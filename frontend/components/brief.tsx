@@ -95,19 +95,20 @@ export function LeadStory({ e, asOf, move, alert, href }: { e: BriefEvent; asOf:
   const nums = e.results_headline ?? [];
   const pat = pattern(e);
   return (
-    <article className="mt-5">
+    <article className="lead-story relative mt-5">
+      <div className="mb-4 flex items-center gap-2 text-[10px] font-semibold uppercase tracking-[0.16em] text-muted"><span className="h-px w-5 bg-accent" />Leading the briefing</div>
       <Kicker e={e} asOf={asOf} alert={alert} />
       <Link href={href} className="group block">
-        <h2 className="serif mt-1.5 text-[28px] font-semibold leading-[1.1] tracking-tight group-hover:underline group-hover:decoration-1 group-hover:underline-offset-4 sm:text-[36px]">
+        <h2 className="serif mt-2 text-[30px] font-medium leading-[1.06] tracking-[-0.025em] group-hover:underline group-hover:decoration-1 group-hover:underline-offset-4 sm:text-[42px]">
           {e.category === "results" ? `${shortName(e.company, e.ticker)}: ${e.title}` : e.title}
         </h2>
       </Link>
       {nums.length > 0 ? (
-        <dl className="mt-4 grid grid-cols-3 border-y border-line">
+        <dl className="lead-metrics mt-4 grid grid-cols-3 rounded-lg border border-line bg-surface">
           {nums.map((h, i) => (
-            <div key={h.id} className={`min-w-0 py-3 ${i ? "border-l border-line pl-2.5 sm:pl-4" : "pr-2.5"}`}>
+            <div key={h.id} className={`min-w-0 py-3 ${i ? "border-l border-line px-2.5 sm:px-4" : "px-2.5 sm:px-4"}`}>
               <dt className="truncate text-[11px] text-faint">{h.label.replace("Operating ", "")} <span className="sm:hidden">₹cr</span><span className="hidden sm:inline">₹ crore</span></dt>
-              <dd className="num serif mt-0.5 text-[18px] font-semibold leading-tight sm:text-[26px]">{croreNum(h.value)}</dd>
+              <dd className="num serif mt-0.5 text-[21px] font-medium leading-tight sm:text-[30px]">{croreNum(h.value)}</dd>
               <dd className="num mt-1 text-[11.5px] text-faint">
                 <Delta c={h.yoy} className="font-semibold" /> YoY
               </dd>
@@ -124,7 +125,7 @@ export function LeadStory({ e, asOf, move, alert, href }: { e: BriefEvent; asOf:
         <span className="font-semibold">Why it’s here:</span> {why(e)} {pat}
       </p>
       {move && <MoveNote m={move} />}
-      <Link href={href} className="mt-3 inline-flex min-h-[40px] items-center text-[13.5px] font-semibold text-accent underline-offset-4 hover:underline">
+      <Link href={href} className="story-action mt-4 inline-flex min-h-[44px] items-center gap-3 rounded-md bg-ink px-4 text-[12px] font-semibold text-bg transition-colors hover:bg-accent">
         {e.has_detail ? "Read the results and evidence →" : "Open the filing →"}
       </Link>
     </article>
@@ -137,7 +138,7 @@ export function StoryRow({ e, asOf, move, alert, href }: { e: BriefEvent; asOf: 
   const rev = e.results_headline?.find((h) => h.id === "revenue" || h.id === "nii");
   const pat = e.results_headline?.find((h) => h.id === "pat");
   return (
-    <li className="border-b border-line py-3.5 last:border-b-0">
+    <li className="story-row border-b border-line py-4 last:border-b-0">
       <Kicker e={e} asOf={asOf} alert={alert} />
       <Link href={href} className="group mt-1 block">
         <h3 className="serif line-clamp-2 text-[18px] font-semibold leading-snug group-hover:underline group-hover:underline-offset-2">
@@ -172,7 +173,7 @@ export function StoryRow({ e, asOf, move, alert, href }: { e: BriefEvent; asOf: 
 export function BriefLine({ e, asOf, href }: { e: BriefEvent; asOf: string; href: string }) {
   return (
     <li>
-      <Link href={href} className="grid min-h-[44px] grid-cols-[88px_1fr_auto] items-baseline gap-x-3 border-b border-line py-2.5 hover:bg-surface-2">
+      <Link href={href} className="brief-line grid min-h-[44px] grid-cols-[78px_1fr_auto] items-baseline gap-x-3 border-b border-line py-2.5 hover:bg-surface-2">
         <span className="kicker break-all text-[10.5px] text-ink">{e.ticker}</span>
         <span className="min-w-0">
           <span className="line-clamp-2 text-[13.5px] leading-snug">{e.title}</span>
@@ -283,7 +284,8 @@ export function SpotlightBlock({ s, href, indexHref }: { s: Spotlight | null | u
   }
   const v = s.item.verdict;
   return (
-    <section>
+    <section className="research-spotlight">
+      <div className="kicker mb-3 flex items-center gap-2 text-accent"><span className="h-1.5 w-1.5 rounded-full bg-accent" />The accountability file</div>
       <SectionLabel right={s.generated_at ? `report of ${fullDate(s.generated_at)}` : undefined}>Promised vs delivered</SectionLabel>
       <div className="kicker text-ink">{s.ticker} <span className="font-normal normal-case tracking-normal text-faint">· {s.company}</span></div>
       <p className="serif mt-1 text-[17px] leading-snug">

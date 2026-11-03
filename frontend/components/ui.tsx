@@ -16,7 +16,7 @@ export function Delta({ c, className = "", invert = false }: { c: Change | undef
 /** Section head: serif label over a hairline, optional right-hand note. */
 export function SectionLabel({ children, right, id }: { children: React.ReactNode; right?: React.ReactNode; id?: string }) {
   return (
-    <div id={id} className="mb-2 mt-8 flex scroll-mt-4 items-baseline justify-between gap-3 border-b border-rule pb-1.5">
+    <div id={id} className="section-heading mb-3 mt-8 flex scroll-mt-4 items-baseline justify-between gap-3 border-b border-rule pb-2">
       <h2 className="serif text-[17px] font-semibold leading-none tracking-tight">{children}</h2>
       {right && <div className="text-right text-[11.5px] text-faint">{right}</div>}
     </div>
@@ -30,16 +30,21 @@ export function Pill({ children, tone = "neutral" }: { children: React.ReactNode
 
 export function Masthead({ dateline, href, right }: { dateline: string; href: (p: string) => string; right?: React.ReactNode }) {
   return (
-    <header className="border-b-2 border-rule pb-2">
+    <header className="masthead border-b-2 border-rule pb-3">
+      <div className="mb-3 flex items-center justify-between text-[10px] font-semibold uppercase tracking-[0.16em] text-muted">
+        <span className="flex items-center gap-2"><span className="h-1.5 w-1.5 rounded-full bg-accent" />Investment intelligence</span>
+        <span className="hidden sm:inline">The portfolio edition</span>
+        <span className="sm:hidden">Your daily edge</span>
+      </div>
       <div className="flex items-end justify-between gap-3">
-        <Link href={href("/")} className="serif text-[34px] font-bold leading-none tracking-tight">
+        <Link href={href("/")} className="serif text-[42px] font-bold leading-[0.85] tracking-[-0.06em] sm:text-[54px]">
           FINN
         </Link>
-        <nav className="flex items-center gap-4 text-[13px] font-medium" aria-label="Sections">
-          <Link href={href("/research")} className="py-2 underline-offset-4 hover:underline">
+        <nav className="masthead-nav flex items-center gap-1 text-[12px] font-medium sm:text-[13px]" aria-label="Sections">
+          <Link href={href("/research")} className="rounded-md px-2.5 py-3 transition-colors hover:bg-surface-2">
             Research
           </Link>
-          <Link href={href("/settings")} className="py-2 underline-offset-4 hover:underline">
+          <Link href={href("/settings")} className="rounded-md px-2.5 py-3 transition-colors hover:bg-surface-2">
             Preferences
           </Link>
         </nav>
@@ -55,18 +60,18 @@ export function Masthead({ dateline, href, right }: { dateline: string; href: (p
 export function ModeSwitch({ mode, setMode }: { mode: Mode; setMode: (m: Mode) => void }) {
   const opt = (m: Mode, label: string) => (
     <button
-      role="tab"
-      aria-selected={mode === m}
+      type="button"
+      aria-pressed={mode === m}
       onClick={() => setMode(m)}
-      className={`min-h-[40px] flex-1 px-3 text-[13px] font-medium transition-colors ${
-        mode === m ? "bg-ink text-bg" : "text-muted hover:text-ink"
+      className={`min-h-[36px] flex-1 rounded-md px-4 text-[12px] font-semibold transition-colors ${
+        mode === m ? "bg-surface text-ink shadow-sm" : "text-muted hover:text-ink"
       }`}
     >
       {label}
     </button>
   );
   return (
-    <div role="tablist" aria-label="Briefing" className="mt-3 flex overflow-hidden rounded-md border border-rule sm:inline-flex sm:w-[340px]">
+    <div role="group" aria-label="Briefing" className="mt-4 flex w-fit gap-1 rounded-lg border border-line bg-surface-2/60 p-1">
       {opt("demo", "Demo briefing")}
       {opt("live", "Live")}
     </div>
@@ -92,7 +97,7 @@ export function StatusBar({ f, stale, mode, source, scheduleNote, asOf, session 
     historical: mode === "demo" ? "Demo" : "Snapshot, not live",
   }[health];
   return (
-    <details className="group mt-3 border-y border-line text-[12.5px]">
+    <details className="status-bar group mt-2 text-[11.5px]">
       <summary className="flex min-h-[40px] cursor-pointer items-center gap-2 py-2">
         <span className={`h-2 w-2 shrink-0 rounded-full ${dot}`} aria-hidden />
         <span className="font-medium">{lead}</span>
@@ -174,14 +179,14 @@ export function StatusBar({ f, stale, mode, source, scheduleNote, asOf, session 
 export function WindowTabs({ value, onChange }: { value: string; onChange: (w: string) => void }) {
   const opts = [["24h", "24 hours"], ["3d", "3 days"], ["7d", "7 days"], ["30d", "30 days"]] as const;
   return (
-    <div role="tablist" aria-label="Time window" className="mt-2 flex gap-5 text-[13px]">
+    <div role="group" aria-label="Time window" className="window-tabs mt-2 flex gap-6 border-b border-line text-[12px]">
       {opts.map(([k, label]) => (
         <button
           key={k}
-          role="tab"
-          aria-selected={value === k}
+          type="button"
+          aria-pressed={value === k}
           onClick={() => onChange(k)}
-          className={`min-h-[40px] border-b-2 ${value === k ? "border-accent font-semibold text-ink" : "border-transparent text-muted hover:text-ink"}`}
+          className={`min-h-[44px] border-b-2 ${value === k ? "border-accent font-semibold text-ink" : "border-transparent text-muted hover:text-ink"}`}
         >
           {label}
         </button>

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useId, useState } from "react";
 import { BackLink, LoadStatus, SectionLabel } from "@/components/ui";
 import { type Settings, withView } from "@/lib/api";
 import { CATEGORY_LABEL } from "@/lib/format";
@@ -76,7 +76,7 @@ export default function PreferencesPage() {
               return (
                 <button key={c} aria-pressed={on}
                   onClick={() => commit({ ...draft, alert_categories: on ? draft.alert_categories.filter((x) => x !== c) : [...draft.alert_categories, c] })}
-                  className={`min-h-[40px] rounded-sm border px-3 text-[13px] ${on ? "border-ink bg-ink text-bg" : "border-line text-muted hover:border-ink hover:text-ink"}`}>
+                  className={`min-h-[40px] rounded-lg border px-3 text-[12px] transition-colors ${on ? "border-accent/30 bg-accent-bg text-accent" : "border-line text-muted hover:border-ink hover:text-ink"}`}>
                   {on ? "✓ " : ""}{CATEGORY_LABEL[c]}
                 </button>
               );
@@ -107,15 +107,22 @@ function Slider({ value, min, max, step, unit, prefix = "", help, label, onChang
   value: number; min: number; max: number; step: number; unit: string; prefix?: string; help: string; label: string;
   onChange: (v: number) => void; onCommit: (v: number) => void;
 }) {
+  const id = useId();
+  const progress = ((value - min) / (max - min)) * 100;
   return (
-    <div>
-      <div className="num serif text-[30px] font-semibold leading-none">{prefix}{value}{unit}</div>
-      <input type="range" min={min} max={max} step={step} value={value} aria-label={label}
+    <div className="preference-control rounded-xl border border-line bg-surface p-4 sm:p-5">
+      <div className="flex items-center justify-between">
+        <output htmlFor={id} className="num serif text-[36px] font-medium leading-none">{prefix}{value}{unit}</output>
+        <span className="text-[10px] font-semibold uppercase tracking-widest text-faint">{unit === "%" ? "Daily change" : "vs. average"}</span>
+      </div>
+      <input id={id} type="range" min={min} max={max} step={step} value={value} aria-label={label}
         onChange={(e) => onChange(Number(e.target.value))}
         onPointerUp={(e) => onCommit(Number((e.target as HTMLInputElement).value))}
         onKeyUp={(e) => onCommit(Number((e.target as HTMLInputElement).value))}
-        className="mt-3 h-6 w-full accent-[var(--accent)]" />
-      <p className="mt-1 text-[12.5px] leading-snug text-muted">{help}</p>
+        style={{ background: `linear-gradient(to right, var(--accent) ${progress}%, var(--line) ${progress}%)` }}
+        className="finn-range my-5 w-full" />
+      <div className="num mb-3 flex justify-between text-[10px] text-faint"><span>{prefix}{min}{unit}</span><span>{prefix}{max}{unit}</span></div>
+      <p className="text-[12px] leading-relaxed text-muted">{help}</p>
     </div>
   );
 }

@@ -55,7 +55,7 @@ export default function BriefPage() {
     : "Portfolio briefing";
 
   return (
-    <main className="mx-auto max-w-[1120px] px-4 pb-24 pt-4 sm:px-6">
+    <main className="mx-auto brief-shell max-w-[1200px] px-5 pb-24 pt-5 sm:px-8 sm:pt-8">
       <Masthead dateline={dateline} href={href} right={fresh && <span>{fresh.totals.filings} filings · {fresh.totals.events} events in {WINDOW_WORDS[win]}</span>} />
       <ModeSwitch mode={mode} setMode={setMode} />
 
@@ -82,7 +82,7 @@ export default function BriefPage() {
       {!fresh && <LoadStatus state={state === "ready" ? "loading" : state} err={err} onRetry={retry} what="the briefing" />}
 
       {fresh && view && prefs && (
-        <div className="lg:grid lg:grid-cols-[minmax(0,1fr)_320px] lg:gap-12">
+        <div className="lg:grid lg:grid-cols-[minmax(0,1fr)_320px] lg:gap-10">
           <div className="min-w-0">
             <AlertSummary filings={view.alerts.length} moves={view.flagged.length} className="mt-3 lg:hidden" />
 
@@ -125,7 +125,7 @@ export default function BriefPage() {
             <Routine items={fresh.tiers.routine} asOf={fresh.as_of} hrefFor={ev} />
           </div>
 
-          <aside className="hidden lg:block" aria-label="Moves and research">
+          <aside className="brief-rail hidden lg:block" aria-label="Moves and research">
             <AlertSummary filings={view.alerts.length} moves={view.flagged.length} className="mt-8" />
             <Moves flagged={view.flagged} stale={fresh.movers.stale} session={fresh.movers.session} prefs={prefs} custom={custom} prefsHref={href("/settings")} />
             <SpotlightBlock s={fresh.spotlight} href={fresh.spotlight ? href(`/r/${fresh.spotlight.ticker}#guidance`) : ""} indexHref={href("/research")} />
@@ -140,7 +140,7 @@ function AlertSummary({ filings, moves, className }: { filings: number; moves: n
   if (!filings && !moves) return null;
   const parts = [filings ? `${filings} filings ●` : null, moves ? `${moves} price/volume` : null].filter(Boolean);
   return (
-    <p className={`text-[12.5px] leading-snug text-accent ${className}`}>
+    <p className={`alert-summary text-[12px] leading-snug text-accent ${className}`}>
       <span className="font-semibold">{filings + moves} alert{filings + moves > 1 ? "s" : ""} for you</span>
       <span className="text-muted"> · {parts.join(" · ")}</span>
     </p>

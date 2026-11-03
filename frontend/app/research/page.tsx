@@ -31,7 +31,7 @@ export default function ResearchPage() {
       </p>
 
       <form
-        className="mt-4 flex gap-2"
+        className="mt-5 flex items-center gap-2 rounded-xl border border-line bg-surface p-2 shadow-sm"
         onSubmit={(e) => {
           e.preventDefault();
           const t = sym.trim().toUpperCase();
@@ -41,8 +41,8 @@ export default function ResearchPage() {
         <label htmlFor="sym" className="sr-only">NSE symbol</label>
         <input id="sym" value={sym} onChange={(e) => setSym(e.target.value)} placeholder="Any NSE symbol, e.g. TITAN"
           autoCapitalize="characters" autoCorrect="off" spellCheck={false}
-          className="min-h-[44px] min-w-0 flex-1 border-b-2 border-rule bg-transparent px-1 text-[15px] uppercase placeholder:normal-case placeholder:text-faint focus:outline-none focus-visible:border-accent" />
-        <button className="min-h-[44px] bg-ink px-4 text-[14px] font-semibold text-bg">Open</button>
+          className="min-h-[44px] min-w-0 flex-1 rounded-md bg-transparent px-3 text-[14px] uppercase placeholder:normal-case placeholder:text-faint" />
+        <button className="min-h-[44px] rounded-lg bg-ink px-4 text-[13px] font-semibold text-bg transition-colors hover:bg-accent">Open →</button>
       </form>
       {mode === "demo" && (
         <p className="mt-2 text-[12px] text-muted">The demo has reports for the companies below, generated from real filings on 3 Nov 2026. Switch to Live to research others.</p>
@@ -92,12 +92,12 @@ export default function ResearchPage() {
 function Row({ r, href }: { r: ResearchIndex["reports"][number]; href: string }) {
   return (
     <li>
-      <Link href={href} className="grid min-h-[56px] grid-cols-[1fr_auto] gap-x-3 border-b border-line py-2.5 hover:bg-surface-2">
+      <Link href={href} className="group grid min-h-[72px] grid-cols-[1fr_auto] items-center gap-x-3 border-b border-line py-4 transition-colors hover:bg-surface-2">
         <span className="min-w-0">
           <span className="kicker text-ink">{r.ticker}</span> <span className="text-[12.5px] text-muted">{r.company}</span>
           {r.summary && <span className="mt-1 block"><SummaryLine s={r.summary} /></span>}
         </span>
-        <span className="num text-[11.5px] text-faint">{istDate(r.finished_at)}</span>
+        <span className="flex flex-col items-end gap-1"><span className="num text-[10.5px] text-faint">{istDate(r.finished_at)}</span><span className="text-lg text-accent transition-transform group-hover:translate-x-1" aria-hidden>↗</span></span>
       </Link>
     </li>
   );
