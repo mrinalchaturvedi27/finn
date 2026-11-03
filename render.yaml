@@ -13,9 +13,10 @@ services:
         sync: false   # set to the Vercel origin, e.g. https://finn-xyz.vercel.app
       - key: FINN_READ_ONLY
         value: "1"    # PUT /api/settings refused; CORS alone doesn't stop direct calls
-      # Temporary: run probe/source_probe.py inside the running container at startup (free plan has
-      # no shell or jobs). Report goes to the logs and GET /api/probe-report. Set to "0" once captured.
+      # Runs probe/source_probe.py inside the running container at startup (free plan has no shell
+      # or jobs); report to logs and GET /api/probe-report. Off: captured 2026-11-03 as
+      # probe/report-render.json. Set to "1" to re-run.
       - key: FINN_STARTUP_PROBE
-        value: "1"
+        value: "0"
       - key: FINN_PROBE_TIMEOUT
         value: "600"
