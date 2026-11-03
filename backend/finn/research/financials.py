@@ -12,17 +12,32 @@ from ..metrics import compute
 from ..sources.nse import NSE, SourceError, parse_nse_dt
 
 
-def quarter_series(nse: NSE, ticker: str, n: int = 9) -> dict:
-    """Last n quarters (n=9 gives four quarters plus their year-ago quarters... and one more)."""
+def quarter_series(nse: NSE, ticker: str, n: int = 10) -> dict:
+    """Last n quarters: enough for the last five quarters and their year-ago quarters.
+    Integrated XBRL filings start in 2025; earlier quarters come from the legacy results index."""
     idx = nse.results_index(ticker)
     rows = {}
+    try:
+        legacy = nse.results_index_legacy(ticker)
+    except SourceError:
+        legacy = []
+    for r in legacy:  # same XBRL taxonomy; integrated rows below win for any quarter in both
+        qe = parse_nse_dt(r.get("toDate"))
+        frm = parse_nse_dt(r.get("fromDate"))
+        if not qe or not frm or not r.get("xbrl") or (qe - frm).days > 95:
+            continue
+        basis = "Consolidated" if r.get("consolidated") == "Consolidated" else "Standalone"
+        stamp = parse_nse_dt(r.get("filingDate"))
+        key = (qe.date(), basis)
+        if key not in rows or (stamp and rows[key][0] and stamp > rows[key][0]):
+            rows[key] = (stamp, {"xbrl": r["xbrl"], "consolidated": basis, "legacy": True})
     for r in idx:
         qe = parse_nse_dt(r.get("qe_Date"))
         if not qe or r.get("consolidated") not in ("Consolidated", "Standalone"):
             continue
         key = (qe.date(), r["consolidated"])
         stamp = parse_nse_dt(r.get("revised_Date") or r.get("broadcast_Date") or r.get("creation_Date"))
-        if key not in rows or (stamp and rows[key][0] and stamp > rows[key][0]):
+        if key not in rows or rows[key][1].get("legacy") or (stamp and rows[key][0] and stamp > rows[key][0]):
             rows[key] = (stamp, r)
     quarters = sorted({qe for qe, _ in rows}, reverse=True)
     # only true quarter ends (results index also lists annual rows under the March quarter)

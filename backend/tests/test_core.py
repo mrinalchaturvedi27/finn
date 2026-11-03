@@ -575,11 +575,67 @@ def test_truncated_archive_download_is_retried_and_never_cached(tmp_path, monkey
     ("I think we have given the CAPEX guidance for full year around Rs. 350 crores.",
      ("capex", "point", 350, 350, "FY27")),
     ("We expect revenue growth in the high single digits for FY27.", ("revenue_growth", "range", 7, 10, "FY27")),
+    ("Giving a guidance of INR4,500 crores is almost 55% growth over the previous year.",
+     ("revenue_growth", "point", 55, 55, "FY27")),
 ])
 def test_guidance_statements(sentence, want):
     from finn.research.guidance import _statement
     st = _statement(sentence, date(2026, 8, 12))
     assert st and (st["metric"], st["direction"], st["low"], st["high"], st["period_label"]) == want
+
+
+@pytest.mark.parametrize("sentence,note", [
+    ("And the margins are going to be north of current 30% plus.", "margin type not stated (gross, EBITDA or segment)"),
+    ("The GDP growth is at 8%, and the EMS space is expected to grow in this year 16% to 18%.",
+     "refers to the industry or economy, not the company"),
+    ("Next year, we expect system growth to be between 12% to 13%.", "refers to the industry or economy, not the company"),
+    ("We have given double digit guidance for volume and EBITDA margin on polymer, we have given between 16%-18% range "
+     "and Adhesive and Paint, we have given between 12%-14% margin.", "may refer to a segment, not the whole company"),
+    ("We are confident that we will come back to our original double digit kind of EBITDA margin in the UK next year.",
+     "may refer to a segment, not the whole company"),
+    ("On a full year basis, we should be able to reach 8% to 10% of EBITDA margins on FMEG.",
+     "may refer to a segment, not the whole company"),
+])
+
+def test_guidance_scope_flags(sentence, note):
+    from finn.research.guidance import _statement
+    st = _statement(sentence, date(2026, 8, 12))
+    assert st and note in st["notes"]
+
+
+@pytest.mark.parametrize("sentence", [
+    "Because for us, the EBITDA corridor which we have shared is 20% to 24%.",   # "us" is not the USA
+    "It gives us the confidence that the guidance of double-digit growth we will achieve on a full year basis.",
+])
+def test_company_level_guidance_is_not_flagged_as_segment(sentence):
+    from finn.research.guidance import _statement
+    st = _statement(sentence, date(2026, 8, 12))
+    assert st and not st["notes"]
+
+
+def test_segment_named_in_an_earlier_sentence_is_carried_over():
+    from finn.research.guidance import extract
+    turn = {"role": "management", "speaker": "CFO", "page": 4, "text":
+            "We have put in a new CEO who has 25 years of experience in this segment. This year we have given a guidance "
+            "of 20% growth for the full year and we are going to achieve it."}
+    st = extract([turn], date(2025, 11, 6), "u")[0]
+    assert "may refer to a segment, not the whole company" in st.notes
+    plain = {**turn, "text": "Thank you for the question. This year we have given a guidance of 20% growth for the full year."}
+    assert extract([plain], date(2025, 11, 6), "u")[0].notes == []
+
+
+def test_minimum_means_at_least():
+    from finn.research.guidance import _statement
+    st = _statement("By year end, we are targeting minimum 20% kind of growth.", date(2025, 8, 18))
+    assert (st["direction"], st["low"]) == ("at_least", 20)
+
+
+def test_longer_term_is_multi_year():
+    from finn.research.guidance import _statement
+    st = _statement("So over the longer term, I believe we would end up in a range of 8% to 10% of the EBITDA margin.",
+                    date(2026, 8, 12))
+    assert st["period_type"] == "long_horizon"
+
 
 
 @pytest.mark.parametrize("sentence", [
@@ -633,6 +689,18 @@ def test_scorecard_tolerance_supersession_and_gaps():
     gap = build([_stmt(period_fy=2026, period_label="FY26")], _series({"2025-03-31": (90, 18), "2026-03-31": (100, 20)}),
                 date(2026, 11, 3))[0]["verdict"]
     assert gap["status"] == "not_comparable" and "1 of its 4 quarters" in gap["reason"]
+
+
+def test_lender_growth_guidance_is_not_scored_as_revenue():
+    from finn.research.guidance import _statement
+    from finn.research.scorecard import build
+    q = ("Overall, we've taken a view that the top line growth or AUM growth will gravitate between 22% and 23%, "
+         "but more likely to be 22% on a full year basis.")
+    st = _statement(q, date(2026, 2, 7))
+    assert "loan book / AUM measure, not in the results filing" in st["notes"]
+    s = {**_series({"2025-06-30": (100, 20), "2026-06-30": (118, 20)}), "taxonomy": "nbfc"}
+    lender = _stmt(quote="We expect growth of 22% to 23% this year.", low=22, high=23)
+    assert "loan book" in build([lender], s, date(2026, 11, 3))[0]["verdict"]["reason"]
 
 
 def test_scorecard_standing_band_and_abstentions():
@@ -710,3 +778,18 @@ def test_research_api_refuses_requests_on_the_seed_and_serves_reports(tmp_path):
     live = run({"FINN_DB_URL": url, "FINN_READ_ONLY": "1"})
     assert live["post"] == 200 and live["index"]["can_request"] is True
     assert [q["ticker"] for q in live["index"]["queue"]] == ["TITAN"]
+
+
+def test_transcript_discovery_keeps_nse_standard_call_subject():
+    from finn.research.transcripts import find
+
+    class N:
+        def announcements(self, t, a, b):
+            mk = lambda seq, when, text: {"seq_id": seq, "an_dt": when, "sort_date": when, "attchmntFile": f"https://x/{seq}.pdf",
+                                          "desc": "Analysts/Institutional Investor Meet/Con. Call Updates", "attchmntText": text}
+            return [mk(1, "07-Aug-2026 10:00:00", "CDSL has informed the Exchange about Transcript of Analysts/Institutional "
+                                                  "Investor Meet/Con. Call held on August 03, 2026"),
+                    mk(2, "25-May-2026 10:00:00", "Astral has informed the Exchange about Transcript of Analyst Meet Held on "
+                                                  "20th May, 2026")]
+    got = find(N(), "X", date(2026, 11, 3))
+    assert [g["call_date"] for g in got] == ["2026-08-03"]  # the call kept, the analyst day dropped

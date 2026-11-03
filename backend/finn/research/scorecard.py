@@ -7,6 +7,7 @@ the statement is shown as not comparable, with the reason. Every verdict carries
 Statuses: delivered | partial (within tolerance of the target) | missed | pending (period not
 over yet; shows what the reported quarters imply) | not_comparable.
 """
+import re
 from datetime import date
 
 from .financials import fiscal_year, fy_quarters
@@ -58,6 +59,15 @@ def verdict(s: dict, q: dict, series: dict, today: date) -> dict:
     nc = lambda reason: {"status": "not_comparable", "reason": reason}  # noqa: E731
     if "may refer to a segment, not the whole company" in s["notes"]:
         return nc("Refers to a segment; FINN checks company-level filings only.")
+    if "loan book / AUM measure, not in the results filing" in s["notes"]:
+        return nc("Loan book / AUM growth: a balance-sheet measure, not in the quarterly results FINN reads.")
+    if (series["taxonomy"] in ("banking", "nbfc") and s["metric"] == "revenue_growth"
+            and not re.search(r"\b(revenue|total income|interest income|nii|net interest income)\b", s["quote"], re.I)):
+        return nc("For lenders, “growth” usually means the loan book; the quote doesn't say revenue.")
+    if "refers to the industry or economy, not the company" in s["notes"]:
+        return nc("About the industry or economy, not the company's own numbers.")
+    if "margin type not stated (gross, EBITDA or segment)" in s["notes"]:
+        return nc("Doesn't say which margin (gross, EBITDA or a segment's), so it can't be matched to the filing.")
     if "constant-currency basis" in s["notes"]:
         return nc("Constant-currency target; filings report in rupees.")
     if s["metric"] == "volume_growth":

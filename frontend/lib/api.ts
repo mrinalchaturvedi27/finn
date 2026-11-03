@@ -204,3 +204,98 @@ export async function put<T>(path: string, body: unknown): Promise<T> {
   if (!r.ok) throw new Error(`${r.status} ${path}`);
   return r.json();
 }
+
+export async function post<T>(path: string): Promise<T> {
+  const r = await fetch(`${API}${path}`, { method: "POST" });
+  if (!r.ok) {
+    let detail = `${r.status}`;
+    try {
+      detail = (await r.json()).detail ?? detail;
+    } catch {}
+    throw new ApiError(r.status, detail);
+  }
+  return r.json();
+}
+
+// ---------- research (pull) ----------
+
+export type Verdict = {
+  status: "delivered" | "partial" | "missed" | "pending" | "not_comparable";
+  value?: number | null;
+  calc?: string;
+  reason?: string | null;
+  tracking?: string | null;
+  tolerance_pp?: number;
+  quarters?: string[];
+};
+
+export type GuidanceItem = {
+  metric: string;
+  metric_label: string;
+  direction: "range" | "at_least" | "at_most" | "point";
+  low: number | null;
+  high: number | null;
+  unit: "pct" | "crore";
+  period_type: string;
+  period_label: string;
+  target: string;
+  quote: string;
+  page: number;
+  speaker: string;
+  stated_on: string;
+  source_url: string;
+  notes: string[];
+  revisions: { stated_on: string; target: string; quote: string; page: number; source_url: string }[];
+  verdict: Verdict;
+};
+
+export type ResearchSummary = {
+  delivered: number;
+  partial: number;
+  missed: number;
+  pending: number;
+  not_comparable: number;
+  statements: number;
+  calls_read: number;
+  calls_found: number;
+};
+
+export type ResearchReport = {
+  ticker: string;
+  company: string | null;
+  generated_at: string;
+  status: "done" | "partial" | "failed";
+  rules_version: number;
+  financials?: {
+    basis: string;
+    taxonomy: "indas" | "banking" | "nbfc" | null;
+    quarters: { quarter_end: string; label: string; xbrl_url: string; values: Record<string, number | null> }[];
+  };
+  sources: {
+    transcripts: { call_date: string; url?: string; nse_url: string; source?: string; pages?: number; status: string; statements?: number }[];
+    xbrl: { quarter: string; url: string }[];
+  };
+  guidance?: GuidanceItem[];
+  summary?: ResearchSummary;
+  failures: { stage: string; error?: string; call_date?: string; quarter_end?: string }[];
+};
+
+export type ResearchRow = {
+  ticker: string;
+  company: string | null;
+  state: string;
+  finished_at: string | null;
+  requested_at: string | null;
+  summary: ResearchSummary | null;
+  requested_via: string | null;
+};
+
+export type ResearchIndex = { reports: ResearchRow[]; queue: ResearchRow[]; demo: string[]; can_request: boolean; schedule: string | null };
+
+export type ResearchResponse = {
+  ticker: string;
+  report: ResearchReport | null;
+  pending: ResearchRow | null;
+  failed: (ResearchRow & { failures: { stage: string; error?: string }[] }) | null;
+  can_request: boolean;
+};

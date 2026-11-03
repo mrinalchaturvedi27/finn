@@ -17,6 +17,7 @@ EXTRACT_VERSION = 1
 FORWARD = re.compile(
     r"\b(guid\w*|target\w*|expect\w*|outlook|aim(?:ing)?\b|aspir\w*|corridor|anticipat\w*|"
     r"confident (?:of|that)|we will (?:be|deliver|achieve|close|end|grow|see|clock|reach)|"
+    r"will (?:gravitate|land|settle|come in|hover|trend)|taken a view|"
     r"(?:should|would) (?:be|grow|close|end|see|deliver|come|reach|clock)|"
     r"going to (?:be|grow|deliver|close|end|see|clock))", re.I)
 GUIDED = re.compile(r"\b(guid\w*|target\w*|expect\w*|outlook|corridor)\b", re.I)
@@ -33,13 +34,25 @@ METRICS = [  # (metric, keyword pattern); each number is assigned to its nearest
 ]
 SEGMENT = re.compile(r"\b(segment|division|vertical|business|category|subsidiary|subsidiaries|exports?|domestic|"
                      r"international|overseas|b2b|b2c|plant|brand)\b|^\s*[A-Z][a-z]+,\s", re.I)
+# case-sensitive: "UK" is a place, "us" is the company talking about itself
+GEO = re.compile(r"\b(UK|US|USA|Europe|America|Africa|Gulf|Middle East|Asia)\b")
+# "margins on FMEG": a business line named by an acronym (metric acronyms excluded)
+SEGMENT_ACRONYM = re.compile(r"\b(?:on|in|for|of)\s+(?:the\s+|our\s+)?(?!EBITDA\b|PAT\b|GDP\b|CAGR\b|EPS\b|ROCE\b|ROE\b)"
+                             r"[A-Z]{3,6}\b")
+# "Adhesive and Paint, we have given ..." names a business line FINN cannot know in advance
+SEGMENT_LEAD = re.compile(r"\b[A-Z][a-z]+(?:\s+and\s+[A-Z][a-z]+)?,\s+we\s+(?:have|are|will|had)\b")
+INDUSTRY = re.compile(r"\b(industry|gdp|economy|economic|market|sector|system|peers?|category growth|nominal|space)\b",
+                      re.I)
+QUALIFIED_MARGIN = re.compile(r"\b(?:ebitda|ebidta|operating)\b|(?<=%)\s*(?:kind of\s+)?ebitda", re.I)
+BOOK = re.compile(r"\b(aum|assets under management|loan book|loan growth|advances|deposits?|disbursements?|credit growth|"
+                  r"book growth|balance sheet growth)\b", re.I)
 COMPANY = re.compile(r"\b(overall|consolidated|company level|company-level|group level|total|as a company|"
                      r"for the company|whole company)\b", re.I)
 LABEL = {"revenue_growth": "Revenue growth", "ebitda_margin": "EBITDA margin", "pat_growth": "Profit growth",
          "capex": "Capex", "volume_growth": "Volume growth"}
 NUM = r"(\d{1,3}(?:\.\d{1,2})?)"
 RANGE = re.compile(rf"{NUM}\s*(?:%|percent|per cent)?\s*(?:to|-|–|and|,)\s*{NUM}\s*(?:%|percent|per cent)", re.I)
-SINGLE = re.compile(rf"(?:(at least|minimum of|more than|over|above|upwards of|around|about|approximately|~|close to|"
+SINGLE = re.compile(rf"(?:(at least|minimum of|minimum|more than|over|above|upwards of|north of|around|about|approximately|~|close to|"
                     rf"up to|at most|below|under)\s+)?{NUM}\s*(?:%|percent|per cent)", re.I)
 CRORE = re.compile(rf"(?:rs\.?|₹|inr)?\s*{NUM.replace('{1,3}', '{1,5}')}\s*(?:crore|crores|cr)\b", re.I)
 VERBAL = [  # standard Indian-call phrasings -> (low, high); "at least" when high is None
@@ -55,7 +68,7 @@ VERBAL = [  # standard Indian-call phrasings -> (low, high); "at least" when hig
 ]
 FY = re.compile(r"\b(?:FY|fiscal|financial year)\s*'?\s*(?:20)?(\d{2})\b", re.I)
 LONG = re.compile(r"\b(next|coming)\s+(two|three|four|five|2|3|4|5)(?:\s*(?:-|to)\s*(?:three|four|five|3|4|5))?\s+years|"
-                  r"medium[- ]term|long[- ]term|over the years|by 20[3-9]\d|cagr", re.I)
+                  r"medium[- ]term|long(?:er)?[- ]term|over the long run|over the years|by 20[3-9]\d|cagr", re.I)
 
 
 @dataclass
@@ -80,6 +93,11 @@ class Statement:
         return asdict(self)
 
 
+def _segment_context(prev: str) -> bool:
+    return bool(prev) and bool(SEGMENT.search(prev) or GEO.search(prev) or SEGMENT_ACRONYM.search(prev)
+                               or SEGMENT_LEAD.search(prev)) and not COMPANY.search(prev)
+
+
 def sentences(text: str):
     for s in re.split(r"(?<=[.?!])\s+(?=[A-Z\"'(])", re.sub(r"\s+", " ", text)):
         if 25 <= len(s) <= 600:
@@ -91,8 +109,13 @@ def extract(turns: list[dict], stated_on: date, source_url: str) -> list[Stateme
     for t in turns:
         if t["role"] != "management":
             continue
-        for s in sentences(t["text"]):
+        sents = list(sentences(t["text"]))
+        for i, s in enumerate(sents):
             st = _statement(s, stated_on)
+            if st and "may refer to a segment, not the whole company" not in st["notes"] and \
+                    _segment_context(" ".join(sents[max(0, i - 2):i])):
+                # the subject is often set a sentence or two earlier ("... in this segment. We guided 20%")
+                st["notes"].append("may refer to a segment, not the whole company")
             if st:
                 out.append(Statement(**st, page=t["page"], speaker=t["speaker"], stated_on=stated_on.isoformat(),
                                      source_url=source_url))
@@ -120,8 +143,17 @@ def _statement(s: str, stated_on: date) -> dict | None:
     notes = []
     if re.search(r"constant currency|\bcc\b", s, re.I):
         notes.append("constant-currency basis")
-    if SEGMENT.search(s) and not COMPANY.search(s):
+    same_metric = {(q["low"], q["high"]) for q in _quantities(s) if _nearest_metric(s, q["pos"], q["unit"])[0] == metric}
+    if (SEGMENT.search(s) or GEO.search(s) or SEGMENT_LEAD.search(s) or SEGMENT_ACRONYM.search(s)
+            or len(same_metric) > 1) and not COMPANY.search(s):
+        # several different targets for one metric in one sentence = a per-segment list
         notes.append("may refer to a segment, not the whole company")
+    if BOOK.search(s):
+        notes.append("loan book / AUM measure, not in the results filing")
+    if INDUSTRY.search(s[max(0, qty["pos"] - 70):qty["pos"]]):
+        notes.append("refers to the industry or economy, not the company")
+    if metric == "ebitda_margin" and not QUALIFIED_MARGIN.search(s):
+        notes.append("margin type not stated (gross, EBITDA or segment)")
     period = _period(s, stated_on, metric)
     return {"metric": metric, "metric_label": LABEL[metric], "direction": qty["direction"], "low": qty["low"],
             "high": qty["high"], "unit": qty["unit"], **period, "quote": s, "notes": notes}
@@ -162,7 +194,7 @@ def _quantities(s: str) -> list[dict]:
         v, q = float(m.group(2)), (m.group(1) or "").lower()
         if v > 100:
             continue
-        if q in ("at least", "minimum of", "more than", "over", "above", "upwards of"):
+        if q in ("at least", "minimum of", "minimum", "more than", "over", "above", "upwards of", "north of"):
             out.append({"direction": "at_least", "low": v, "high": None, "unit": "pct", "pos": m.start()})
         elif q in ("up to", "at most", "below", "under"):
             out.append({"direction": "at_most", "low": None, "high": v, "unit": "pct", "pos": m.start()})
@@ -187,7 +219,9 @@ def _period(s: str, stated_on: date, metric: str) -> dict:
             return {"period_type": "FY", "period_fy": fy, "period_label": f"FY{str(fy)[-2:]}"}
     if re.search(r"\bnext (?:year|fiscal|financial year)\b", s, re.I):
         return {"period_type": "FY", "period_fy": cur_fy + 1, "period_label": f"FY{str(cur_fy + 1)[-2:]}"}
-    if re.search(r"\b(this|current|full)\s+(?:year|fiscal|financial year)\b|\bfor the (?:full )?year\b", s, re.I):
+    # "growth over the previous year" is this year's growth
+    if re.search(r"\b(this|current|full)\s+(?:year|fiscal|financial year)\b|\bfor the (?:full )?year\b|"
+                 r"\bover (?:the )?(?:previous|last|preceding) (?:year|fiscal)\b", s, re.I):
         return {"period_type": "FY", "period_fy": cur_fy, "period_label": f"FY{str(cur_fy)[-2:]}"}
     if re.search(r"\b(next|coming) quarter\b", s, re.I):
         return {"period_type": "Q", "period_fy": None, "period_label": "next quarter"}

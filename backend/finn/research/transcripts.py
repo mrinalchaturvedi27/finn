@@ -19,7 +19,8 @@ from ..sources.nse import NSE, SourceError, parse_nse_dt
 UA = "Mozilla/5.0 (compatible; FINN research prototype)"
 LINK_LETTER = re.compile(r"uploaded on the (investor|website)|web-?\s?link|available (at|on) the|can be (accessed|availed)",
                          re.I)
-CALL_DATE = re.compile(r"(?:held on|call on|dated)\s+(\d{1,2})(?:st|nd|rd|th)?\s+([A-Za-z]{3})[a-z]*,?\s+(\d{4})", re.I)
+CALL_DATE = re.compile(r"(?:held on|call on|dated)\s+(?:(\d{1,2})(?:st|nd|rd|th)?\s+([A-Za-z]{3})[a-z]*|"
+                       r"([A-Za-z]{3})[a-z]*\s+(\d{1,2})(?:st|nd|rd|th)?),?\s+(\d{4})", re.I)
 MONTHS = {m: i for i, m in enumerate(["jan", "feb", "mar", "apr", "may", "jun", "jul", "aug", "sep", "oct",
                                       "nov", "dec"], 1)}
 _NAME = r"(?:[A-Z][a-z'\-]+|[A-Z]{2,}|[A-Z]\.)"  # Title-case word, ALL-CAPS word, or an initial
@@ -40,8 +41,11 @@ def find(nse: NSE, ticker: str, today: date, months: int = 15) -> list[dict]:
         if c.subkind != "transcript" or not r.get("attchmntFile"):
             continue
         text = r.get("attchmntText") or ""
-        if re.search(r"analyst meet|investor meet|investor day|analyst day", text, re.I):
-            continue  # earnings calls only: guidance is checked against the quarter's numbers
+        # earnings calls only (guidance is checked against the quarter's numbers); NSE's standard
+        # subject "Analysts/Institutional Investor Meet/Con. Call" is a call, not an analyst day
+        if (re.search(r"analyst meet|investor meet|investor day|analyst day", text, re.I)
+                and not re.search(r"con\.?\s?call|conference call|concall|earnings call", text, re.I)):
+            continue
         filed = parse_nse_dt(r.get("an_dt")) or parse_nse_dt(r.get("sort_date"))
         call = _call_date(text) or (filed.date() if filed else None)
         if call in seen:
@@ -56,8 +60,9 @@ def _call_date(text: str) -> date | None:
     m = CALL_DATE.search(text)
     if not m:
         return None
+    day, mon = (m.group(1), m.group(2)) if m.group(1) else (m.group(4), m.group(3))
     try:
-        return date(int(m.group(3)), MONTHS[m.group(2)[:3].lower()], int(m.group(1)))
+        return date(int(m.group(5)), MONTHS[mon[:3].lower()], int(day))
     except (KeyError, ValueError):
         return None
 

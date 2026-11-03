@@ -45,9 +45,14 @@ export default function BriefPage() {
             {data ? `${istDate(data.as_of)} · ${data.totals.filings} filings, ${data.totals.events} events` : "Loading brief…"}
           </p>
         </div>
-        <Link href="/settings" className="rounded-full border border-line bg-surface px-3 py-1.5 text-[12px] text-muted">
-          Thresholds
-        </Link>
+        <nav className="flex gap-1.5">
+          <Link href="/research" className="rounded-full bg-ink px-3 py-1.5 text-[12px] font-medium text-bg">
+            Research
+          </Link>
+          <Link href="/settings" className="rounded-full border border-line bg-surface px-3 py-1.5 text-[12px] text-muted">
+            Thresholds
+          </Link>
+        </nav>
       </header>
 
       {data?.data_source === "seed_fallback" && (

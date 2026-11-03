@@ -100,6 +100,12 @@ class NSE:
         data = self._json(url)
         return data.get("data", []) if isinstance(data, dict) else data
 
+    def results_index_legacy(self, symbol: str) -> list[dict]:
+        """Quarterly XBRL results filed before the integrated format (up to Dec 2024)."""
+        url = f"{BASE}/api/corporates-financial-results?index=equities&symbol={symbol}&period=Quarterly"
+        data = self._json(url)
+        return data if isinstance(data, list) else data.get("data", [])
+
     def fetch_bytes(self, url: str) -> tuple[bytes | None, str]:
         """Archive fetch with a content-addressed disk cache. Returns (bytes, sha256).
         In replay, PDFs come back as (None, sha) — only their extracted text is snapshotted."""
