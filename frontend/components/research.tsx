@@ -13,7 +13,7 @@ export const VERDICT: Record<Verdict["status"], { label: string; cls: string }> 
 export function VerdictChip({ v }: { v: Verdict }) {
   const s = VERDICT[v.status];
   const label = v.ambiguous ? "Conflicting targets" : v.status === "pending" && v.tracking ? "Pending · run-rate indication" : s.label;
-  return <span className={`inline-flex shrink-0 items-center rounded-full px-2 py-0.5 text-[11px] font-medium ${s.cls}`}>{label}</span>;
+  return <span className={`inline-flex shrink-0 items-center rounded-sm px-2 py-0.5 text-[11px] font-medium ${s.cls}`}>{label}</span>;
 }
 
 /** One line for lists: only what was found. */
@@ -31,7 +31,7 @@ export function SummaryLine({ s }: { s: ResearchSummary }) {
   return (
     <span className="flex flex-wrap gap-1.5">
       {parts.map(([k, n]) => (
-        <span key={k} className={`rounded-full px-2 py-0.5 text-[11.5px] ${VERDICT[k].cls}`}>
+        <span key={k} className={`rounded-sm px-2 py-0.5 text-[11.5px] ${VERDICT[k].cls}`}>
           <span className="num font-semibold">{n}</span> {VERDICT[k].label.toLowerCase()}
         </span>
       ))}
@@ -50,12 +50,12 @@ export function SummaryStrip({ s }: { s: ResearchSummary }) {
   return (
     <div className="flex flex-wrap gap-1.5">
       {items.map(([k, n]) => (
-        <span key={k} className={`rounded-full px-2.5 py-1 text-[12px] ${n ? VERDICT[k].cls : "bg-surface-2 text-faint"}`}>
+        <span key={k} className={`rounded-sm px-2.5 py-1 text-[12px] ${n ? VERDICT[k].cls : "bg-surface-2 text-faint"}`}>
           <span className="num font-semibold">{n}</span> {VERDICT[k].label.toLowerCase()}
         </span>
       ))}
       {s.not_comparable > 0 && (
-        <span className="rounded-full bg-surface-2 px-2.5 py-1 text-[12px] text-faint">
+        <span className="rounded-sm bg-surface-2 px-2.5 py-1 text-[12px] text-faint">
           <span className="num">{s.not_comparable}</span> not checkable
         </span>
       )}

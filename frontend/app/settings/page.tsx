@@ -76,7 +76,7 @@ export default function PreferencesPage() {
               return (
                 <button key={c} aria-pressed={on}
                   onClick={() => commit({ ...draft, alert_categories: on ? draft.alert_categories.filter((x) => x !== c) : [...draft.alert_categories, c] })}
-                  className={`min-h-[40px] rounded-lg border px-3 text-[12px] transition-colors ${on ? "border-accent/30 bg-accent-bg text-accent" : "border-line text-muted hover:border-ink hover:text-ink"}`}>
+                  className={`min-h-[40px] rounded-none border px-3 text-[12px] transition-colors ${on ? "border-accent/30 bg-accent-bg text-accent" : "border-line text-muted hover:border-ink hover:text-ink"}`}>
                   {on ? "✓ " : ""}{CATEGORY_LABEL[c]}
                 </button>
               );
@@ -110,7 +110,7 @@ function Slider({ value, min, max, step, unit, prefix = "", help, label, onChang
   const id = useId();
   const progress = ((value - min) / (max - min)) * 100;
   return (
-    <div className="preference-control rounded-xl border border-line bg-surface p-4 sm:p-5">
+    <div className="preference-control rounded-none border border-line bg-surface p-4 sm:p-5">
       <div className="flex items-center justify-between">
         <output htmlFor={id} className="num serif text-[36px] font-medium leading-none">{prefix}{value}{unit}</output>
         <span className="text-[10px] font-semibold uppercase tracking-widest text-faint">{unit === "%" ? "Daily change" : "vs. average"}</span>

@@ -16,7 +16,7 @@ export function Delta({ c, className = "", invert = false }: { c: Change | undef
 /** Section head: serif label over a hairline, optional right-hand note. */
 export function SectionLabel({ children, right, id }: { children: React.ReactNode; right?: React.ReactNode; id?: string }) {
   return (
-    <div id={id} className="section-heading mb-3 mt-8 flex scroll-mt-4 items-baseline justify-between gap-3 border-b border-rule pb-2">
+    <div id={id} className="section-heading mb-3 mt-6 flex scroll-mt-4 items-baseline justify-between gap-3 border-b border-rule pb-2">
       <h2 className="serif text-[17px] font-semibold leading-none tracking-tight">{children}</h2>
       {right && <div className="text-right text-[11.5px] text-faint">{right}</div>}
     </div>
@@ -28,31 +28,12 @@ export function Pill({ children, tone = "neutral" }: { children: React.ReactNode
   return <span className={`inline-flex items-center rounded px-1.5 py-0.5 text-[11px] font-medium ${cls}`}>{children}</span>;
 }
 
-export function Masthead({ dateline, href, right }: { dateline: string; href: (p: string) => string; right?: React.ReactNode }) {
+export function Masthead({ dateline, right }: { dateline: string; href: (p: string) => string; right?: React.ReactNode }) {
   return (
-    <header className="masthead border-b-2 border-rule pb-3">
-      <div className="mb-3 flex items-center justify-between text-[10px] font-semibold uppercase tracking-[0.16em] text-muted">
-        <span className="flex items-center gap-2"><span className="h-1.5 w-1.5 rounded-full bg-accent" />Investment intelligence</span>
-        <span className="hidden sm:inline">The portfolio edition</span>
-        <span className="sm:hidden">Your daily edge</span>
-      </div>
-      <div className="flex items-end justify-between gap-3">
-        <Link href={href("/")} className="serif text-[42px] font-bold leading-[0.85] tracking-[-0.06em] sm:text-[54px]">
-          FINN
-        </Link>
-        <nav className="masthead-nav flex items-center gap-1 text-[12px] font-medium sm:text-[13px]" aria-label="Sections">
-          <Link href={href("/research")} className="rounded-md px-2.5 py-3 transition-colors hover:bg-surface-2">
-            Research
-          </Link>
-          <Link href={href("/settings")} className="rounded-md px-2.5 py-3 transition-colors hover:bg-surface-2">
-            Preferences
-          </Link>
-        </nav>
-      </div>
-      <div className="mt-1.5 flex flex-wrap items-baseline justify-between gap-x-3 text-[12px] text-muted">
-        <span className="serif text-[13.5px] italic">{dateline}</span>
-        {right}
-      </div>
+    <header className="masthead">
+      <div className="terminal-page-code">WORKSPACE / 01 <span>PORTFOLIO INTELLIGENCE</span></div>
+      <div className="terminal-page-title"><h1>Market brief<span className="terminal-cursor" aria-hidden>_</span></h1>{right && <div className="terminal-count">{right}</div>}</div>
+      <p className="terminal-dateline">{dateline}</p>
     </header>
   );
 }
@@ -63,15 +44,15 @@ export function ModeSwitch({ mode, setMode }: { mode: Mode; setMode: (m: Mode) =
       type="button"
       aria-pressed={mode === m}
       onClick={() => setMode(m)}
-      className={`min-h-[36px] flex-1 rounded-md px-4 text-[12px] font-semibold transition-colors ${
-        mode === m ? "bg-surface text-ink shadow-sm" : "text-muted hover:text-ink"
+      className={`min-h-[36px] flex-1 px-4 text-[12px] font-semibold transition-colors ${
+        mode === m ? "bg-accent-bg text-accent" : "text-muted hover:text-ink"
       }`}
     >
       {label}
     </button>
   );
   return (
-    <div role="group" aria-label="Briefing" className="mt-4 flex w-fit gap-1 rounded-lg border border-line bg-surface-2/60 p-1">
+    <div role="group" aria-label="Briefing" className="terminal-mode mt-4 flex w-fit border border-line bg-surface">
       {opt("demo", "Demo briefing")}
       {opt("live", "Live")}
     </div>

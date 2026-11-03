@@ -55,7 +55,7 @@ export default function BriefPage() {
     : "Portfolio briefing";
 
   return (
-    <main className="mx-auto brief-shell max-w-[1200px] px-5 pb-24 pt-5 sm:px-8 sm:pt-8">
+    <main className="mx-auto brief-shell max-w-[1440px] px-5 pb-24 pt-5 sm:px-8 sm:pt-8">
       <Masthead dateline={dateline} href={href} right={fresh && <span>{fresh.totals.filings} filings · {fresh.totals.events} events in {WINDOW_WORDS[win]}</span>} />
       <ModeSwitch mode={mode} setMode={setMode} />
 
@@ -82,8 +82,14 @@ export default function BriefPage() {
       {!fresh && <LoadStatus state={state === "ready" ? "loading" : state} err={err} onRetry={retry} what="the briefing" />}
 
       {fresh && view && prefs && (
-        <div className="lg:grid lg:grid-cols-[minmax(0,1fr)_320px] lg:gap-10">
+        <div className="lg:grid lg:grid-cols-[minmax(0,1fr)_340px] lg:gap-5">
           <div className="min-w-0">
+            <div className="terminal-stats" aria-label="Briefing summary">
+              <div><span>Filings</span><strong>{fresh.totals.filings.toString().padStart(2, "0")}</strong></div>
+              <div><span>Events</span><strong>{fresh.totals.events.toString().padStart(2, "0")}</strong></div>
+              <div><span>Priority</span><strong>{fresh.tiers.top.length.toString().padStart(2, "0")}</strong></div>
+              <div><span>Moves flagged</span><strong className="text-accent">{view.flagged.length.toString().padStart(2, "0")}</strong></div>
+            </div>
             <AlertSummary filings={view.alerts.length} moves={view.flagged.length} className="mt-3 lg:hidden" />
 
             {view.lead ? (

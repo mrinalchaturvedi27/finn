@@ -31,7 +31,7 @@ export default function ResearchPage() {
       </p>
 
       <form
-        className="mt-5 flex items-center gap-2 rounded-xl border border-line bg-surface p-2 shadow-sm"
+        className="mt-5 flex items-center gap-2 rounded-none border border-line bg-surface p-2 "
         onSubmit={(e) => {
           e.preventDefault();
           const t = sym.trim().toUpperCase();
@@ -41,8 +41,8 @@ export default function ResearchPage() {
         <label htmlFor="sym" className="sr-only">NSE symbol</label>
         <input id="sym" value={sym} onChange={(e) => setSym(e.target.value)} placeholder="Any NSE symbol, e.g. TITAN"
           autoCapitalize="characters" autoCorrect="off" spellCheck={false}
-          className="min-h-[44px] min-w-0 flex-1 rounded-md bg-transparent px-3 text-[14px] uppercase placeholder:normal-case placeholder:text-faint" />
-        <button className="min-h-[44px] rounded-lg bg-ink px-4 text-[13px] font-semibold text-bg transition-colors hover:bg-accent">Open →</button>
+          className="min-h-[44px] min-w-0 flex-1 rounded-none bg-transparent px-3 text-[14px] uppercase placeholder:normal-case placeholder:text-faint" />
+        <button className="min-h-[44px] rounded-none bg-ink px-4 text-[13px] font-semibold text-bg transition-colors hover:bg-accent">Open →</button>
       </form>
       {mode === "demo" && (
         <p className="mt-2 text-[12px] text-muted">The demo has reports for the companies below, generated from real filings on 3 Nov 2026. Switch to Live to research others.</p>
