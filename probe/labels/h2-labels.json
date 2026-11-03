@@ -1,0 +1,802 @@
+[
+ {
+  "exch_id": "106646901",
+  "category": "dividend",
+  "tier": "look",
+  "labeller": "claude-subagent-blind",
+  "confidence": "high",
+  "note": ""
+ },
+ {
+  "exch_id": "106662108",
+  "category": "agm_egm",
+  "tier": "routine",
+  "labeller": "claude-subagent-blind",
+  "confidence": "high",
+  "note": "annual report dispatch letter for AGM"
+ },
+ {
+  "exch_id": "106665665",
+  "category": "unclassified",
+  "tier": "routine",
+  "labeller": "claude-subagent-blind",
+  "confidence": "high",
+  "note": ""
+ },
+ {
+  "exch_id": "106627724",
+  "category": "management_change",
+  "tier": "look",
+  "labeller": "claude-subagent-blind",
+  "confidence": "low",
+  "note": "director change; role not stated"
+ },
+ {
+  "exch_id": "106629251",
+  "category": "results",
+  "tier": "routine",
+  "labeller": "claude-subagent-blind",
+  "confidence": "high",
+  "note": "newspaper publication of results"
+ },
+ {
+  "exch_id": "106652467",
+  "category": "investor_meetings",
+  "tier": "routine",
+  "labeller": "claude-subagent-blind",
+  "confidence": "high",
+  "note": ""
+ },
+ {
+  "exch_id": "106678120",
+  "category": "investor_meetings",
+  "tier": "routine",
+  "labeller": "claude-subagent-blind",
+  "confidence": "high",
+  "note": ""
+ },
+ {
+  "exch_id": "106588681",
+  "category": "earnings_call",
+  "tier": "routine",
+  "labeller": "claude-subagent-blind",
+  "confidence": "high",
+  "note": ""
+ },
+ {
+  "exch_id": "106604279",
+  "category": "management_change",
+  "tier": "look",
+  "labeller": "claude-subagent-blind",
+  "confidence": "low",
+  "note": "director change; role not stated"
+ },
+ {
+  "exch_id": "106631243",
+  "category": "fund_raise",
+  "tier": "routine",
+  "labeller": "claude-subagent-blind",
+  "confidence": "low",
+  "note": "routine NCD allotment by NBFC; not equity raise"
+ },
+ {
+  "exch_id": "106671326",
+  "category": "agm_egm",
+  "tier": "routine",
+  "labeller": "claude-subagent-blind",
+  "confidence": "high",
+  "note": ""
+ },
+ {
+  "exch_id": "106672143",
+  "category": "fund_raise",
+  "tier": "routine",
+  "labeller": "claude-subagent-blind",
+  "confidence": "low",
+  "note": "routine NCD allotment by NBFC; not equity raise"
+ },
+ {
+  "exch_id": "106607645",
+  "category": "unclassified",
+  "tier": "look",
+  "labeller": "claude-subagent-blind",
+  "confidence": "low",
+  "note": "newspaper publication, subject unknown; metadata too thin to tell"
+ },
+ {
+  "exch_id": "106616169",
+  "category": "M&A",
+  "tier": "look",
+  "labeller": "claude-subagent-blind",
+  "confidence": "low",
+  "note": "subsidiary takes equity stake in RIX; small strategic investment"
+ },
+ {
+  "exch_id": "106661259",
+  "category": "management_change",
+  "tier": "look",
+  "labeller": "claude-subagent-blind",
+  "confidence": "high",
+  "note": "Executive Director of a vertical, not CEO/MD"
+ },
+ {
+  "exch_id": "106661269",
+  "category": "management_change",
+  "tier": "look",
+  "labeller": "claude-subagent-blind",
+  "confidence": "high",
+  "note": "Executive Director of a vertical, not CEO/MD"
+ },
+ {
+  "exch_id": "106605987",
+  "category": "press_release",
+  "tier": "look",
+  "labeller": "claude-subagent-blind",
+  "confidence": "low",
+  "note": "untitled press release; could be results-related"
+ },
+ {
+  "exch_id": "106620292",
+  "category": "earnings_call",
+  "tier": "routine",
+  "labeller": "claude-subagent-blind",
+  "confidence": "high",
+  "note": ""
+ },
+ {
+  "exch_id": "106625527",
+  "category": "results",
+  "tier": "look",
+  "labeller": "claude-subagent-blind",
+  "confidence": "high",
+  "note": "results presentation"
+ },
+ {
+  "exch_id": "106676403",
+  "category": "unclassified",
+  "tier": "routine",
+  "labeller": "claude-subagent-blind",
+  "confidence": "high",
+  "note": ""
+ },
+ {
+  "exch_id": "106637620",
+  "category": "dividend",
+  "tier": "look",
+  "labeller": "claude-subagent-blind",
+  "confidence": "low",
+  "note": "dividend record date; scheduling-like, kept look per dividend rule"
+ },
+ {
+  "exch_id": "106640455",
+  "category": "investor_meetings",
+  "tier": "routine",
+  "labeller": "claude-subagent-blind",
+  "confidence": "high",
+  "note": ""
+ },
+ {
+  "exch_id": "106652504",
+  "category": "investor_meetings",
+  "tier": "routine",
+  "labeller": "claude-subagent-blind",
+  "confidence": "high",
+  "note": ""
+ },
+ {
+  "exch_id": "106602543",
+  "category": "results",
+  "tier": "look",
+  "labeller": "claude-subagent-blind",
+  "confidence": "low",
+  "note": "Eternal's quarterly shareholder letter accompanies results"
+ },
+ {
+  "exch_id": "106659898",
+  "category": "litigation",
+  "tier": "look",
+  "labeller": "claude-subagent-blind",
+  "confidence": "low",
+  "note": "state GST order; amount unknown, likely minor"
+ },
+ {
+  "exch_id": "106580022",
+  "category": "management_change",
+  "tier": "look",
+  "labeller": "claude-subagent-blind",
+  "confidence": "high",
+  "note": "independent director resignation"
+ },
+ {
+  "exch_id": "106606803",
+  "category": "management_change",
+  "tier": "look",
+  "labeller": "claude-subagent-blind",
+  "confidence": "low",
+  "note": "director change; role not stated"
+ },
+ {
+  "exch_id": "106591667",
+  "category": "M&A",
+  "tier": "look",
+  "labeller": "claude-subagent-blind",
+  "confidence": "low",
+  "note": "bank's investment in HDFC Life equity (group company stake)"
+ },
+ {
+  "exch_id": "106595462",
+  "category": "unclassified",
+  "tier": "look",
+  "labeller": "claude-subagent-blind",
+  "confidence": "low",
+  "note": "newspaper publication, subject unknown; metadata too thin to tell"
+ },
+ {
+  "exch_id": "106599476",
+  "category": "earnings_call",
+  "tier": "look",
+  "labeller": "claude-subagent-blind",
+  "confidence": "high",
+  "note": "transcript"
+ },
+ {
+  "exch_id": "106603869",
+  "category": "unclassified",
+  "tier": "routine",
+  "labeller": "claude-subagent-blind",
+  "confidence": "high",
+  "note": "ESOP allotment"
+ },
+ {
+  "exch_id": "106629524",
+  "category": "unclassified",
+  "tier": "routine",
+  "labeller": "claude-subagent-blind",
+  "confidence": "high",
+  "note": "ESOP allotment"
+ },
+ {
+  "exch_id": "106666835",
+  "category": "management_change",
+  "tier": "top",
+  "labeller": "claude-subagent-blind",
+  "confidence": "low",
+  "note": "RBI approval extending interim chairman tenure plus board outcome of unknown content"
+ },
+ {
+  "exch_id": "106676949",
+  "category": "unclassified",
+  "tier": "look",
+  "labeller": "claude-subagent-blind",
+  "confidence": "low",
+  "note": "newspaper publication, subject unknown; metadata too thin to tell"
+ },
+ {
+  "exch_id": "106680236",
+  "category": "management_change",
+  "tier": "top",
+  "labeller": "claude-subagent-blind",
+  "confidence": "high",
+  "note": "new part-time chairman"
+ },
+ {
+  "exch_id": "106584046",
+  "category": "unclassified",
+  "tier": "routine",
+  "labeller": "claude-subagent-blind",
+  "confidence": "high",
+  "note": "Reg 74(5) certificate"
+ },
+ {
+  "exch_id": "106592507",
+  "category": "unclassified",
+  "tier": "routine",
+  "labeller": "claude-subagent-blind",
+  "confidence": "high",
+  "note": "ESOP allotment"
+ },
+ {
+  "exch_id": "106593463",
+  "category": "dividend",
+  "tier": "look",
+  "labeller": "claude-subagent-blind",
+  "confidence": "high",
+  "note": ""
+ },
+ {
+  "exch_id": "106595311",
+  "category": "unclassified",
+  "tier": "routine",
+  "labeller": "claude-subagent-blind",
+  "confidence": "high",
+  "note": "ESOP allotment"
+ },
+ {
+  "exch_id": "106600378",
+  "category": "unclassified",
+  "tier": "look",
+  "labeller": "claude-subagent-blind",
+  "confidence": "low",
+  "note": "newspaper publication, subject unknown; metadata too thin to tell"
+ },
+ {
+  "exch_id": "106609481",
+  "category": "unclassified",
+  "tier": "routine",
+  "labeller": "claude-subagent-blind",
+  "confidence": "high",
+  "note": "ESOP allotment"
+ },
+ {
+  "exch_id": "106584776",
+  "category": "insider_trading",
+  "tier": "routine",
+  "labeller": "claude-subagent-blind",
+  "confidence": "low",
+  "note": "SAST Reg 31(4) annual promoter no-encumbrance declaration; could be argued pledging"
+ },
+ {
+  "exch_id": "106584777",
+  "category": "insider_trading",
+  "tier": "routine",
+  "labeller": "claude-subagent-blind",
+  "confidence": "low",
+  "note": "SAST Reg 31(4) annual promoter no-encumbrance declaration; could be argued pledging"
+ },
+ {
+  "exch_id": "106584779",
+  "category": "insider_trading",
+  "tier": "routine",
+  "labeller": "claude-subagent-blind",
+  "confidence": "low",
+  "note": "SAST Reg 31(4) annual promoter no-encumbrance declaration; could be argued pledging"
+ },
+ {
+  "exch_id": "106584822",
+  "category": "insider_trading",
+  "tier": "routine",
+  "labeller": "claude-subagent-blind",
+  "confidence": "low",
+  "note": "SAST Reg 31(4) annual promoter no-encumbrance declaration; could be argued pledging"
+ },
+ {
+  "exch_id": "106584806",
+  "category": "insider_trading",
+  "tier": "routine",
+  "labeller": "claude-subagent-blind",
+  "confidence": "low",
+  "note": "SAST Reg 31(4) annual promoter no-encumbrance declaration; could be argued pledging"
+ },
+ {
+  "exch_id": "106596941",
+  "category": "press_release",
+  "tier": "look",
+  "labeller": "claude-subagent-blind",
+  "confidence": "high",
+  "note": "strategic partnership"
+ },
+ {
+  "exch_id": "106599575",
+  "category": "unclassified",
+  "tier": "look",
+  "labeller": "claude-subagent-blind",
+  "confidence": "low",
+  "note": "newspaper publication, subject unknown; metadata too thin to tell"
+ },
+ {
+  "exch_id": "106613083",
+  "category": "investor_meetings",
+  "tier": "routine",
+  "labeller": "claude-subagent-blind",
+  "confidence": "high",
+  "note": ""
+ },
+ {
+  "exch_id": "106648164",
+  "category": "investor_meetings",
+  "tier": "routine",
+  "labeller": "claude-subagent-blind",
+  "confidence": "high",
+  "note": ""
+ },
+ {
+  "exch_id": "106664473",
+  "category": "press_release",
+  "tier": "look",
+  "labeller": "claude-subagent-blind",
+  "confidence": "high",
+  "note": "client collaboration"
+ },
+ {
+  "exch_id": "106672530",
+  "category": "press_release",
+  "tier": "look",
+  "labeller": "claude-subagent-blind",
+  "confidence": "high",
+  "note": "marketing initiative"
+ },
+ {
+  "exch_id": "106588672",
+  "category": "management_change",
+  "tier": "look",
+  "labeller": "claude-subagent-blind",
+  "confidence": "high",
+  "note": "senior management cessation"
+ },
+ {
+  "exch_id": "106663667",
+  "category": "management_change",
+  "tier": "look",
+  "labeller": "claude-subagent-blind",
+  "confidence": "low",
+  "note": "director change; role not stated"
+ },
+ {
+  "exch_id": "106611671",
+  "category": "insider_trading",
+  "tier": "routine",
+  "labeller": "claude-subagent-blind",
+  "confidence": "low",
+  "note": "SAST Reg 31(4) promoter (GoI) declaration"
+ },
+ {
+  "exch_id": "106588421",
+  "category": "unclassified",
+  "tier": "routine",
+  "labeller": "claude-subagent-blind",
+  "confidence": "high",
+  "note": "Reg 74(5) certificate"
+ },
+ {
+  "exch_id": "106621639",
+  "category": "results",
+  "tier": "look",
+  "labeller": "claude-subagent-blind",
+  "confidence": "low",
+  "note": "untitled investor presentation; timing suggests Q4 results deck"
+ },
+ {
+  "exch_id": "106647428",
+  "category": "management_change",
+  "tier": "look",
+  "labeller": "claude-subagent-blind",
+  "confidence": "high",
+  "note": "independent director resignation"
+ },
+ {
+  "exch_id": "106605058",
+  "category": "insider_trading",
+  "tier": "look",
+  "labeller": "claude-subagent-blind",
+  "confidence": "low",
+  "note": "promoter reclassification to public; shareholding-structure item, no exact category"
+ },
+ {
+  "exch_id": "106611011",
+  "category": "results",
+  "tier": "look",
+  "labeller": "claude-subagent-blind",
+  "confidence": "low",
+  "note": "untitled investor presentation; timing suggests Q4 results deck"
+ },
+ {
+  "exch_id": "106612610",
+  "category": "unclassified",
+  "tier": "look",
+  "labeller": "claude-subagent-blind",
+  "confidence": "low",
+  "note": "newspaper publication, subject unknown; metadata too thin to tell"
+ },
+ {
+  "exch_id": "106598111",
+  "category": "insider_trading",
+  "tier": "routine",
+  "labeller": "claude-subagent-blind",
+  "confidence": "low",
+  "note": "SAST Reg 31(4) promoter declaration"
+ },
+ {
+  "exch_id": "106598107",
+  "category": "insider_trading",
+  "tier": "routine",
+  "labeller": "claude-subagent-blind",
+  "confidence": "low",
+  "note": "SAST Reg 31(4) promoter declaration"
+ },
+ {
+  "exch_id": "106677983",
+  "category": "unclassified",
+  "tier": "routine",
+  "labeller": "claude-subagent-blind",
+  "confidence": "high",
+  "note": ""
+ },
+ {
+  "exch_id": "106589080",
+  "category": "M&A",
+  "tier": "look",
+  "labeller": "claude-subagent-blind",
+  "confidence": "high",
+  "note": "completion of stake acquisition by subsidiary; small vs L&T"
+ },
+ {
+  "exch_id": "106597704",
+  "category": "press_release",
+  "tier": "look",
+  "labeller": "claude-subagent-blind",
+  "confidence": "high",
+  "note": "order win"
+ },
+ {
+  "exch_id": "106609817",
+  "category": "dividend",
+  "tier": "look",
+  "labeller": "claude-subagent-blind",
+  "confidence": "high",
+  "note": ""
+ },
+ {
+  "exch_id": "106668962",
+  "category": "M&A",
+  "tier": "look",
+  "labeller": "claude-subagent-blind",
+  "confidence": "high",
+  "note": "new step-down subsidiary"
+ },
+ {
+  "exch_id": "106679431",
+  "category": "unclassified",
+  "tier": "look",
+  "labeller": "claude-subagent-blind",
+  "confidence": "low",
+  "note": "newspaper publication, subject unknown; metadata too thin to tell"
+ },
+ {
+  "exch_id": "106584830",
+  "category": "press_release",
+  "tier": "look",
+  "labeller": "claude-subagent-blind",
+  "confidence": "high",
+  "note": "product launch"
+ },
+ {
+  "exch_id": "106595788",
+  "category": "results",
+  "tier": "look",
+  "labeller": "claude-subagent-blind",
+  "confidence": "low",
+  "note": "audited financial statements filed separately from results outcome"
+ },
+ {
+  "exch_id": "106596329",
+  "category": "earnings_call",
+  "tier": "look",
+  "labeller": "claude-subagent-blind",
+  "confidence": "low",
+  "note": "presentation and call recording link, likely results call"
+ },
+ {
+  "exch_id": "106636931",
+  "category": "investor_meetings",
+  "tier": "routine",
+  "labeller": "claude-subagent-blind",
+  "confidence": "low",
+  "note": "presentation for investor meet; could be results deck"
+ },
+ {
+  "exch_id": "106638806",
+  "category": "press_release",
+  "tier": "look",
+  "labeller": "claude-subagent-blind",
+  "confidence": "high",
+  "note": "partnership"
+ },
+ {
+  "exch_id": "106639752",
+  "category": "investor_meetings",
+  "tier": "routine",
+  "labeller": "claude-subagent-blind",
+  "confidence": "high",
+  "note": ""
+ },
+ {
+  "exch_id": "106654134",
+  "category": "investor_meetings",
+  "tier": "routine",
+  "labeller": "claude-subagent-blind",
+  "confidence": "low",
+  "note": "presentation for investor meet; could be results deck"
+ },
+ {
+  "exch_id": "106657868",
+  "category": "management_change",
+  "tier": "look",
+  "labeller": "claude-subagent-blind",
+  "confidence": "high",
+  "note": "director reappointment proposal"
+ },
+ {
+  "exch_id": "106671502",
+  "category": "investor_meetings",
+  "tier": "routine",
+  "labeller": "claude-subagent-blind",
+  "confidence": "low",
+  "note": "presentation for investor meet; could be results deck"
+ },
+ {
+  "exch_id": "106678112",
+  "category": "M&A",
+  "tier": "top",
+  "labeller": "claude-subagent-blind",
+  "confidence": "high",
+  "note": "business combination with Nagarro"
+ },
+ {
+  "exch_id": "106678113",
+  "category": "press_release",
+  "tier": "look",
+  "labeller": "claude-subagent-blind",
+  "confidence": "low",
+  "note": "long-term agreement with US tech major; could be top if large"
+ },
+ {
+  "exch_id": "106681419",
+  "category": "investor_meetings",
+  "tier": "routine",
+  "labeller": "claude-subagent-blind",
+  "confidence": "high",
+  "note": ""
+ },
+ {
+  "exch_id": "106615129",
+  "category": "earnings_call",
+  "tier": "routine",
+  "labeller": "claude-subagent-blind",
+  "confidence": "high",
+  "note": "audio recording"
+ },
+ {
+  "exch_id": "106640833",
+  "category": "litigation",
+  "tier": "look",
+  "labeller": "claude-subagent-blind",
+  "confidence": "low",
+  "note": "action/order with no details; metadata too thin to tell"
+ },
+ {
+  "exch_id": "106651230",
+  "category": "investor_meetings",
+  "tier": "routine",
+  "labeller": "claude-subagent-blind",
+  "confidence": "high",
+  "note": ""
+ },
+ {
+  "exch_id": "106587073",
+  "category": "postal_ballot",
+  "tier": "look",
+  "labeller": "claude-subagent-blind",
+  "confidence": "low",
+  "note": "postal ballot notice, resolution unknown"
+ },
+ {
+  "exch_id": "106611090",
+  "category": "unclassified",
+  "tier": "look",
+  "labeller": "claude-subagent-blind",
+  "confidence": "low",
+  "note": "statutory auditor change; reason unknown"
+ },
+ {
+  "exch_id": "106611097",
+  "category": "unclassified",
+  "tier": "routine",
+  "labeller": "claude-subagent-blind",
+  "confidence": "high",
+  "note": "cost auditor reappointment"
+ },
+ {
+  "exch_id": "106658111",
+  "category": "agm_egm",
+  "tier": "routine",
+  "labeller": "claude-subagent-blind",
+  "confidence": "high",
+  "note": ""
+ },
+ {
+  "exch_id": "106662321",
+  "category": "investor_meetings",
+  "tier": "routine",
+  "labeller": "claude-subagent-blind",
+  "confidence": "high",
+  "note": ""
+ },
+ {
+  "exch_id": "106605758",
+  "category": "M&A",
+  "tier": "look",
+  "labeller": "claude-subagent-blind",
+  "confidence": "high",
+  "note": "retail subsidiary acquires beauty brand; small vs RIL"
+ },
+ {
+  "exch_id": "106643838",
+  "category": "agm_egm",
+  "tier": "routine",
+  "labeller": "claude-subagent-blind",
+  "confidence": "high",
+  "note": ""
+ },
+ {
+  "exch_id": "106643844",
+  "category": "dividend",
+  "tier": "look",
+  "labeller": "claude-subagent-blind",
+  "confidence": "low",
+  "note": "dividend record date; scheduling-like, kept look per dividend rule"
+ },
+ {
+  "exch_id": "106583594",
+  "category": "unclassified",
+  "tier": "look",
+  "labeller": "claude-subagent-blind",
+  "confidence": "low",
+  "note": "newspaper publication, subject unknown; metadata too thin to tell"
+ },
+ {
+  "exch_id": "106631883",
+  "category": "unclassified",
+  "tier": "routine",
+  "labeller": "claude-subagent-blind",
+  "confidence": "high",
+  "note": "physical share transfer window ad"
+ },
+ {
+  "exch_id": "106648041",
+  "category": "earnings_call",
+  "tier": "look",
+  "labeller": "claude-subagent-blind",
+  "confidence": "high",
+  "note": "transcript"
+ },
+ {
+  "exch_id": "106662897",
+  "category": "unclassified",
+  "tier": "look",
+  "labeller": "claude-subagent-blind",
+  "confidence": "low",
+  "note": "generic Reg 30 intimation; metadata too thin to tell"
+ },
+ {
+  "exch_id": "106670090",
+  "category": "management_change",
+  "tier": "top",
+  "labeller": "claude-subagent-blind",
+  "confidence": "high",
+  "note": "chairperson resignation"
+ },
+ {
+  "exch_id": "106579813",
+  "category": "results",
+  "tier": "look",
+  "labeller": "claude-subagent-blind",
+  "confidence": "low",
+  "note": "quarterly business/revenue update ahead of results"
+ },
+ {
+  "exch_id": "106596930",
+  "category": "results",
+  "tier": "top",
+  "labeller": "claude-subagent-blind",
+  "confidence": "low",
+  "note": "board outcome on 22 Apr, likely Q4 results approval; content not stated"
+ },
+ {
+  "exch_id": "106642934",
+  "category": "agm_egm",
+  "tier": "routine",
+  "labeller": "claude-subagent-blind",
+  "confidence": "high",
+  "note": ""
+ }
+]

@@ -3,7 +3,7 @@
 Mobile-first investor brief: portfolio filings ranked by what matters, with results
 numbers taken from the company's own XBRL filing and located on the printed statement page.
 
-**Status: milestone 1** — seeded historical snapshot (visibly labelled), ranked brief,
+**Status: milestone 1 deployed; milestone 2 (live ingestion) in progress** — seeded historical snapshot (visibly labelled), ranked brief,
 results detail view, price/volume thresholds, freshness indicators.
 Cloud source access (probe run inside the Render Singapore container, 2026-11-03,
 `probe/report-render.json`): yfinance 9/9 and screener.in 9/9 work. **NSE's announcement and
@@ -38,6 +38,38 @@ regression run against `probe/results_confirmed.json`).
 PDFs), price bars, and the capture clock. `--replay` rebuilds the identical database offline
 (asserted in `tests/test_core.py::test_snapshot_replay_is_offline_and_reproducible`).
 To capture a new snapshot: `python -m finn.ingest snapshot --days 30 --record data/snapshot-<date>`.
+
+## Live ingestion (milestone 2, in progress)
+
+`python -m finn.worker` runs the live pipeline (`--once` for a single cron-style tick). Each tick
+reads the `ingest_run` log to decide what is due, so repeating a tick is safe:
+
+- **Announcements:** every 15 min in market hours (Mon–Fri 09:00–15:45 IST), hourly otherwise.
+  The first run backfills 30 days per ticker; later runs re-read from the last filing minus 2 days.
+  Re-posts are marked duplicates. A corrigendum/addendum is linked to the filing it amends (by
+  the date it cites, else by subject overlap) and joins that filing's event.
+- **Results cards:** built when a results outcome or press release arrives; retried every 2 h for
+  10 days while failed or partial (XBRL often lands hours after the PDF); rebuilt when new filings
+  join the event. A daily check rebuilds a card when NSE publishes a later XBRL revision; values
+  from superseded revisions are removed.
+- **Prices:** once per session 90 min after the close, then hourly until 21:00 while any ticker
+  lacks that session's bar. Alerts are evaluated per ticker; a ticker without the bar is shown as
+  stale and evaluated when it arrives.
+- **Alerts:** stored in `alert` and shown in the brief. Announcement alerts fire only for events
+  filed after the first live run, so the backfill never alerts. "New" is tracked per viewer in the
+  browser, because the deployed API is read-only.
+- **Freshness:** a source is marked overdue when its last check is older than twice its
+  scheduled interval.
+
+Exchange holidays are not modelled; a holiday produces an empty or stale run.
+
+**Where it can run.** NSE's APIs return 403 to Render (`probe/report-render.json`). The worker
+needs a host NSE accepts, writing to storage the Render API can read. Storage: `FINN_DB_URL` accepts
+a Postgres URL; replaying the snapshot into Postgres gives byte-identical API output to SQLite.
+Candidate hosts are probed with the same script before use (`.github/workflows/source-probe.yml`
+runs it on a GitHub-hosted runner).
+
+**Classifier validation:** `probe/labels/RESULTS.md`.
 
 ## Deployment (milestone 1)
 - Backend on Render (Docker). The image seeds the snapshot at build; set `FINN_CORS` to the

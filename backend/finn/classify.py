@@ -41,31 +41,50 @@ SUBJECT_MAP = {
     "change in auditors": "unclassified", "options to purchase securities": "unclassified",
     "giving guarantees/indemnity/ becoming a surety for third party": "unclassified",
     "pledge": "pledging", "creation of pledge": "pledging", "release of pledge": "pledging",
+    "disclosure under sebi takeover regulations": "insider_trading",
 }
 
-RESULTS_TXT = re.compile(r"financial results?|unaudited.*results|audited.*results", re.I)
+RESULTS_TXT = re.compile(r"financial results?|unaudited.*results|audited.*results|"
+                         r"(quarter|q[1-4]|half[- ]year)\w*\s+(\w+\s+){0,2}results", re.I)
 RESULTS_INTIMATION = re.compile(r"to consider|to announce|will be held|is scheduled|intimation of board meeting|"
                                 r"results on|prior intimation", re.I)
 CALL_TXT = re.compile(r"transcript|recording|audio|earnings call|conference call|con\.? ?call|webcast", re.I)
 TRANSCRIPT = re.compile(r"transcript", re.I)
+DECK_TXT = re.compile(r"investor presentation|(results|earnings) presentation|update for q[1-4]\b|"
+                      r"q[1-4]\s*(fy\s*\d{2,4}\s*)?(business )?update|quarterly (business )?update|"
+                      r"interim condensed .{0,40}financial statements", re.I)
+TAKEOVER_OFFER = re.compile(r"open offer|tender offer|takeover offer|vote for .{0,40}\boffer\b|\bacqui|merger|amalgamat|"
+                            r"business combination", re.I)
+NEWSPAPER_TXT = [  # what a newspaper publication is about
+    (re.compile(r"financial (results|statements)|quarter ended", re.I), "results"),
+    (re.compile(r"postal ballot|e-?voting", re.I), "postal_ballot"),
+    (re.compile(r"annual general meeting|\bagm\b|extra-?ordinary general meeting", re.I), "agm_egm"),
+    (re.compile(r"dpt-?1|public deposits?", re.I), "fund_raise"),
+]
 
 TEXT_RULES = [  # applied to opaque subjects ("General Updates", "Updates", board outcomes)
+    (re.compile(r"postal ballot", re.I), "postal_ballot"),
+    (re.compile(r"annual general meeting|\bagm\b|annual report", re.I), "agm_egm"),
+    (re.compile(r"initial public offer|\bipo\b", re.I), "M&A"),  # e.g. listing a subsidiary
     (re.compile(r"transcript|earnings call|conference call", re.I), "earnings_call"),
     (re.compile(r"investor (conference|meet)|analyst", re.I), "investor_meetings"),
     (re.compile(r"\bfines?\b|penalt|show cause|demand order|\bgst\b|income tax|nclt|nclat|\bcourt\b|"
                 r"tribunal|adjudication|sebi order|regulatory action|search|investigation", re.I), "litigation"),
     (re.compile(r"acqui|merger|amalgamat|demerger|joint venture|\bstake\b|takeover|divest|incorporat\w* .{0,30}subsidiary", re.I), "M&A"),
     (re.compile(r"\bqip\b|preferential|rights issue|buy-?back|non-convertible|debentures|commercial paper|"
-                r"raising of funds|fund rais", re.I), "fund_raise"),
+                r"raising of funds|fund rais|senior notes|\bbonds?\b|medium term note|\bmtn\b", re.I), "fund_raise"),
     (re.compile(r"dividend", re.I), "dividend"),
     (re.compile(r"bonus|sub-?division|stock split", re.I), "bonus_split"),
-    (re.compile(r"appoint|resign|cessation|re-?designat|retire", re.I), "management_change"),
+    (re.compile(r"appoint|resign|cessation|re-?designat|retire|change in (director|key managerial|kmp|senior management)|"
+                r"\bchair(man|person)\b|tenure", re.I), "management_change"),
     (re.compile(r"credit rating", re.I), "credit_rating"),
     (re.compile(r"capex|capacity|new plant|facility|expansion|commenc", re.I), "capex"),
     (re.compile(r"pledge", re.I), "pledging"),
     (re.compile(r"order|contract|launch|approv|partnership|collaborat|announces", re.I), "press_release"),
     (re.compile(r"esop|stock option|restricted stock|\brsu\b|newspaper|dematerial|physical shares|auditor|"
-                r"annual securities report|kanto|loss of share certificate|duplicate share", re.I), "unclassified"),
+                r"annual securities report|kanto|loss of share certificate|duplicate share|"
+                r"investor education and protection fund|\biepf\b|guarantee|indemnity|surety|monitoring agency",
+                re.I), "unclassified"),
 ]
 
 OPAQUE = re.compile(r"^(general updates|updates|disclosure under regulation 30.*|intimation under .*regulations,? 2015"
@@ -104,9 +123,10 @@ def classify(subject: str, text: str | None) -> Classification:
             sub = {"outcome of board meeting": "results_outcome", "copy of newspaper publication": "results_newspaper",
                    "investor presentation": "results_deck", "press release": "results_press"}[subj]
         elif subj == "press release":
-            cat = "press_release"
+            cat = "M&A" if TAKEOVER_OFFER.search(body) else "press_release"
         elif subj == "copy of newspaper publication":
-            cat, sub = "unclassified", "newspaper"
+            cat = next((c for rx, c in NEWSPAPER_TXT if rx.search(body)), "unclassified")
+            sub = "results_newspaper" if cat == "results" else "newspaper"
     if cat is None and subj == "analysts/institutional investor meet/con. call updates":
         if CALL_TXT.search(body):
             cat = "earnings_call"
@@ -117,13 +137,15 @@ def classify(subject: str, text: str | None) -> Classification:
         cat = "postal_ballot" if "postal ballot" in body.lower() else "agm_egm"
     if cat is None and subj in SUBJECT_MAP:
         cat = SUBJECT_MAP[subj]
-    if cat == "management_change" and re.search(r"auditor", body, re.I):
-        cat, sub = "unclassified", "auditor"  # auditor appointments are routine per the reference taxonomy
     if cat == "results" and sub is None:
         sub = "results_outcome"
     if cat is None or subj in ("general updates", "updates", "outcome of board meeting"):
         if RESULTS_TXT.search(body) and RESULTS_INTIMATION.search(body):
             cat, sub = "results", "results_intimation"
+        elif (cat is None or cat == "unclassified") and RESULTS_TXT.search(body) and CALL_TXT.search(body):
+            cat, src = "earnings_call", "rule_weak"
+        elif (cat is None or cat == "unclassified") and DECK_TXT.search(body):
+            cat, sub, src = "results", "results_deck", "rule_weak"
         elif cat is None or cat == "unclassified":
             for rx, c in TEXT_RULES:
                 if rx.search(body):
@@ -131,6 +153,10 @@ def classify(subject: str, text: str | None) -> Classification:
                     break
     if cat is None:
         cat, src = "unclassified", "none"
+    if cat == "management_change" and re.search(r"auditor", body, re.I):
+        cat, sub = "unclassified", "auditor"  # auditor appointments are routine per the reference taxonomy
+    if cat == "fund_raise" and subj == "allotment of securities" and re.search(r"non[- ]?convertible", body, re.I):
+        sub = "debt_allotment"
     if cat == "earnings_call" and sub is None:
         sub = "transcript" if TRANSCRIPT.search(body) else "call_logistics"
 
@@ -138,11 +164,16 @@ def classify(subject: str, text: str | None) -> Classification:
     if cat in ("results", "earnings_call", "investor_meetings", "agm_egm", "postal_ballot", "dividend"):
         opaque = False  # the subject alone tells us what it is
     m, reasons = materiality(cat, sub, subj, body, opaque)
+    if src == "none" and not opaque and subj in ("general updates", "updates", "outcome of board meeting"):
+        # a described update that no rule recognises is surfaced, not filed as paperwork
+        m, reasons = 40, ["update not recognised by rules"]
     return Classification(cat, src, m, "unread" if opaque else "read", reasons, sub, summary or subject)
 
 
 def materiality(cat, sub, subj, body, opaque) -> tuple[int, list[str]]:
     low = body.lower()
+    if sub == "newspaper":
+        return 12, ["newspaper notice"]
     if cat == "results":
         score = {"results_outcome": 85, "results_press": 60, "results_deck": 45,
                  "results_newspaper": 10, "results_intimation": 25}.get(sub, 60)
@@ -166,12 +197,16 @@ def materiality(cat, sub, subj, body, opaque) -> tuple[int, list[str]]:
     if cat == "M&A":
         if re.search(r"incorporat", low) and not re.search(r"acqui|merger|takeover|demerger", low):
             return 35, ["new subsidiary incorporated"]
-        return (70 if re.search(r"acqui|merger|scheme|takeover|\bstake\b|demerger", low + subj) else 55), ["corporate action"]
+        return (70 if re.search(r"acqui|merger|scheme|takeover|\bstake\b|demerger|\boffer\b", low + subj) else 55), ["corporate action"]
     if cat == "fund_raise":
+        if sub == "debt_allotment":
+            return 20, ["debt securities allotment"]
         return (70 if re.search(r"qip|qualified institutional|preferential|rights|buy-?back", low + subj) else 40), ["capital raise"]
     if cat == "pledging":
         return 65, ["promoter pledge change"]
     if cat == "insider_trading":
+        if re.search(r"31\s*\(\s*4\s*\)", low):
+            return 15, ["annual promoter encumbrance declaration"]
         return 45, ["insider dealing"]
     if cat == "bonus_split":
         return 55, ["share count change"]
@@ -184,6 +219,8 @@ def materiality(cat, sub, subj, body, opaque) -> tuple[int, list[str]]:
             return 50, ["order win"]
         if re.search(r"approv|usfda|launch", low):
             return 45, ["approval / launch"]
+        if re.search(r"partnership|collaborat|strategic alliance", low):
+            return 45, ["partnership"]
         return 25, ["general news"]
     if cat == "earnings_call":
         return (35 if sub == "transcript" else 12), [sub or "call"]

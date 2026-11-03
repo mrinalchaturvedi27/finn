@@ -1,0 +1,710 @@
+{
+ "period": [
+  "2026-04-01",
+  "2026-06-30"
+ ],
+ "seed": 20261103,
+ "population": 833,
+ "filings": [
+  {
+   "exch_id": "106646901",
+   "ticker": "ASIANPAINT",
+   "filed_at": "2026-05-29T14:09:58",
+   "subject": "Dividend",
+   "text": "Asian Paints Limited has informed the Exchange that Board of Directors at its meeting held on May 29, 2026, recommended Final Dividend of Rs. 23 per equity share."
+  },
+  {
+   "exch_id": "106662108",
+   "ticker": "ASIANPAINT",
+   "filed_at": "2026-06-12T16:47:09",
+   "subject": "General Updates",
+   "text": "Letter to shareholders in relation to Integrated Annual Report of the Company for the financial year 2025-26"
+  },
+  {
+   "exch_id": "106665665",
+   "ticker": "ASIANPAINT",
+   "filed_at": "2026-06-17T16:17:41",
+   "subject": "Trading Window",
+   "text": "Asian Paints Limited has informed the Exchange regarding the Trading Window closure pursuant to SEBI (Prohibition of Insider Trading) Regulations, 2015"
+  },
+  {
+   "exch_id": "106627724",
+   "ticker": "ASTRAL",
+   "filed_at": "2026-05-18T16:50:31",
+   "subject": "Change in Director(s)",
+   "text": "Astral Limited has informed the Exchange regarding Change in Director(s) of the company."
+  },
+  {
+   "exch_id": "106629251",
+   "ticker": "ASTRAL",
+   "filed_at": "2026-05-19T13:49:13",
+   "subject": "Copy of Newspaper Publication",
+   "text": "Astral Limited has informed the Exchange about Newspaper advertisement pertaining to Audited Financial Results for the Quarter and Year ended on 31st March, 2026"
+  },
+  {
+   "exch_id": "106652467",
+   "ticker": "ASTRAL",
+   "filed_at": "2026-06-02T15:57:17",
+   "subject": "Analysts/Institutional Investor Meet/Con. Call Updates",
+   "text": "Astral Limited has informed the Exchange about Intimation of Investor Meet will held on 05th June, 2026"
+  },
+  {
+   "exch_id": "106678120",
+   "ticker": "ASTRAL",
+   "filed_at": "2026-06-27T10:11:44",
+   "subject": "Analysts/Institutional Investor Meet/Con. Call Updates",
+   "text": "Astral Limited has informed the Exchange about Schedule of meet"
+  },
+  {
+   "exch_id": "106588681",
+   "ticker": "BAJFINANCE",
+   "filed_at": "2026-04-13T19:12:46",
+   "subject": "Analysts/Institutional Investor Meet/Con. Call Updates",
+   "text": "Bajaj Finance Limited has informed the Exchange about Conference Call in respect of financial results for the quarter ended 31 March 2026"
+  },
+  {
+   "exch_id": "106604279",
+   "ticker": "BAJFINANCE",
+   "filed_at": "2026-04-29T17:12:42",
+   "subject": "Change in Director(s)",
+   "text": "Bajaj Finance Limited has informed the Exchange regarding Change in Director(s) of the company."
+  },
+  {
+   "exch_id": "106631243",
+   "ticker": "BAJFINANCE",
+   "filed_at": "2026-05-20T13:28:47",
+   "subject": "Allotment of Securities",
+   "text": "Bajaj Finance Limited has informed the Exchange regarding allotment of 102500 securities pursuant to Non Convertible Securities at its meeting held on May 20, 2026"
+  },
+  {
+   "exch_id": "106671326",
+   "ticker": "BAJFINANCE",
+   "filed_at": "2026-06-23T18:28:41",
+   "subject": "Copy of Newspaper Publication",
+   "text": "Bajaj Finance Limited has informed the Exchange about Copy of Newspaper Publication w.r.t. 39th AGM to be held through Video Conferencing/ Other Audio-Visual Means"
+  },
+  {
+   "exch_id": "106672143",
+   "ticker": "BAJFINANCE",
+   "filed_at": "2026-06-24T12:05:32",
+   "subject": "Allotment of Securities",
+   "text": "Bajaj Finance Limited has informed the Exchange regarding allotment of 200000 securities pursuant to Non Convertible Securities at its meeting held on Jun 24, 2026"
+  },
+  {
+   "exch_id": "106607645",
+   "ticker": "CDSL",
+   "filed_at": "2026-05-03T19:15:57",
+   "subject": "Copy of Newspaper Publication",
+   "text": "Central Depository Services (India) Limited has informed the Exchange about Copy of Newspaper Publication"
+  },
+  {
+   "exch_id": "106616169",
+   "ticker": "CDSL",
+   "filed_at": "2026-05-10T15:10:04",
+   "subject": "Updates",
+   "text": "CDSL has informed the Exchange regarding 'Allotment of equity shares to Centrico Insurance Repository Limited (CIRL), subsidiary of Central Depository Services (India) Limited (CDSL) by RIX Systems & Solutions Private Limited (RIX). '"
+  },
+  {
+   "exch_id": "106661259",
+   "ticker": "CDSL",
+   "filed_at": "2026-06-11T19:05:36",
+   "subject": "Outcome of Board Meeting",
+   "text": "CDSL has informed the Exchange regarding Outcome of Board Meeting held on June 11, 2026, with respect to Appointment of Executive Director-Vertical 1 of the Company."
+  },
+  {
+   "exch_id": "106661269",
+   "ticker": "CDSL",
+   "filed_at": "2026-06-11T19:09:06",
+   "subject": "Appointment",
+   "text": "CDSL has informed the Exchange regarding Appointment of Mr. Amit Mahajan as Executive Director of Vertical 1 of the company w.e.f. June 11, 2026."
+  },
+  {
+   "exch_id": "106605987",
+   "ticker": "DEEPAKNTR",
+   "filed_at": "2026-04-30T17:34:43",
+   "subject": "Updates",
+   "text": "Deepak Nitrite Limited has informed the Exchange regarding 'Press Release '."
+  },
+  {
+   "exch_id": "106620292",
+   "ticker": "DEEPAKNTR",
+   "filed_at": "2026-05-13T13:56:16",
+   "subject": "General Updates",
+   "text": "Deepak Nitrite Limited has informed the Exchange about General Updates - Schedule Q4 & FY2O26 Earnings Conference Call"
+  },
+  {
+   "exch_id": "106625527",
+   "ticker": "DEEPAKNTR",
+   "filed_at": "2026-05-15T19:33:05",
+   "subject": "General Updates",
+   "text": "Deepak Nitrite Limited has informed the Exchange about General Updates - Q4 & FY2026 Results Presentation"
+  },
+  {
+   "exch_id": "106676403",
+   "ticker": "DEEPAKNTR",
+   "filed_at": "2026-06-26T11:49:08",
+   "subject": "Trading Window",
+   "text": "Deepak Nitrite Limited has informed the Exchange regarding the Trading Window closure pursuant to SEBI (Prohibition of Insider Trading) Regulations, 2015"
+  },
+  {
+   "exch_id": "106637620",
+   "ticker": "DIVISLAB",
+   "filed_at": "2026-05-23T12:17:32",
+   "subject": "Record Date",
+   "text": "Divi's Laboratories Limited has informed the Exchange that Record date for the purpose of Dividend  is 24-Jul-2026."
+  },
+  {
+   "exch_id": "106640455",
+   "ticker": "DIXON",
+   "filed_at": "2026-05-25T23:14:57",
+   "subject": "Analysts/Institutional Investor Meet/Con. Call Updates",
+   "text": "Dixon Technologies (India) Limited has informed the Exchange about Schedule of meet"
+  },
+  {
+   "exch_id": "106652504",
+   "ticker": "DIXON",
+   "filed_at": "2026-06-02T16:24:57",
+   "subject": "Analysts/Institutional Investor Meet/Con. Call Updates",
+   "text": "Dixon Technologies (India) Limited has informed the Exchange about Investor Meet Outcome"
+  },
+  {
+   "exch_id": "106602543",
+   "ticker": "ETERNAL",
+   "filed_at": "2026-04-28T15:17:28",
+   "subject": "General Updates",
+   "text": "Eternal limited has filed with exchange shareholders letter dated April 28, 2026"
+  },
+  {
+   "exch_id": "106659898",
+   "ticker": "ETERNAL",
+   "filed_at": "2026-06-10T16:08:30",
+   "subject": "General Updates",
+   "text": "Eternal Limited has informed the exchange regarding order received from Deputy Commissioner (ST), State Special Circle-I, Andhra Pradesh"
+  },
+  {
+   "exch_id": "106580022",
+   "ticker": "HAL",
+   "filed_at": "2026-04-06T10:53:24",
+   "subject": "Resignation of Independent director",
+   "text": "HINDUSTAN AERONAUTICS LIMITED has informed the Exchange about Resignation of Independent director."
+  },
+  {
+   "exch_id": "106606803",
+   "ticker": "HAL",
+   "filed_at": "2026-05-01T12:54:48",
+   "subject": "Change in Director(s)",
+   "text": "Hindustan Aeronautics Limited has informed the Exchange regarding Change in Director(s) of the company."
+  },
+  {
+   "exch_id": "106591667",
+   "ticker": "HDFCBANK",
+   "filed_at": "2026-04-16T16:39:32",
+   "subject": "Updates",
+   "text": "HDFC Bank Limited has informed the Exchange regarding 'Investment in the equity shares of HDFC Life Insurance Company Limited'."
+  },
+  {
+   "exch_id": "106595462",
+   "ticker": "HDFCBANK",
+   "filed_at": "2026-04-21T13:42:09",
+   "subject": "Copy of Newspaper Publication",
+   "text": "HDFC Bank Limited has informed the Exchange about Copy of Newspaper Publication"
+  },
+  {
+   "exch_id": "106599476",
+   "ticker": "HDFCBANK",
+   "filed_at": "2026-04-24T15:44:52",
+   "subject": "Analysts/Institutional Investor Meet/Con. Call Updates",
+   "text": "HDFC Bank Limited has informed the Exchange about Transcript"
+  },
+  {
+   "exch_id": "106603869",
+   "ticker": "HDFCBANK",
+   "filed_at": "2026-04-29T12:34:25",
+   "subject": "ESOP/ESOS/ESPS",
+   "text": "HDFC Bank Limited has informed the Exchange regarding Allotment of 383322  Shares."
+  },
+  {
+   "exch_id": "106629524",
+   "ticker": "HDFCBANK",
+   "filed_at": "2026-05-19T16:20:42",
+   "subject": "ESOP/ESOS/ESPS",
+   "text": "HDFC Bank Limited has informed the Exchange regarding Allotment of 796290  Shares."
+  },
+  {
+   "exch_id": "106666835",
+   "ticker": "HDFCBANK",
+   "filed_at": "2026-06-18T16:46:58",
+   "subject": "Updates",
+   "text": "HDFC Bank Limited has informed the Exchange regarding 'Updates: (a) Receipt of approval from the Reserve Bank of India for extension of tenure of Mr. Keki Mistry as an interim Part-time Chairman of the Bank; and (b) Outcome of the Board Meeting of HDFC Bank Limited held on June 18, 2026'."
+  },
+  {
+   "exch_id": "106676949",
+   "ticker": "HDFCBANK",
+   "filed_at": "2026-06-26T15:14:41",
+   "subject": "Copy of Newspaper Publication",
+   "text": "HDFC Bank Limited has informed the Exchange about Copy of Newspaper Publication"
+  },
+  {
+   "exch_id": "106680236",
+   "ticker": "HDFCBANK",
+   "filed_at": "2026-06-29T20:33:49",
+   "subject": "Appointment",
+   "text": "HDFC Bank Limited has informed the Exchange regarding Appointment of Mr. Rajiv Kumar as a Part-time Chairman and Additional (Independent) Director of HDFC Bank Limited w.e.f. Jun 30, 2026."
+  },
+  {
+   "exch_id": "106584046",
+   "ticker": "ICICIBANK",
+   "filed_at": "2026-04-08T19:02:23",
+   "subject": "Certificate under SEBI (Depositories and Participants) Regulations, 2018",
+   "text": "ICICI Bank Limited has informed the Exchange about Certificate under Regulation 74(5) of SEBI (Depositories and Participants) Regulations, 2018, for the quarter ended March 31, 2026, received from 3i Infotech Limited, Registrar to an Issue and Share Transfer Agent for bonds /debentures of the Bank."
+  },
+  {
+   "exch_id": "106592507",
+   "ticker": "ICICIBANK",
+   "filed_at": "2026-04-17T12:15:11",
+   "subject": "ESOP/ESOS/ESPS",
+   "text": "ICICI Bank Limited has informed the Exchange regarding Allotment of 3001435  Shares."
+  },
+  {
+   "exch_id": "106593463",
+   "ticker": "ICICIBANK",
+   "filed_at": "2026-04-18T15:13:36",
+   "subject": "Dividend",
+   "text": "ICICI Bank Limited has informed the Exchange that Board of Directors at its meeting held on April 18, 2026, recommended a Dividend of Rs. 12/- (Rupees Twelve only) per equity share of face value Rs. 2/- each, subject to requisite approvals. The dividend on equity shares will be paid after same is approved by the Members at the ensuing Annual General Meeting of the Bank."
+  },
+  {
+   "exch_id": "106595311",
+   "ticker": "ICICIBANK",
+   "filed_at": "2026-04-21T12:03:19",
+   "subject": "ESOP/ESOS/ESPS",
+   "text": "ICICI Bank Limited has informed the Exchange regarding Allotment of 912191  Shares."
+  },
+  {
+   "exch_id": "106600378",
+   "ticker": "ICICIBANK",
+   "filed_at": "2026-04-25T15:05:46",
+   "subject": "Copy of Newspaper Publication",
+   "text": "ICICI Bank Limited has informed the Exchange about Copy of Newspaper Publication"
+  },
+  {
+   "exch_id": "106609481",
+   "ticker": "ICICIBANK",
+   "filed_at": "2026-05-05T14:19:56",
+   "subject": "ESOP/ESOS/ESPS",
+   "text": "ICICI Bank Limited has informed the Exchange regarding Allotment of 1083096  Shares."
+  },
+  {
+   "exch_id": "106584776",
+   "ticker": "INFY",
+   "filed_at": "2026-04-09T12:27:55",
+   "subject": "Disclosure under SEBI Takeover Regulations",
+   "text": "Infosys Limited has Submitted to the Exchange a copy of Disclosure under Regulation 31(4) of the Securities and Exchange Board of India (Substantial Acquisition of Shares and Takeovers) Regulations, 2011."
+  },
+  {
+   "exch_id": "106584777",
+   "ticker": "INFY",
+   "filed_at": "2026-04-09T12:29:10",
+   "subject": "Disclosure under SEBI Takeover Regulations",
+   "text": "Infosys Limited has Submitted to the Exchange a copy of Disclosure under Regulation 31(4) of the Securities and Exchange Board of India (Substantial Acquisition of Shares and Takeovers) Regulations, 2011."
+  },
+  {
+   "exch_id": "106584779",
+   "ticker": "INFY",
+   "filed_at": "2026-04-09T12:29:15",
+   "subject": "Disclosure under SEBI Takeover Regulations",
+   "text": "Infosys Limited has Submitted to the Exchange a copy of Disclosure under Regulation 31(4) of the Securities and Exchange Board of India (Substantial Acquisition of Shares and Takeovers) Regulations, 2011."
+  },
+  {
+   "exch_id": "106584822",
+   "ticker": "INFY",
+   "filed_at": "2026-04-09T12:29:51",
+   "subject": "Disclosure under SEBI Takeover Regulations",
+   "text": "Infosys Limited has Submitted to the Exchange a copy of Disclosure under Regulation 31(4) of the Securities and Exchange Board of India (Substantial Acquisition of Shares and Takeovers) Regulations, 2011."
+  },
+  {
+   "exch_id": "106584806",
+   "ticker": "INFY",
+   "filed_at": "2026-04-09T12:31:07",
+   "subject": "Disclosure under SEBI Takeover Regulations",
+   "text": "Infosys Limited has Submitted to the Exchange a copy of Disclosure under Regulation 31(4) of the Securities and Exchange Board of India (Substantial Acquisition of Shares and Takeovers) Regulations, 2011."
+  },
+  {
+   "exch_id": "106596941",
+   "ticker": "INFY",
+   "filed_at": "2026-04-22T16:02:51",
+   "subject": "Updates",
+   "text": "Infosys Limited has informed the Exchange regarding 'Infosys Announces Strategic Collaboration with OpenAI toAccelerate Enterprise AI Transformation and Unlock AI Value at Scale'."
+  },
+  {
+   "exch_id": "106599575",
+   "ticker": "INFY",
+   "filed_at": "2026-04-24T16:34:20",
+   "subject": "Copy of Newspaper Publication",
+   "text": "Infosys Limited has informed the Exchange about Copy of Newspaper Publication"
+  },
+  {
+   "exch_id": "106613083",
+   "ticker": "INFY",
+   "filed_at": "2026-05-07T17:35:58",
+   "subject": "Updates",
+   "text": "Infosys Limited has informed the Exchange regarding ' Investor Conference'."
+  },
+  {
+   "exch_id": "106648164",
+   "ticker": "INFY",
+   "filed_at": "2026-05-29T20:36:12",
+   "subject": "Updates",
+   "text": "Infosys Limited has informed the Exchange regarding ' Investor Conference'."
+  },
+  {
+   "exch_id": "106664473",
+   "ticker": "INFY",
+   "filed_at": "2026-06-16T15:30:43",
+   "subject": "Updates",
+   "text": "Infosys Limited has informed the Exchange regarding 'Infosys Collaborates with Valmet to Reimagine IT Operations with AI Accelerated Transformation'."
+  },
+  {
+   "exch_id": "106672530",
+   "ticker": "INFY",
+   "filed_at": "2026-06-24T15:29:03",
+   "subject": "Updates",
+   "text": "Infosys Limited has informed the Exchange regarding 'Infosys, ANA s Global CMO Growth Council, and LIONS Unveil the CMO AI Hub'."
+  },
+  {
+   "exch_id": "106588672",
+   "ticker": "IRCTC",
+   "filed_at": "2026-04-13T19:04:24",
+   "subject": "Cessation",
+   "text": "Indian Railway Catering And Tourism Corporation Limited has informed the Exchange regarding Cessation of Mr Vinay Kumar Pathak as Senior Management of the company w.e.f. April 13, 2026."
+  },
+  {
+   "exch_id": "106663667",
+   "ticker": "IRCTC",
+   "filed_at": "2026-06-15T19:08:05",
+   "subject": "Change in Director(s)",
+   "text": "Indian Railway Catering And Tourism Corporation Limited has informed the Exchange regarding Change in Director(s) of the company."
+  },
+  {
+   "exch_id": "106611671",
+   "ticker": "IRCTC",
+   "filed_at": "2026-06-16T18:40:56",
+   "subject": "Disclosure under SEBI Takeover Regulations",
+   "text": "GOVERNMENT OF INDIA MINISTRY OF RAILWAYS\u00a0has Submitted to the Exchange a copy of Disclosure under Regulation 31(4) of the Securities and Exchange Board of India (Substantial Acquisition of Shares and Takeovers) Regulations, 2011."
+  },
+  {
+   "exch_id": "106588421",
+   "ticker": "KAYNES",
+   "filed_at": "2026-04-13T17:13:15",
+   "subject": "Certificate under SEBI (Depositories and Participants) Regulations, 2018",
+   "text": "Kaynes Technology India Limited has informed the Exchange about Certificate under SEBI (Depositories and Participants) Regulations, 2018"
+  },
+  {
+   "exch_id": "106621639",
+   "ticker": "KAYNES",
+   "filed_at": "2026-05-13T23:28:40",
+   "subject": "Investor Presentation",
+   "text": "Kaynes Technology India Limited has informed the Exchange about Investor Presentation"
+  },
+  {
+   "exch_id": "106647428",
+   "ticker": "KAYNES",
+   "filed_at": "2026-05-29T17:24:49",
+   "subject": "Resignation",
+   "text": "Kaynes Technology India Limited has informed the Exchange regarding Resignation of Mr Heinz Franz Moitzi as Non- Executive Independent Director of the company w.e.f. May 31, 2026."
+  },
+  {
+   "exch_id": "106605058",
+   "ticker": "KPITTECH",
+   "filed_at": "2026-04-30T10:37:21",
+   "subject": "General Updates",
+   "text": "KPIT Technologies Limited has informed the Exchange about Approval for Reclassification of two promoters of the Company from  Promoter  Category to  Public  Category."
+  },
+  {
+   "exch_id": "106611011",
+   "ticker": "KPITTECH",
+   "filed_at": "2026-05-06T13:49:55",
+   "subject": "Investor Presentation",
+   "text": "KPIT Technologies Limited has informed the Exchange about Investor Presentation"
+  },
+  {
+   "exch_id": "106612610",
+   "ticker": "KPITTECH",
+   "filed_at": "2026-05-07T13:25:24",
+   "subject": "Copy of Newspaper Publication",
+   "text": "KPIT Technologies Limited has informed the Exchange about Copy of Newspaper Publication dated May 06, 2026."
+  },
+  {
+   "exch_id": "106598111",
+   "ticker": "KPITTECH",
+   "filed_at": "2026-06-15T18:06:00",
+   "subject": "Disclosure under SEBI Takeover Regulations",
+   "text": "Ajay Bhagwat\u00a0has Submitted to the Exchange a copy of Disclosure under Regulation 31(4) of the Securities and Exchange Board of India (Substantial Acquisition of Shares and Takeovers) Regulations, 2011."
+  },
+  {
+   "exch_id": "106598107",
+   "ticker": "KPITTECH",
+   "filed_at": "2026-06-15T18:06:26",
+   "subject": "Disclosure under SEBI Takeover Regulations",
+   "text": "\u00a0Mr. Chinmay Pandit\u00a0has Submitted to the Exchange a copy of Disclosure under Regulation 31(4) of the Securities and Exchange Board of India (Substantial Acquisition of Shares and Takeovers) Regulations, 2011."
+  },
+  {
+   "exch_id": "106677983",
+   "ticker": "KPITTECH",
+   "filed_at": "2026-06-26T20:03:26",
+   "subject": "Trading Window",
+   "text": "KPIT Technologies Limited has informed the Exchange regarding the Trading Window closure pursuant to SEBI (Prohibition of Insider Trading) Regulations, 2015"
+  },
+  {
+   "exch_id": "106589080",
+   "ticker": "LT",
+   "filed_at": "2026-04-14T11:33:04",
+   "subject": "General Updates",
+   "text": "Larsen & Toubro Limited has informed the Exchange about Completion of Acquisition of stake in International Green Scapes Limited by L&T Realty Properties Limited (L&T RPL), Wholly Owned subsidiary"
+  },
+  {
+   "exch_id": "106597704",
+   "ticker": "LT",
+   "filed_at": "2026-04-23T09:38:23",
+   "subject": "Bagging/Receiving of orders/contracts",
+   "text": "Larsen & Toubro Limited has informed the Exchange about Bagging/Receiving of orders/contracts"
+  },
+  {
+   "exch_id": "106609817",
+   "ticker": "LT",
+   "filed_at": "2026-05-05T17:12:59",
+   "subject": "Dividend",
+   "text": "Larsen & Toubro Limited has informed the Exchange that Board of Directors at its meeting held on May 05, 2026, recommended Final Dividend of Rs. 38 per equity share."
+  },
+  {
+   "exch_id": "106668962",
+   "ticker": "LT",
+   "filed_at": "2026-06-20T21:43:46",
+   "subject": "General Updates",
+   "text": "Disclosure under Regulation 30 of SEBI (Listing Obligations and Disclosure Requirements) Regulations, 2015 (SEBI LODR)   Incorporation of a wholly owned step-down subsidiary."
+  },
+  {
+   "exch_id": "106679431",
+   "ticker": "LT",
+   "filed_at": "2026-06-29T15:40:34",
+   "subject": "Copy of Newspaper Publication",
+   "text": "Larsen & Toubro Limited has informed the Exchange about Copy of Newspaper Publication"
+  },
+  {
+   "exch_id": "106584830",
+   "ticker": "PERSISTENT",
+   "filed_at": "2026-04-09T12:30:17",
+   "subject": "Press Release",
+   "text": "Persistent Systems Limited has informed the Exchange regarding a press release dated April 09, 2026, titled \"Persistent Launches Merchant Risk Management Solution Powered by Databricks AI\"."
+  },
+  {
+   "exch_id": "106595788",
+   "ticker": "PERSISTENT",
+   "filed_at": "2026-04-21T17:51:06",
+   "subject": "Updates",
+   "text": "Persistent Systems Limited has informed the Exchange regarding 'Audited Financial Statements of the Company as of March 31, 2026'."
+  },
+  {
+   "exch_id": "106596329",
+   "ticker": "PERSISTENT",
+   "filed_at": "2026-04-22T00:11:53",
+   "subject": "Analysts/Institutional Investor Meet/Con. Call Updates",
+   "text": "Persistent Systems Limited has informed the Exchange about Presentation and Link of Recording"
+  },
+  {
+   "exch_id": "106636931",
+   "ticker": "PERSISTENT",
+   "filed_at": "2026-05-22T19:30:12",
+   "subject": "Analysts/Institutional Investor Meet/Con. Call Updates",
+   "text": "Persistent Systems Limited has informed the Exchange about Presentation"
+  },
+  {
+   "exch_id": "106638806",
+   "ticker": "PERSISTENT",
+   "filed_at": "2026-05-25T12:35:50",
+   "subject": "Press Release",
+   "text": "Persistent Systems Limited has informed the Exchange regarding a press release dated May 25, 2026, titled \"Press Release titled  Persistent and Kong Announce Strategic Partnership to Help Enterprises Securely Move AI into Production \"."
+  },
+  {
+   "exch_id": "106639752",
+   "ticker": "PERSISTENT",
+   "filed_at": "2026-05-25T18:42:10",
+   "subject": "Analysts/Institutional Investor Meet/Con. Call Updates",
+   "text": "Persistent Systems Limited has informed the Exchange about Schedule of meet"
+  },
+  {
+   "exch_id": "106654134",
+   "ticker": "PERSISTENT",
+   "filed_at": "2026-06-03T20:22:51",
+   "subject": "Analysts/Institutional Investor Meet/Con. Call Updates",
+   "text": "Persistent Systems Limited has informed the Exchange about Presentation"
+  },
+  {
+   "exch_id": "106657868",
+   "ticker": "PERSISTENT",
+   "filed_at": "2026-06-08T20:21:25",
+   "subject": "General Updates",
+   "text": "Persistent Systems Limited has informed the Exchange about the proposal for reappointment of the Directors"
+  },
+  {
+   "exch_id": "106671502",
+   "ticker": "PERSISTENT",
+   "filed_at": "2026-06-23T19:47:07",
+   "subject": "Analysts/Institutional Investor Meet/Con. Call Updates",
+   "text": "Persistent Systems Limited has informed the Exchange about Presentation"
+  },
+  {
+   "exch_id": "106678112",
+   "ticker": "PERSISTENT",
+   "filed_at": "2026-06-27T03:13:50",
+   "subject": "Press Release",
+   "text": "Persistent Systems Limited has informed the Exchange regarding a press release dated Jun 27, 2026, titled \"Press Release titled  Persistent and Nagarro sign Business Combination Agreement to form the Persistent - Nagarro Group, a global leader in AI-led digital engineering \"."
+  },
+  {
+   "exch_id": "106678113",
+   "ticker": "PERSISTENT",
+   "filed_at": "2026-06-27T04:51:00",
+   "subject": "Updates",
+   "text": "Persistent Systems Limited has informed the Exchange regarding 'Intimation regarding execution of long-term agreement with a global technology leader headquartered in the United States'."
+  },
+  {
+   "exch_id": "106681419",
+   "ticker": "PERSISTENT",
+   "filed_at": "2026-06-30T15:54:12",
+   "subject": "Analysts/Institutional Investor Meet/Con. Call Updates",
+   "text": "Persistent Systems Limited has informed the Exchange about Schedule of meet"
+  },
+  {
+   "exch_id": "106615129",
+   "ticker": "PIDILITIND",
+   "filed_at": "2026-05-08T18:52:57",
+   "subject": "Updates",
+   "text": "Pidilite Industries Limited has informed the Exchange regarding 'Audio Recording Q4FY26 Earnings Call '."
+  },
+  {
+   "exch_id": "106640833",
+   "ticker": "PIDILITIND",
+   "filed_at": "2026-05-26T11:27:11",
+   "subject": "Action(s) initiated or orders passed",
+   "text": "Pidilite Industries Limited has informed the Exchange about Action(s) initiated or orders passed"
+  },
+  {
+   "exch_id": "106651230",
+   "ticker": "PIDILITIND",
+   "filed_at": "2026-06-01T16:56:32",
+   "subject": "Analysts/Institutional Investor Meet/Con. Call Updates",
+   "text": "Pidilite Industries Limited has informed the Exchange about Schedule of meet"
+  },
+  {
+   "exch_id": "106587073",
+   "ticker": "POLYCAB",
+   "filed_at": "2026-04-10T20:04:48",
+   "subject": "Shareholders meeting",
+   "text": "Polycab India Limited has informed the Exchange regarding Notice of Postal Ballot"
+  },
+  {
+   "exch_id": "106611090",
+   "ticker": "POLYCAB",
+   "filed_at": "2026-05-06T15:03:47",
+   "subject": "Change in Auditors",
+   "text": "Polycab India Limited has informed the Exchange regarding Change in Auditors of the company."
+  },
+  {
+   "exch_id": "106611097",
+   "ticker": "POLYCAB",
+   "filed_at": "2026-05-06T15:07:31",
+   "subject": "General Updates",
+   "text": "Polycab India Limited has informed the Exchange about re-appointment of Cost Auditors  for FY 2026-27."
+  },
+  {
+   "exch_id": "106658111",
+   "ticker": "POLYCAB",
+   "filed_at": "2026-06-08T23:41:03",
+   "subject": "Shareholders meeting",
+   "text": "Polycab India Limited has informed the Exchange regarding Notice of Annual General Meeting to be held on Jun 30, 2026"
+  },
+  {
+   "exch_id": "106662321",
+   "ticker": "POLYCAB",
+   "filed_at": "2026-06-12T19:09:38",
+   "subject": "General Updates",
+   "text": "Polycab India Limited has informed the Exchange regarding analyst(s)/investor(s) meet."
+  },
+  {
+   "exch_id": "106605758",
+   "ticker": "RELIANCE",
+   "filed_at": "2026-04-30T16:05:58",
+   "subject": "Updates",
+   "text": "Please find attached a media release by Reliance Retail Limited, a subsidiary of the Company, titled  Reliance Retail Acquires Priyanka Chopra Jonas s Anomaly, Accelerating Expansion of Its Beauty Portfolio."
+  },
+  {
+   "exch_id": "106643838",
+   "ticker": "RELIANCE",
+   "filed_at": "2026-05-27T17:56:54",
+   "subject": "General Updates",
+   "text": "The Forty-ninth Annual General Meeting (Post - IPO) of the members of the Company will be held on Friday, June 19, 2026 at 2:00 P.M. (IST) through Video Conferencing / Other Audio Visual Means."
+  },
+  {
+   "exch_id": "106643844",
+   "ticker": "RELIANCE",
+   "filed_at": "2026-05-27T17:58:39",
+   "subject": "Record Date",
+   "text": "Reliance Industries Limited has informed the Exchange that Record date for the purpose of Dividend  is 05-Jun-2026."
+  },
+  {
+   "exch_id": "106583594",
+   "ticker": "SUNPHARMA",
+   "filed_at": "2026-04-08T15:49:56",
+   "subject": "Copy of Newspaper Publication",
+   "text": "Sun Pharmaceutical Industries Limited has informed the Exchange about Copy of Newspaper Publication"
+  },
+  {
+   "exch_id": "106631883",
+   "ticker": "SUNPHARMA",
+   "filed_at": "2026-05-20T17:51:17",
+   "subject": "Copy of Newspaper Publication",
+   "text": "Sun Pharmaceutical Industries Limited has informed the Exchange about newspaper publication for special window for transfer of physical shares"
+  },
+  {
+   "exch_id": "106648041",
+   "ticker": "SUNPHARMA",
+   "filed_at": "2026-05-29T19:59:33",
+   "subject": "Analysts/Institutional Investor Meet/Con. Call Updates",
+   "text": "Sun Pharmaceutical Industries Limited has informed the Exchange about Transcript"
+  },
+  {
+   "exch_id": "106662897",
+   "ticker": "SUNPHARMA",
+   "filed_at": "2026-06-14T11:44:42",
+   "subject": "General Updates",
+   "text": "Intimation under Regulation 30 of SEBI (LODR) Regulations 2015"
+  },
+  {
+   "exch_id": "106670090",
+   "ticker": "TITAN",
+   "filed_at": "2026-06-22T21:54:25",
+   "subject": "Resignation",
+   "text": "Titan Company Limited has informed the Exchange regarding Resignation of Ms. Sandhya Sharma, IAS as Chairperson of the company w.e.f. Jun 22, 2026."
+  },
+  {
+   "exch_id": "106579813",
+   "ticker": "TRENT",
+   "filed_at": "2026-04-06T08:18:48",
+   "subject": "General Updates",
+   "text": "Trent Limited has informed the Exchange about Update for Q4FY26 and FY26"
+  },
+  {
+   "exch_id": "106596930",
+   "ticker": "TRENT",
+   "filed_at": "2026-04-22T15:55:20",
+   "subject": "Outcome of Board Meeting",
+   "text": "Trent Limited has submitted to the Exchange about Outcome of Board Meeting held today i.e. 22nd April 2026"
+  },
+  {
+   "exch_id": "106642934",
+   "ticker": "TRENT",
+   "filed_at": "2026-05-27T10:58:09",
+   "subject": "Copy of Newspaper Publication",
+   "text": "Trent Limited has informed the Exchange about Newspaper Advertisement relating to the 74th Annual General Meeting"
+  }
+ ]
+}

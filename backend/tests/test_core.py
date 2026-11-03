@@ -117,7 +117,7 @@ def test_results_pdf_candidates_exclude_press_and_newspaper():
 @pytest.mark.parametrize("subject,text,cat", [
     ("Outcome of Board Meeting", "has submitted the financial results for the period ended September 30, 2026", "results"),
     ("Appointment", "Appointment of Statutory Auditors pursuant to rotation", "unclassified"),
-    ("General Updates", "KPIT AGM - response to stakeholders' queries", "unclassified"),
+    ("General Updates", "KPIT AGM - response to stakeholders' queries", "agm_egm"),
     ("Analysts/Institutional Investor Meet/Con. Call Updates", "Transcript", "earnings_call"),
     ("Change in Management", "Appointment of Mr X as Non- Executive Director", "management_change"),
 ])
@@ -265,3 +265,138 @@ def test_rebuilt_seed_has_same_fingerprint_and_api_is_read_only(tmp_path):
     assert seen[0]["health"]["read_only"] is True
     assert seen[0]["health"]["seed"] == seen[1]["health"]["seed"]
     assert seen[0]["health"]["seed"]["metric_obs"] > 0
+
+
+# ---------- live pipeline rules ----------
+
+def _live_db(tmp_path):
+    from sqlalchemy import create_engine
+    from sqlalchemy.orm import sessionmaker
+    from finn.models import Base, Company
+    eng = create_engine(f"sqlite:///{tmp_path / 'live.db'}")
+    Base.metadata.create_all(eng)
+    db = sessionmaker(eng)()
+    db.add(Company(ticker="PERSISTENT", in_portfolio=True))
+    db.commit()
+    return db
+
+
+def _filing(db, i, filed, subject, text=None):
+    from finn.models import Filing
+    f = Filing(ticker="PERSISTENT", exchange="NSE", exch_id=str(i), filed_at=filed, subject=subject, text=text,
+               category="pending", category_source="none", dedup_key=f"k{i}")
+    db.add(f)
+    db.flush()
+    return f
+
+
+def test_corrigendum_links_to_the_cited_letter(tmp_path):
+    from finn import live
+    db = _live_db(tmp_path)
+    orig = _filing(db, 1, datetime(2026, 9, 30, 18, 5), "Analysts/Institutional Investor Meet/Con. Call Updates",
+                   "Schedule of analyst meetings")
+    _filing(db, 2, datetime(2026, 10, 2, 10, 0), "Press Release", "Persistent wins deal")
+    cor = _filing(db, 3, datetime(2026, 10, 3, 9, 0), "Corrigendum",
+                  "Corrigendum to our earlier letter under Ref. no. NSE & BSE / 2026-27 / 143 dated September 30, 2026")
+    assert live.link_revisions(db, "PERSISTENT") == 1 and cor.revision_of == orig.id
+
+
+def test_corrigendum_to_a_letter_outside_the_window_stays_standalone(tmp_path):
+    from finn import live
+    db = _live_db(tmp_path)
+    _filing(db, 1, datetime(2026, 10, 20, 10, 0), "Press Release", "Persistent wins deal")
+    cor = _filing(db, 2, datetime(2026, 10, 21, 9, 0), "Corrigendum",
+                  "Corrigendum to our earlier letter dated September 30, 2026")
+    assert live.link_revisions(db, "PERSISTENT") == 0 and cor.revision_of is None
+
+
+def test_revision_joins_the_amended_event():
+    filed = datetime(2026, 10, 20, 10, 0)
+    evs = build_events([
+        {"id": 1, "ticker": "X", "filed_at": filed, "subject": "Credit Rating", "text": "CRISIL reaffirmed AA+"},
+        {"id": 2, "ticker": "X", "filed_at": datetime(2026, 10, 22, 9, 0), "subject": "Corrigendum",
+         "text": "Corrigendum to credit rating letter dated October 20, 2026", "revision_of": 1},
+    ])
+    assert len(evs) == 1 and evs[0]["member_ids"] == [1, 2] and evs[0]["revised"]
+
+
+def test_backfill_then_incremental_windows(tmp_path):
+    from finn import live
+    db = _live_db(tmp_path)
+    now = datetime(2026, 11, 3, 12, 0)
+    assert live.announcement_windows(db, ["PERSISTENT"], now)["PERSISTENT"] == (date(2026, 10, 4), date(2026, 11, 3), True)
+    _filing(db, 1, datetime(2026, 11, 2, 18, 0), "Press Release")
+    assert live.announcement_windows(db, ["PERSISTENT"], now)["PERSISTENT"] == (date(2026, 10, 31), date(2026, 11, 3), False)
+
+
+def test_card_rebuild_policy():
+    from types import SimpleNamespace
+    from finn import live
+    now = datetime(2026, 11, 3, 12, 0)
+    ok = {"results": {"status": "ok"}, "results_attempt": {"at": "2026-11-03T08:00:00", "n_members": 2}}
+    assert live.card_due(SimpleNamespace(detail=None, occurred_at=now), 1, now) == "no card yet"
+    assert live.card_due(SimpleNamespace(detail=ok, occurred_at=now), 2, now) is None
+    assert live.card_due(SimpleNamespace(detail=ok, occurred_at=now), 3, now) == "new filings joined the event"
+    failed = {"results": {"status": "failed"}, "results_attempt": {"at": "2026-11-03T11:00:00", "n_members": 1}}
+    assert live.card_due(SimpleNamespace(detail=failed, occurred_at=now), 1, now) is None  # tried 1h ago
+    assert live.card_due(SimpleNamespace(detail=failed, occurred_at=now), 1, datetime(2026, 11, 3, 13, 30))
+    old = datetime(2026, 10, 1)
+    assert live.card_due(SimpleNamespace(detail=failed, occurred_at=old), 1, now) is None  # gave up
+
+
+def test_xbrl_revision_detected_from_index():
+    from finn import live
+    card = {"periods": {"current": {"xbrl_url": "a1.xml"}, "prev_q": {"xbrl_url": "b.xml"}}}
+    row = lambda qe, url, rev: {"qe_Date": qe, "consolidated": "Consolidated", "xbrl": url, "broadcast_Date": rev}
+    idx = [row("30-Sep-2026", "a1.xml", "17-Oct-2026 13:00"), row("30-Jun-2026", "b.xml", "18-Jul-2026 13:00")]
+    assert not live.xbrl_revised(card, idx, date(2026, 9, 30))
+    idx.append(row("30-Sep-2026", "a2.xml", "25-Oct-2026 10:00"))
+    assert live.xbrl_revised(card, idx, date(2026, 9, 30))
+
+
+def test_alerts_skip_backfill_and_dedupe(tmp_path):
+    from finn import live
+    from finn.models import Alert, Event
+    db = _live_db(tmp_path)
+    st = {"alert_categories": ["results"], "eod_buffer_min": 90, "volume_multiple": 2.0, "price_pct": 4.0}
+    db.add(Event(group_key="old", ticker="PERSISTENT", category="results", title="Q1", materiality=85,
+                 occurred_at=datetime(2026, 10, 20), read_state="read", materiality_reasons=[]))
+    db.commit()
+    assert live.record_announcement_alerts(db, st) == 0  # not live yet
+    live.mark_live_since(db, datetime(2026, 11, 1))
+    db.add(Event(group_key="new", ticker="PERSISTENT", category="results", title="Q2", materiality=85,
+                 occurred_at=datetime(2026, 11, 2), read_state="read", materiality_reasons=[]))
+    db.commit()
+    assert live.record_announcement_alerts(db, st) == 1
+    db.commit()
+    assert live.record_announcement_alerts(db, st) == 0
+    assert db.query(Alert).count() == 1
+
+
+def test_worker_schedule(tmp_path):
+    from finn.models import IngestRun
+    from finn.worker import due, market_hours
+    db = _live_db(tmp_path)
+    tue_10 = datetime(2026, 11, 3, 10, 0)
+    assert market_hours(tue_10) and not market_hours(datetime(2026, 11, 3, 16, 0))
+    assert not market_hours(datetime(2026, 11, 7, 10, 0))  # Saturday
+    assert set(due(db, tue_10)) == {"announcements", "prices", "xbrl_recheck"}
+
+    def run(source, started, through=None, errors=()):
+        db.add(IngestRun(source=source, mode="live", started_at=started, finished_at=started, status="ok",
+                         data_through=through, errors=list(errors)))
+        db.commit()
+    run("nse_announcements", datetime(2026, 11, 3, 9, 50))
+    run("prices", datetime(2026, 11, 3, 9, 50), through=datetime(2026, 11, 2, 15, 30))
+    run("results_xbrl_recheck", datetime(2026, 11, 3, 0, 5))
+    assert due(db, tue_10) == []  # 10 min in market hours; Monday's session already in
+    assert due(db, datetime(2026, 11, 3, 10, 5)) == ["announcements"]  # 15 min cadence
+    run("nse_announcements", datetime(2026, 11, 3, 16, 0))
+    assert "announcements" not in due(db, datetime(2026, 11, 3, 16, 30))  # hourly after the close
+    assert "announcements" in due(db, datetime(2026, 11, 3, 17, 0))
+    # Tuesday's session is published at 17:00; first attempt then, retries hourly, not every minute
+    assert "prices" in due(db, datetime(2026, 11, 3, 17, 1))
+    run("prices", datetime(2026, 11, 3, 17, 1), through=datetime(2026, 11, 2, 15, 30))
+    assert "prices" not in due(db, datetime(2026, 11, 3, 17, 30))
+    assert "prices" in due(db, datetime(2026, 11, 3, 18, 2))
+    assert "xbrl_recheck" in due(db, datetime(2026, 11, 4, 0, 1))

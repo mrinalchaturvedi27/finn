@@ -8,7 +8,7 @@ CORROBORATION_VERSION = 2  # page + row label + value + column alignment
 EXTRACTION_SCHEMA_VERSION = 1
 PROMPT_VERSION = 0  # no LLM in milestone 1
 CALC_VERSION = 1
-CLASSIFIER_VERSION = 1
+CLASSIFIER_VERSION = 3  # 1: initial rules; 2: fixes from holdout 1; 3: fixes from holdout 2
 
 
 def cache_key(doc_sha256: str, *, parser: str = PARSER_VERSION) -> str:
