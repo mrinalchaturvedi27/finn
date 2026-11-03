@@ -205,11 +205,11 @@ def record_price_alerts(db, settings: dict, now: datetime) -> dict:
     return {"session": session, "new": new, "stale": stale}
 
 
-def drop_orphan_events(db, ticker: str) -> int:
+def drop_orphan_events(db, ticker: str, events: list | None = None) -> int:
     """Events left with no filings after regrouping (e.g. an outcome moved into its results event)."""
     used = set(db.scalars(select(Filing.event_id).where(Filing.ticker == ticker, Filing.event_id.is_not(None))))
     n = 0
-    for e in db.scalars(select(Event).where(Event.ticker == ticker)).all():
+    for e in events if events is not None else db.scalars(select(Event).where(Event.ticker == ticker)).all():
         if e.id not in used and not db.scalar(select(Alert.id).where(Alert.event_id == e.id).limit(1)):
             db.delete(e)
             n += 1

@@ -59,6 +59,15 @@ def ingest_announcements(db, nse: NSE, tickers: list[str], days: int, mode: str,
     end = px.now_ist().date()
     start = end - timedelta(days=days)
     raw, errors, n = {}, [], 0
+    # one round trip each for what already exists (the database may be far from the worker)
+    known = set(db.scalars(select(Filing.exch_id).where(Filing.exchange == "NSE", Filing.ticker.in_(tickers))))
+    first_by_key = {}
+    for fid, dk in db.execute(select(Filing.id, Filing.dedup_key).where(Filing.ticker.in_(tickers),
+                                                                        Filing.duplicate_of.is_(None))
+                              .order_by(Filing.id)):
+        first_by_key.setdefault(dk, fid)
+    cos = {c.ticker: c for c in db.scalars(select(Company).where(Company.ticker.in_(tickers)))}
+    new_dups = []  # (filing, earlier filing in this batch) — ids exist only after the flush
     for t in tickers:
         t_start, t_end = (windows[t][0], windows[t][1]) if windows else (start, end)
         try:
@@ -69,26 +78,33 @@ def ingest_announcements(db, nse: NSE, tickers: list[str], days: int, mode: str,
         raw[t] = rows
         if windows:
             live.set_cursor(db, t, run.started_at)
-        co = db.get(Company, t)
+        co = cos.get(t)
         if rows and co and not co.name:
             co.name, co.isin = rows[0].get("sm_name"), rows[0].get("sm_isin")
-        seen = {}
-        for r in sorted(rows, key=lambda r: r.get("sort_date") or ""):
-            exch_id = str(r.get("seq_id") or r.get("dt"))
-            if db.scalar(select(Filing.id).where(Filing.exchange == "NSE", Filing.exch_id == exch_id)):
-                continue
-            filed = parse_nse_dt(r.get("an_dt")) or parse_nse_dt(r.get("sort_date"))
-            dk = dedup_key(t, r)
-            f = Filing(ticker=t, exchange="NSE", exch_id=exch_id, filed_at=filed, subject=r.get("desc") or "",
-                       text=r.get("attchmntText"), attachment_url=r.get("attchmntFile"),
-                       category="pending", category_source="none", dedup_key=dk)
-            dup = seen.get(dk) or db.scalar(select(Filing.id).where(Filing.dedup_key == dk))
-            if dup:
-                f.duplicate_of = dup
-            db.add(f)
-            db.flush()
-            seen.setdefault(dk, f.id)
-            n += 1
+        seen = {}  # dedup key -> first new Filing of this batch
+        with db.no_autoflush:
+            for r in sorted(rows, key=lambda r: r.get("sort_date") or ""):
+                exch_id = str(r.get("seq_id") or r.get("dt"))
+                if exch_id in known:
+                    continue
+                known.add(exch_id)
+                filed = parse_nse_dt(r.get("an_dt")) or parse_nse_dt(r.get("sort_date"))
+                dk = dedup_key(t, r)
+                f = Filing(ticker=t, exchange="NSE", exch_id=exch_id, filed_at=filed, subject=r.get("desc") or "",
+                           text=r.get("attchmntText"), attachment_url=r.get("attchmntFile"),
+                           category="pending", category_source="none", dedup_key=dk)
+                if dk in first_by_key:
+                    f.duplicate_of = first_by_key[dk]
+                elif dk in seen:
+                    new_dups.append((f, seen[dk]))
+                else:
+                    seen[dk] = f
+                db.add(f)
+                n += 1
+    db.flush()  # one batched insert
+    for f, first in new_dups:
+        f.duplicate_of = first.id
+    for t in raw:
         live.link_revisions(db, t)
     db.commit()
     latest = db.scalar(select(Filing.filed_at).order_by(Filing.filed_at.desc()).limit(1))
@@ -105,13 +121,19 @@ def rebuild_events(db, tickers: list[str], raw: dict[str, list[dict]], mode: str
         dicts = [{"id": f.id, "ticker": t, "filed_at": f.filed_at, "subject": f.subject, "text": f.text,
                   "duplicate_of": f.duplicate_of, "revision_of": f.revision_of} for f in filings]
         by_id = {f.id: f for f in filings}
-        for ev in build_events(dicts):
-            e = db.scalar(select(Event).where(Event.group_key == ev["group_key"])) or Event(group_key=ev["group_key"])
-            for k in ("ticker", "category", "title", "occurred_at", "materiality", "materiality_reasons",
-                      "read_state", "summary", "primary_filing_id"):
-                setattr(e, k, ev[k])
-            db.add(e)
-            db.flush()
+        existing = {e.group_key: e for e in db.scalars(select(Event).where(Event.ticker == t))}
+        built = build_events(dicts)
+        with db.no_autoflush:
+            for ev in built:
+                e = existing.get(ev["group_key"]) or Event(group_key=ev["group_key"])
+                for k in ("ticker", "category", "title", "occurred_at", "materiality", "materiality_reasons",
+                          "read_state", "summary", "primary_filing_id"):
+                    setattr(e, k, ev[k])
+                db.add(e)
+                existing[ev["group_key"]] = e
+        db.flush()  # one batched insert for new events
+        for ev in built:
+            e = existing[ev["group_key"]]
             for fid in ev["member_ids"]:
                 f = by_id[fid]
                 f.event_id = e.id
@@ -146,18 +168,18 @@ def rebuild_events(db, tickers: list[str], raw: dict[str, list[dict]], mode: str
                     if pat.get("yoy_q_change", {}).get("state") == "ok":
                         e.summary = _results_line(card)
         db.flush()
-        live.drop_orphan_events(db, t)
+        live.drop_orphan_events(db, t, list(existing.values()))
         db.commit()
     _finish(db, run, "ok" if not errors else "partial", n_cards, errors, px.now_ist())
 
 
-def _doc(db, ticker, kind, url, sha, **kw) -> Document:
-    d = db.scalar(select(Document).where(Document.url == url)) or Document(url=url, ticker=ticker, kind=kind)
+def _doc(db, known: dict, ticker, kind, url, sha, **kw) -> Document:
+    d = known.get(url) or Document(url=url, ticker=ticker, kind=kind)
     d.sha256, d.fetch_state, d.parse_state = sha, "ok", "ok"
     for k, v in kw.items():
         setattr(d, k, v)
     db.add(d)
-    db.flush()
+    known[url] = d
     return d
 
 
@@ -168,21 +190,27 @@ def persist_observations(db, ticker: str, card: dict, related_filing_id: int | N
     from .metrics import SETS
     defs = {m.id: m for m in SETS[card["taxonomy"]]}
     basis = card["basis"].lower()
+    periods = {k: p for k, p in card["periods"].items() if p.get("sha256")}
+    urls = [p["xbrl_url"] for p in periods.values()] + ([card["pdf"]["url"]] if card.get("pdf") else [])
+    known = {d.url: d for d in db.scalars(select(Document).where(Document.url.in_(urls)))}
     pdf_doc = None
     if card.get("pdf") and not card["pdf"].get("rejected") and card["pdf"].get("sha256"):
-        pdf_doc = _doc(db, ticker, "filing_pdf", card["pdf"]["url"], card["pdf"]["sha256"],
+        pdf_doc = _doc(db, known, ticker, "filing_pdf", card["pdf"]["url"], card["pdf"]["sha256"],
                        period_end=date.fromisoformat(card["quarter_end"]), basis=basis)
-    for k, period in card["periods"].items():
-        if not period.get("sha256"):
-            continue
+    xdocs = {}
+    for k, period in periods.items():
         qe = date.fromisoformat(period["quarter_end"])
-        xdoc = _doc(db, ticker, "results_xbrl", period["xbrl_url"], period["sha256"], period_start=quarter_start(qe),
-                    period_end=qe, basis=basis, revision=f"supersedes {period['revisions_superseded']}")
-        ck = cache_key(period["sha256"])
-        db.query(MetricObs).filter(MetricObs.cache_key == ck).delete()
-        # the card always uses the latest XBRL revision, so other versions of this period are superseded
-        db.query(MetricObs).filter(MetricObs.ticker == ticker, MetricObs.period_end == qe, MetricObs.basis == basis,
-                                   MetricObs.period_type == "Q", MetricObs.cache_key != ck).delete()
+        xdocs[k] = _doc(db, known, ticker, "results_xbrl", period["xbrl_url"], period["sha256"],
+                        period_start=quarter_start(qe), period_end=qe, basis=basis,
+                        revision=f"supersedes {period['revisions_superseded']}")
+    db.flush()  # document ids, one round trip
+    # the card always uses the latest XBRL revision: every earlier observation of these periods is replaced
+    qes = [date.fromisoformat(p["quarter_end"]) for p in periods.values()]
+    db.query(MetricObs).filter(MetricObs.ticker == ticker, MetricObs.basis == basis, MetricObs.period_type == "Q",
+                               MetricObs.period_end.in_(qes)).delete(synchronize_session=False)
+    for k, period in periods.items():
+        qe = date.fromisoformat(period["quarter_end"])
+        xdoc, ck = xdocs[k], cache_key(period["sha256"])
         for row in card["metrics"]:
             value = row["current"] if k == "current" else row.get(k)
             m = defs[row["id"]]
@@ -227,6 +255,7 @@ def ingest_prices(db, tickers: list[str], mode: str):
         _finish(db, run, "failed", 0, [{"error": repr(e)}], None)
         return
     cap = px.latest_complete_session(px.now_ist(), DEFAULT_SETTINGS["eod_buffer_min"])
+    have = {(b.ticker, b.session): b for b in db.scalars(select(PriceBar).where(PriceBar.ticker.in_(list(bars))))}
     n = 0
     for t, rows in bars.items():
         if not rows:
@@ -234,8 +263,14 @@ def ingest_prices(db, tickers: list[str], mode: str):
         for b in rows:
             if b["session"] > cap:
                 continue  # partial / unpublished session
-            db.merge(PriceBar(ticker=t, **b))
             n += 1
+            old = have.get((t, b["session"]))
+            if old is None:
+                db.add(PriceBar(ticker=t, **b))
+            else:  # only rows whose values changed are written (yfinance may adjust recent bars)
+                for k, v in b.items():
+                    if k != "session" and getattr(old, k) != v:
+                        setattr(old, k, v)
     db.commit()
     last = db.scalar(select(PriceBar.session).order_by(PriceBar.session.desc()).limit(1))
     _finish(db, run, "ok" if not errors else "partial", n, errors,
@@ -243,8 +278,10 @@ def ingest_prices(db, tickers: list[str], mode: str):
 
 
 def seed_companies(db):
-    for p in load_portfolio():
-        co = db.get(Company, p["ticker"]) or Company(ticker=p["ticker"])
+    port = load_portfolio()
+    have = {c.ticker: c for c in db.scalars(select(Company).where(Company.ticker.in_([p["ticker"] for p in port])))}
+    for p in port:
+        co = have.get(p["ticker"]) or Company(ticker=p["ticker"])
         co.sector, co.in_portfolio = p["sector"], True
         db.add(co)
     if not db.get(Setting, "alerts"):

@@ -16,7 +16,7 @@ import time
 from contextlib import contextmanager
 from datetime import datetime, time as dtime, timedelta
 
-from sqlalchemy import select, text
+from sqlalchemy import event, select, text
 
 from . import live
 from . import prices as px
@@ -156,27 +156,70 @@ def tick(now: datetime | None = None) -> list[str]:
         return _tick(now)
 
 
+class _Stages:
+    """Logs each stage's duration and database round trips, so a slow run explains itself."""
+    def __init__(self):
+        self.q = 0
+        event.listen(dbmod.engine, "before_cursor_execute", self._count)
+
+    def _count(self, *a, **k):
+        self.q += 1
+
+    @contextmanager
+    def __call__(self, name: str):
+        t, q = time.monotonic(), self.q
+        print(f"  {name} ...", flush=True)
+        try:
+            yield
+        finally:
+            print(f"  {name} done in {time.monotonic() - t:.1f}s, {self.q - q} db round trips", flush=True)
+
+    def close(self):
+        event.remove(dbmod.engine, "before_cursor_execute", self._count)
+
+
+def db_round_trip_ms() -> float:
+    with dbmod.engine.connect() as c:
+        c.execute(text("select 1"))  # connect outside the measurement
+        t = time.monotonic()
+        for _ in range(5):
+            c.execute(text("select 1"))
+        return (time.monotonic() - t) / 5 * 1000
+
+
 def _tick(now: datetime) -> list[str]:
     nse = NSE()
-    with Session() as db:
-        close_abandoned(db, now)
-        seed_companies(db)
-        tickers = [p["ticker"] for p in load_portfolio()]
-        jobs = due(db, now)
-        if "announcements" in jobs:
-            windows = live.announcement_windows(db, tickers, now)
-            raw = ingest_announcements(db, nse, tickers, live.BACKFILL_DAYS, "live", windows=windows)
-            if raw:
-                live.mark_live_since(db, now)  # alerts only for what arrives after the first live run
-            rebuild_events(db, tickers, raw, "live")
-        if "prices" in jobs:
-            ingest_prices(db, tickers, "live")
-        if "xbrl_recheck" in jobs:
-            recheck_xbrl(db, nse, now)
-        st = _settings_or_default(db)
-        live.record_announcement_alerts(db, st)
-        live.record_price_alerts(db, st, now)
-        db.commit()
+    stage = _Stages()
+    print(f"  db round trip {db_round_trip_ms():.0f} ms", flush=True)
+    try:
+        with Session() as db:
+            with stage("setup"):
+                close_abandoned(db, now)
+                seed_companies(db)
+                tickers = [p["ticker"] for p in load_portfolio()]
+                jobs = due(db, now)
+            print(f"  due: {', '.join(jobs) or 'nothing'}", flush=True)
+            if "announcements" in jobs:
+                with stage("announcements"):
+                    windows = live.announcement_windows(db, tickers, now)
+                    raw = ingest_announcements(db, nse, tickers, live.BACKFILL_DAYS, "live", windows=windows)
+                    if raw:
+                        live.mark_live_since(db, now)  # alerts only for what arrives after the first live run
+                with stage("events and results cards"):
+                    rebuild_events(db, tickers, raw, "live")
+            if "prices" in jobs:
+                with stage("prices"):
+                    ingest_prices(db, tickers, "live")
+            if "xbrl_recheck" in jobs:
+                with stage("xbrl revision check"):
+                    recheck_xbrl(db, nse, now)
+            with stage("alerts"):
+                st = _settings_or_default(db)
+                live.record_announcement_alerts(db, st)
+                live.record_price_alerts(db, st, now)
+                db.commit()
+    finally:
+        stage.close()
     return jobs
 
 
