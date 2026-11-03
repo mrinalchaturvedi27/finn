@@ -197,9 +197,12 @@ def _judge(s: dict, value: float, kind: str, calc: str, final: bool, quarters: l
     out = {"value": round(value, 2), "calc": calc, "tolerance_pp": tol, "quarters": quarters, "reason": None}
     if final:
         return {**out, "status": status}
-    tracking = {"delivered": "on track", "partial": "slightly behind", "missed": "behind"}[status]
-    return {**out, "status": "pending", "tracking": tracking,
-            "reason": f"Period not over: {len(quarters)} of 4 quarters reported; {tracking} so far."}
+    # a partial year is only a run-rate indication: never presented as the annual target being met
+    tracking = {"delivered": "run-rate above target", "partial": "run-rate just below target",
+                "missed": "run-rate below target"}[status]
+    return {**out, "status": "pending", "tracking": tracking, "run_rate": True,
+            "reason": f"Run-rate indication only ({len(quarters)} of 4 quarters filed): {tracking}. "
+                      "The annual target is not delivered until the full year is reported."}
 
 
 def _pending_nothing(label: str, have: list) -> dict:

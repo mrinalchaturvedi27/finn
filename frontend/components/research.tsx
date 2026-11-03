@@ -12,7 +12,7 @@ export const VERDICT: Record<Verdict["status"], { label: string; cls: string }> 
 
 export function VerdictChip({ v }: { v: Verdict }) {
   const s = VERDICT[v.status];
-  const label = v.status === "pending" && v.tracking ? `Pending · ${v.tracking}` : s.label;
+  const label = v.status === "pending" && v.tracking ? "Pending · run-rate indication" : s.label;
   return <span className={`inline-flex shrink-0 items-center rounded-full px-2 py-0.5 text-[11px] font-medium ${s.cls}`}>{label}</span>;
 }
 
@@ -90,7 +90,9 @@ export function PromiseCard({ g }: { g: GuidanceItem }) {
             </span>
             {d && (
               <span>
-                <span className="text-faint">{g.verdict.status === "pending" ? "So far " : "Delivered "}</span>
+                <span className="text-faint">
+                  {g.verdict.status === "pending" ? `Run-rate (${g.verdict.quarters?.length ?? 0} of 4 qtrs) ` : "Delivered "}
+                </span>
                 <span className="num font-medium">{d}</span>
               </span>
             )}
@@ -100,6 +102,9 @@ export function PromiseCard({ g }: { g: GuidanceItem }) {
       </div>
       {(g.verdict.calc || g.verdict.reason) && (
         <p className="mt-1.5 text-[11.5px] leading-snug text-faint">{g.verdict.calc || g.verdict.reason}</p>
+      )}
+      {g.verdict.run_rate && g.verdict.reason && (
+        <p className="mt-1 text-[11.5px] leading-snug text-muted">{g.verdict.reason}</p>
       )}
       {g.revisions.length > 0 && (
         <p className="mt-1.5 text-[12px] text-warn">

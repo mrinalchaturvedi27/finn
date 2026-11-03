@@ -225,6 +225,7 @@ export type Verdict = {
   calc?: string;
   reason?: string | null;
   tracking?: string | null;
+  run_rate?: boolean;
   tolerance_pp?: number;
   quarters?: string[];
 };

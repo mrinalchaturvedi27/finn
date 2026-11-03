@@ -671,7 +671,8 @@ def test_scorecard_fy_growth_pending_then_final():
     s = _series({"2025-06-30": (100, 20), "2025-09-30": (100, 20), "2025-12-31": (100, 20), "2026-03-31": (100, 20),
                  "2026-06-30": (116, 22), "2026-09-30": (117, 22)})
     v = build([_stmt()], s, date(2026, 11, 3))[0]["verdict"]
-    assert v["status"] == "pending" and v["tracking"] == "on track" and round(v["value"], 1) == 16.5
+    assert v["status"] == "pending" and v["tracking"] == "run-rate above target" and round(v["value"], 1) == 16.5
+    assert "Run-rate indication only (2 of 4 quarters filed)" in v["reason"] and "not delivered" in v["reason"]
     s["quarters"] += _series({"2026-12-31": (110, 20), "2027-03-31": (110, 20)})["quarters"]
     v = build([_stmt()], s, date(2027, 6, 1))[0]["verdict"]
     assert v["status"] == "missed" and round(v["value"], 2) == 13.25  # 15-18% guided, more than 1pp short
@@ -689,7 +690,7 @@ def test_scorecard_tolerance_supersession_and_gaps():
     assert [c["verdict"]["status"] for c in clash] == ["not_comparable"] * 2 and all(not c["revisions"] for c in clash)
     same = build([_stmt(stated_on="2026-02-01"), _stmt(stated_on="2026-08-01")], s, date(2026, 11, 3))[0]
     assert same["revisions"] == [] and same["reiterated_on"] == ["2026-02-01"]
-    assert items[0]["verdict"]["tracking"] == "slightly behind"  # 14.5% is within 1pp of 15%
+    assert items[0]["verdict"]["tracking"] == "run-rate just below target"  # 14.5% is within 1pp of 15%
     # a finished year with missing quarters is a data gap, not "pending"
     gap = build([_stmt(period_fy=2026, period_label="FY26")], _series({"2025-03-31": (90, 18), "2026-03-31": (100, 20)}),
                 date(2026, 11, 3))[0]["verdict"]

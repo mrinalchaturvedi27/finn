@@ -68,8 +68,10 @@ are the company's own filings only, with no news, broker notes or model knowledg
    call are not checkable. Every verdict shows its calculation, the quote and its page.
 
 Precision over recall: every claimed verdict on 11 companies was checked by hand against its
-quote, and each false one became a rule and a test. Most Indian guidance is segment-level, so many
-statements are listed as not checkable, with the reason.
+quote, and each false one became a rule and a test. Only three comparisons were checkable, two
+delivered and one pending. Most Indian guidance is segment-level, so most statements are listed as
+not checkable, with the reason. A pending verdict is a run-rate indication from the quarters filed
+so far, never an annual target met.
 
 ## Live ingestion (milestone 2)
 
