@@ -1,7 +1,7 @@
 {
  "ticker": "RELIANCE",
- "generated_at": "2026-11-03T23:20:54",
- "rules_version": 1,
+ "generated_at": "2026-11-03T23:49:45",
+ "rules_version": 2,
  "extract_version": 1,
  "sources": {
   "transcripts": [],
@@ -240,5 +240,5 @@
   "calls_found": 0
  },
  "status": "done",
- "cache_key": "d93721ad9d8273ce8ba37fa2"
+ "cache_key": "d84fe78eeb517ad434640bf0"
 }

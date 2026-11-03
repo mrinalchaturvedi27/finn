@@ -1,7 +1,7 @@
 {
  "ticker": "POLYCAB",
- "generated_at": "2026-11-03T23:19:28",
- "rules_version": 1,
+ "generated_at": "2026-11-03T23:49:31",
+ "rules_version": 2,
  "extract_version": 1,
  "sources": {
   "transcripts": [
@@ -311,6 +311,7 @@
    ],
    "target": "~10%",
    "revisions": [],
+   "conflicts": [],
    "reiterated_on": [],
    "verdict": {
     "status": "not_comparable",
@@ -318,25 +319,82 @@
    }
   },
   {
-   "metric": "revenue_growth",
-   "metric_label": "Revenue growth",
-   "direction": "point",
-   "low": 17.0,
-   "high": 17.0,
+   "metric": "ebitda_margin",
+   "metric_label": "EBITDA margin",
+   "direction": "range",
+   "low": 8.0,
+   "high": 10.0,
    "unit": "pct",
-   "period_type": "FY",
-   "period_fy": 2026,
-   "period_label": "FY26",
-   "quote": "The FMEG segment sustained its impressive growth momentum, delivering a 17% YoY increase in Q3 FY26, and consistently outperforming the industry in-line with our Project Spring growth aspirations.",
+   "period_type": "long_horizon",
+   "period_fy": null,
+   "period_label": "multi-year",
+   "quote": "In FMEG, we continue to outpace industry growth in line with our plan of growing 1.5x to 2x the market rate, while maintaining focus on margin improvement and progressing towards the 8%-10% EBITDA target by FY 2030.",
    "page": 5,
-   "speaker": "Shashank Yagnick",
-   "stated_on": "2026-01-16",
-   "source_url": "https://nsearchives.nseindia.com/corporate/POLYCAB_22012026193636_Intimation_of_Earnings_Call_Transcript.pdf",
+   "speaker": "Chirayu Upadhyaya",
+   "stated_on": "2025-10-17",
+   "source_url": "https://nsearchives.nseindia.com/corporate/POLYCAB_28102025211243_SEintimationearningscall17102025.pdf",
    "notes": [
     "may refer to a segment, not the whole company"
    ],
-   "target": "~17%",
+   "target": "8\u201310%",
    "revisions": [],
+   "conflicts": [],
+   "reiterated_on": [],
+   "verdict": {
+    "status": "not_comparable",
+    "reason": "Refers to a segment; FINN checks company-level filings only."
+   }
+  },
+  {
+   "metric": "ebitda_margin",
+   "metric_label": "EBITDA margin",
+   "direction": "point",
+   "low": 10.0,
+   "high": 10.0,
+   "unit": "pct",
+   "period_type": "standing",
+   "period_fy": null,
+   "period_label": "standing band",
+   "quote": "If you remove that from the margins of the EPC business, you would end up at around 10% of EBIT margins for the quarter, which is in line with our guided range for the segment.",
+   "page": 9,
+   "speaker": "Chirayu Upadhyaya",
+   "stated_on": "2025-10-17",
+   "source_url": "https://nsearchives.nseindia.com/corporate/POLYCAB_28102025211243_SEintimationearningscall17102025.pdf",
+   "notes": [
+    "may refer to a segment, not the whole company",
+    "margin type not stated (gross, EBITDA or segment)"
+   ],
+   "target": "~10%",
+   "revisions": [],
+   "conflicts": [],
+   "reiterated_on": [],
+   "verdict": {
+    "status": "not_comparable",
+    "reason": "Refers to a segment; FINN checks company-level filings only."
+   }
+  },
+  {
+   "metric": "ebitda_margin",
+   "metric_label": "EBITDA margin",
+   "direction": "range",
+   "low": 11.0,
+   "high": 13.0,
+   "unit": "pct",
+   "period_type": "unstated",
+   "period_fy": null,
+   "period_label": "period not stated",
+   "quote": "Achal, the guidance of 11% to 13% of margins is a 5-year guidance.",
+   "page": 12,
+   "speaker": "Chirayu Upadhyaya",
+   "stated_on": "2025-10-17",
+   "source_url": "https://nsearchives.nseindia.com/corporate/POLYCAB_28102025211243_SEintimationearningscall17102025.pdf",
+   "notes": [
+    "may refer to a segment, not the whole company",
+    "margin type not stated (gross, EBITDA or segment)"
+   ],
+   "target": "11\u201313%",
+   "revisions": [],
+   "conflicts": [],
    "reiterated_on": [],
    "verdict": {
     "status": "not_comparable",
@@ -364,6 +422,7 @@
    ],
    "target": "8\u201310%",
    "revisions": [],
+   "conflicts": [],
    "reiterated_on": [],
    "verdict": {
     "status": "not_comparable",
@@ -390,6 +449,34 @@
    ],
    "target": "7\u201310%",
    "revisions": [],
+   "conflicts": [],
+   "reiterated_on": [],
+   "verdict": {
+    "status": "not_comparable",
+    "reason": "Refers to a segment; FINN checks company-level filings only."
+   }
+  },
+  {
+   "metric": "revenue_growth",
+   "metric_label": "Revenue growth",
+   "direction": "point",
+   "low": 17.0,
+   "high": 17.0,
+   "unit": "pct",
+   "period_type": "FY",
+   "period_fy": 2026,
+   "period_label": "FY26",
+   "quote": "The FMEG segment sustained its impressive growth momentum, delivering a 17% YoY increase in Q3 FY26, and consistently outperforming the industry in-line with our Project Spring growth aspirations.",
+   "page": 5,
+   "speaker": "Shashank Yagnick",
+   "stated_on": "2026-01-16",
+   "source_url": "https://nsearchives.nseindia.com/corporate/POLYCAB_22012026193636_Intimation_of_Earnings_Call_Transcript.pdf",
+   "notes": [
+    "may refer to a segment, not the whole company"
+   ],
+   "target": "~17%",
+   "revisions": [],
+   "conflicts": [],
    "reiterated_on": [],
    "verdict": {
     "status": "not_comparable",
@@ -416,6 +503,7 @@
    ],
    "target": "3\u20135%",
    "revisions": [],
+   "conflicts": [],
    "reiterated_on": [],
    "verdict": {
     "status": "not_comparable",
@@ -442,6 +530,34 @@
    ],
    "target": "7\u201310%",
    "revisions": [],
+   "conflicts": [],
+   "reiterated_on": [],
+   "verdict": {
+    "status": "not_comparable",
+    "reason": "Refers to a segment; FINN checks company-level filings only."
+   }
+  },
+  {
+   "metric": "ebitda_margin",
+   "metric_label": "EBITDA margin",
+   "direction": "range",
+   "low": 8.0,
+   "high": 10.0,
+   "unit": "pct",
+   "period_type": "long_horizon",
+   "period_fy": null,
+   "period_label": "multi-year",
+   "quote": "Page 7 of 18 Polycab India Limited May 06, 2026 In FMEG, we are also progressing well consistently, outpacing industry growth in line with our target of growing at 1.5x to 2x of market rate, while maintaining a clear focus on margin expansion and progressing towards our EBITDA margin goal of 8% to 10% by FY2030.",
+   "page": 5,
+   "speaker": "Shashank Yagnick",
+   "stated_on": "2026-05-08",
+   "source_url": "https://nsearchives.nseindia.com/corporate/POLYCAB_08052026185934_Intimation_of_Earnings_Call_Transcript.pdf",
+   "notes": [
+    "may refer to a segment, not the whole company"
+   ],
+   "target": "8\u201310%",
+   "revisions": [],
+   "conflicts": [],
    "reiterated_on": [],
    "verdict": {
     "status": "not_comparable",
@@ -455,9 +571,9 @@
    "low": 0.0,
    "high": 0.0,
    "unit": "crore",
-   "period_type": "unstated",
+   "period_type": "long_horizon",
    "period_fy": null,
-   "period_label": "period not stated",
+   "period_label": "multi-year",
    "quote": "And we are continuing to expand, again, in line with our Project Spring guidance of INR 6,000 crores to INR 8,000 crores capex by financial year 2030.",
    "page": 12,
    "speaker": "Shashank Yagnick",
@@ -468,32 +584,7 @@
    ],
    "target": "~0 cr",
    "revisions": [],
-   "reiterated_on": [],
-   "verdict": {
-    "status": "not_comparable",
-    "reason": "Refers to a segment; FINN checks company-level filings only."
-   }
-  },
-  {
-   "metric": "revenue_growth",
-   "metric_label": "Revenue growth",
-   "direction": "point",
-   "low": 12.0,
-   "high": 12.0,
-   "unit": "pct",
-   "period_type": "unstated",
-   "period_fy": null,
-   "period_label": "period not stated",
-   "quote": "If we are expecting 12% market growth, then we should deliver 18% and plus.",
-   "page": 13,
-   "speaker": "Shashank Yagnick",
-   "stated_on": "2026-05-08",
-   "source_url": "https://nsearchives.nseindia.com/corporate/POLYCAB_08052026185934_Intimation_of_Earnings_Call_Transcript.pdf",
-   "notes": [
-    "may refer to a segment, not the whole company"
-   ],
-   "target": "~12%",
-   "revisions": [],
+   "conflicts": [],
    "reiterated_on": [],
    "verdict": {
     "status": "not_comparable",
@@ -520,6 +611,7 @@
    ],
    "target": "11\u201313%",
    "revisions": [],
+   "conflicts": [],
    "reiterated_on": [],
    "verdict": {
     "status": "not_comparable",
@@ -546,6 +638,7 @@
    ],
    "target": "~500 cr",
    "revisions": [],
+   "conflicts": [],
    "reiterated_on": [],
    "verdict": {
     "status": "not_comparable",
@@ -553,80 +646,30 @@
    }
   },
   {
-   "metric": "ebitda_margin",
-   "metric_label": "EBITDA margin",
-   "direction": "range",
-   "low": 8.0,
-   "high": 10.0,
-   "unit": "pct",
-   "period_type": "unstated",
-   "period_fy": null,
-   "period_label": "period not stated",
-   "quote": "EBIT margins for the quarter were 8%, very much in line with the milestones laid out under Project Spring, where we target EBITDA margins of 8% to 10% by FY 2030.",
-   "page": 4,
-   "speaker": "Shashank Yagnick",
-   "stated_on": "2026-07-20",
-   "source_url": "https://nsearchives.nseindia.com/corporate/POLYCAB_20072026120857_Intimation_of_Earnings_Call_Transcript.pdf",
-   "notes": [
-    "may refer to a segment, not the whole company"
-   ],
-   "target": "8\u201310%",
-   "revisions": [],
-   "reiterated_on": [],
-   "verdict": {
-    "status": "not_comparable",
-    "reason": "The same call gives different targets for this metric and period (7\u201310%, 8\u201310%); FINN can't tell which is company-level."
-   }
-  },
-  {
-   "metric": "ebitda_margin",
-   "metric_label": "EBITDA margin",
-   "direction": "range",
-   "low": 7,
-   "high": 10,
-   "unit": "pct",
-   "period_type": "unstated",
-   "period_fy": null,
-   "period_label": "period not stated",
-   "quote": "And profitability, like you mentioned, we have always guided that Bharat Net, which again forms part of our EPC business, the expected margins are supposed to be high single digits.",
-   "page": 8,
-   "speaker": "Shashank Yagnick",
-   "stated_on": "2026-07-20",
-   "source_url": "https://nsearchives.nseindia.com/corporate/POLYCAB_20072026120857_Intimation_of_Earnings_Call_Transcript.pdf",
-   "notes": [
-    "may refer to a segment, not the whole company",
-    "margin type not stated (gross, EBITDA or segment)"
-   ],
-   "target": "7\u201310%",
-   "revisions": [],
-   "reiterated_on": [],
-   "verdict": {
-    "status": "not_comparable",
-    "reason": "The same call gives different targets for this metric and period (7\u201310%, 8\u201310%); FINN can't tell which is company-level."
-   }
-  },
-  {
    "metric": "revenue_growth",
    "metric_label": "Revenue growth",
    "direction": "point",
-   "low": 3.0,
-   "high": 3.0,
+   "low": 12.0,
+   "high": 12.0,
    "unit": "pct",
    "period_type": "unstated",
    "period_fy": null,
    "period_label": "period not stated",
-   "quote": "The IMF's latest outlook projects global growth approximately at 3% for 2026, supported by resilient economic activity and technology-driven investment cycle, while global inflation forecasts have been revised higher.",
-   "page": 3,
-   "speaker": "Niyant Maru",
-   "stated_on": "2026-07-20",
-   "source_url": "https://nsearchives.nseindia.com/corporate/POLYCAB_20072026120857_Intimation_of_Earnings_Call_Transcript.pdf",
-   "notes": [],
-   "target": "~3%",
+   "quote": "If we are expecting 12% market growth, then we should deliver 18% and plus.",
+   "page": 13,
+   "speaker": "Shashank Yagnick",
+   "stated_on": "2026-05-08",
+   "source_url": "https://nsearchives.nseindia.com/corporate/POLYCAB_08052026185934_Intimation_of_Earnings_Call_Transcript.pdf",
+   "notes": [
+    "may refer to a segment, not the whole company"
+   ],
+   "target": "~12%",
    "revisions": [],
+   "conflicts": [],
    "reiterated_on": [],
    "verdict": {
     "status": "not_comparable",
-    "reason": "No target period stated, so there is nothing definite to check it against."
+    "reason": "Refers to a segment; FINN checks company-level filings only."
    }
   },
   {
@@ -650,6 +693,34 @@
    ],
    "target": "11\u201313%",
    "revisions": [],
+   "conflicts": [],
+   "reiterated_on": [],
+   "verdict": {
+    "status": "not_comparable",
+    "reason": "Refers to a segment; FINN checks company-level filings only."
+   }
+  },
+  {
+   "metric": "ebitda_margin",
+   "metric_label": "EBITDA margin",
+   "direction": "range",
+   "low": 8.0,
+   "high": 10.0,
+   "unit": "pct",
+   "period_type": "long_horizon",
+   "period_fy": null,
+   "period_label": "multi-year",
+   "quote": "EBIT margins for the quarter were 8%, very much in line with the milestones laid out under Project Spring, where we target EBITDA margins of 8% to 10% by FY 2030.",
+   "page": 4,
+   "speaker": "Shashank Yagnick",
+   "stated_on": "2026-07-20",
+   "source_url": "https://nsearchives.nseindia.com/corporate/POLYCAB_20072026120857_Intimation_of_Earnings_Call_Transcript.pdf",
+   "notes": [
+    "may refer to a segment, not the whole company"
+   ],
+   "target": "8\u201310%",
+   "revisions": [],
+   "conflicts": [],
    "reiterated_on": [],
    "verdict": {
     "status": "not_comparable",
@@ -676,6 +747,35 @@
    ],
    "target": "7\u201310%",
    "revisions": [],
+   "conflicts": [],
+   "reiterated_on": [],
+   "verdict": {
+    "status": "not_comparable",
+    "reason": "Refers to a segment; FINN checks company-level filings only."
+   }
+  },
+  {
+   "metric": "ebitda_margin",
+   "metric_label": "EBITDA margin",
+   "direction": "range",
+   "low": 7,
+   "high": 10,
+   "unit": "pct",
+   "period_type": "unstated",
+   "period_fy": null,
+   "period_label": "period not stated",
+   "quote": "And profitability, like you mentioned, we have always guided that Bharat Net, which again forms part of our EPC business, the expected margins are supposed to be high single digits.",
+   "page": 8,
+   "speaker": "Shashank Yagnick",
+   "stated_on": "2026-07-20",
+   "source_url": "https://nsearchives.nseindia.com/corporate/POLYCAB_20072026120857_Intimation_of_Earnings_Call_Transcript.pdf",
+   "notes": [
+    "may refer to a segment, not the whole company",
+    "margin type not stated (gross, EBITDA or segment)"
+   ],
+   "target": "7\u201310%",
+   "revisions": [],
+   "conflicts": [],
    "reiterated_on": [],
    "verdict": {
     "status": "not_comparable",
@@ -700,10 +800,36 @@
    "notes": [],
    "target": "at least 10%",
    "revisions": [],
+   "conflicts": [],
    "reiterated_on": [],
    "verdict": {
     "status": "not_comparable",
     "reason": "Multi-year target; beyond the quarters available."
+   }
+  },
+  {
+   "metric": "revenue_growth",
+   "metric_label": "Revenue growth",
+   "direction": "point",
+   "low": 3.0,
+   "high": 3.0,
+   "unit": "pct",
+   "period_type": "unstated",
+   "period_fy": null,
+   "period_label": "period not stated",
+   "quote": "The IMF's latest outlook projects global growth approximately at 3% for 2026, supported by resilient economic activity and technology-driven investment cycle, while global inflation forecasts have been revised higher.",
+   "page": 3,
+   "speaker": "Niyant Maru",
+   "stated_on": "2026-07-20",
+   "source_url": "https://nsearchives.nseindia.com/corporate/POLYCAB_20072026120857_Intimation_of_Earnings_Call_Transcript.pdf",
+   "notes": [],
+   "target": "~3%",
+   "revisions": [],
+   "conflicts": [],
+   "reiterated_on": [],
+   "verdict": {
+    "status": "not_comparable",
+    "reason": "No target period stated, so there is nothing definite to check it against."
    }
   },
   {
@@ -726,6 +852,7 @@
    ],
    "target": "8\u201310%",
    "revisions": [],
+   "conflicts": [],
    "reiterated_on": [],
    "verdict": {
     "status": "not_comparable",
@@ -752,6 +879,7 @@
    ],
    "target": "11\u201313%",
    "revisions": [],
+   "conflicts": [],
    "reiterated_on": [],
    "verdict": {
     "status": "not_comparable",
@@ -779,6 +907,7 @@
    ],
    "target": "7\u201310%",
    "revisions": [],
+   "conflicts": [],
    "reiterated_on": [],
    "verdict": {
     "status": "not_comparable",
@@ -805,6 +934,7 @@
    ],
    "target": "8\u201310%",
    "revisions": [],
+   "conflicts": [],
    "reiterated_on": [],
    "verdict": {
     "status": "not_comparable",
@@ -817,11 +947,11 @@
   "partial": 0,
   "missed": 0,
   "pending": 0,
-  "not_comparable": 20,
-  "statements": 20,
+  "not_comparable": 24,
+  "statements": 24,
   "calls_read": 5,
   "calls_found": 5
  },
  "status": "done",
- "cache_key": "018382eb059d3f376c280a3a"
+ "cache_key": "fa0f113c716c2f7d21a4e386"
 }

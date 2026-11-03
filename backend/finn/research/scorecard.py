@@ -12,7 +12,11 @@ from datetime import date
 
 from .financials import fiscal_year, fy_quarters
 
-RULES_VERSION = 1
+RULES_VERSION = 2  # 2: a different later target is a revision only when it explicitly replaces the earlier one
+# Language that says a target is being replaced, not just restated loosely.
+REPLACES = re.compile(r"\b(revis\w*|lower(?:ed|ing)?|cut|reduc\w*|now (?:expect|see|guide|believe|estimate)|moderat\w*|"
+                      r"(?:earlier|previous|prior|original) (?:guidance|target|estimate)|instead of|scal\w* (?:back|down)|"
+                      r"rais\w*|upgrad\w*|downgrad\w*|from \d+(?:\.\d+)?\s*% to)\b", re.I)
 TOLERANCE = {"pct_growth": 1.0, "margin": 0.5}  # percentage points
 CR = 1e7  # rupees per crore
 
@@ -20,9 +24,15 @@ CR = 1e7  # rupees per crore
 def build(statements: list[dict], series: dict, today: date) -> list[dict]:
     q = {x["quarter_end"]: x for x in series["quarters"]}
     groups: dict[tuple, list[dict]] = {}
-    for s in sorted(statements, key=lambda s: s["stated_on"]):
-        groups.setdefault(_key(s), []).append(s)
     out = []
+    for s in sorted(statements, key=lambda s: s["stated_on"]):
+        if _intrinsically_uncheckable(s):
+            # a segment, industry, volume, capex or multi-year statement can't revise or contradict a
+            # company-level target: it stands alone with its own reason
+            out.append({**s, "target": target_text(s), "revisions": [], "conflicts": [], "reiterated_on": [],
+                        "verdict": verdict(s, q, series, today)})
+            continue
+        groups.setdefault(_key(s), []).append(s)
     for items in groups.values():
         last_call = [s for s in items if s["stated_on"] == items[-1]["stated_on"]]
         if len({target_text(s) for s in last_call}) > 1:
@@ -36,16 +46,46 @@ def build(statements: list[dict], series: dict, today: date) -> list[dict]:
                                                   "FINN can't tell which is company-level."}})
             continue
         latest = items[-1]
+        if verdict(latest, q, series, today)["status"] == "not_comparable":
+            # the latest statement can't be checked itself: list every statement on its own
+            for s in items:
+                out.append({**s, "target": target_text(s), "revisions": [], "conflicts": [], "reiterated_on": [],
+                            "verdict": verdict(s, q, series, today)})
+            continue
         earlier = [{"stated_on": s["stated_on"], "target": target_text(s), "quote": s["quote"], "page": s["page"],
-                    "source_url": s["source_url"]} for s in items[:-1]]
+                    "source_url": s["source_url"], "speaker": s["speaker"]} for s in items[:-1]]
         # saying the same target again is a reiteration, not a revision
-        trail = [e for e in earlier if e["target"] != target_text(latest)]
+        differ = [e for e in earlier if e["target"] != target_text(latest)]
         reiterated = [e["stated_on"] for e in earlier if e["target"] == target_text(latest)]
-        out.append({**latest, "target": target_text(latest), "revisions": trail, "reiterated_on": reiterated,
-                    "verdict": verdict(latest, q, series, today)})
+        v = verdict(latest, q, series, today)
+        if differ and not REPLACES.search(latest["quote"]):
+            # a different target on another call, with nothing saying it replaces the earlier one:
+            # both stand as statements, and FINN does not pick the one that flatters the result
+            targets = "; ".join(f"{e['target']} on {e['stated_on']}" for e in differ)
+            actual = f" For reference: {v['calc']}" if v.get("calc") else ""
+            v = {**v, "status": "not_comparable", "tracking": None, "run_rate": False, "ambiguous": True,
+                 "reason": f"Management gave different targets on different calls ({targets}; "
+                           f"{target_text(latest)} on {latest['stated_on']}) and none explicitly replaces the other, "
+                           f"so FINN doesn't choose.{actual}"}
+            out.append({**latest, "target": target_text(latest), "revisions": [], "conflicts": differ,
+                        "reiterated_on": reiterated, "verdict": v})
+            continue
+        out.append({**latest, "target": target_text(latest), "revisions": differ, "conflicts": [],
+                    "reiterated_on": reiterated, "verdict": v})
     order = {"missed": 0, "partial": 1, "delivered": 2, "pending": 3, "not_comparable": 4}
     out.sort(key=lambda s: (order[s["verdict"]["status"]], s["stated_on"]), reverse=False)
     return out
+
+
+DEFINITE_SCOPE = {"refers to the industry or economy, not the company", "margin type not stated (gross, EBITDA or segment)",
+                  "loan book / AUM measure, not in the results filing", "constant-currency basis"}
+
+
+def _intrinsically_uncheckable(s: dict) -> bool:
+    """Measures something else for certain. A "may refer to a segment" flag is uncertain scope: such a
+    statement still groups, so it can make a company-level target ambiguous."""
+    return (bool(DEFINITE_SCOPE & set(s["notes"])) or s["metric"] in ("volume_growth", "capex")
+            or s["period_type"] == "long_horizon")
 
 
 def _key(s: dict) -> tuple:
@@ -120,7 +160,7 @@ def _fy(s: dict, q: dict) -> dict:
             return _pending_nothing(label, have)
         e, r = sum(x["ebitda_op_proxy"] for x in rows), sum(x["revenue"] for x in rows)
         value = e / r * 100
-        calc = (f"{label}{_todate(have)}: operating EBITDA ₹{e / CR:,.0f} cr ÷ revenue ₹{r / CR:,.0f} cr "
+        calc = (f"{_span(label, have)}: operating EBITDA ₹{e / CR:,.0f} cr ÷ revenue ₹{r / CR:,.0f} cr "
                 f"= {value:.1f}% (FINN's EBITDA excludes other income; the company's definition may differ)")
         return _judge(s, value, "margin", calc, final=len(have) == 4, quarters=have)
     metric = {"revenue_growth": "revenue", "pat_growth": "pat"}[s["metric"]]
@@ -135,9 +175,11 @@ def _fy(s: dict, q: dict) -> dict:
         return {"status": "not_comparable", "reason": "Year-ago base is zero or negative; growth is not meaningful."}
     value = (cur / base - 1) * 100
     used = [d for d, _ in pairs]
-    name = "Revenue" if metric == "revenue" else "PAT"
-    calc = (f"{label}{_todate(used)}: {name} ₹{cur / CR:,.0f} cr vs ₹{base / CR:,.0f} cr in the same quarters a "
-            f"year earlier = {value:+.1f}%")
+    name = "revenue" if metric == "revenue" else "PAT"
+    prior_label = f"FY{str(fy - 1)[-2:]}"
+    base_span = prior_label if len(used) == 4 else f"{_qrange(used)} {prior_label}"
+    calc = (f"{_span(label, used)}: {name} ₹{cur / CR:,.0f} cr against ₹{base / CR:,.0f} cr in {base_span} "
+            f"= {value:+.1f}%")
     return _judge(s, value, "pct_growth", calc, final=len(used) == 4, quarters=used)
 
 
@@ -213,6 +255,26 @@ def _pending_nothing(label: str, have: list) -> dict:
 def _year_ago(d: str) -> str:
     x = date.fromisoformat(d)
     return date(x.year - 1, x.month, x.day).isoformat()
+
+
+MONTH = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
+
+
+def _qrange(quarters: list[str]) -> str:
+    qs = [fy_label_q(d) for d in sorted(quarters)]
+    return qs[0] if len(qs) == 1 else f"{qs[0]}–{qs[-1]}"
+
+
+def _span(label: str, quarters: list[str]) -> str:
+    """'FY26, all 4 quarters (Apr 2025–Mar 2026)' or 'FY27 to date, 1 of 4 quarters (Q1: Apr–Jun 2026)'."""
+    qs = sorted(quarters)
+    first, last = date.fromisoformat(qs[0]), date.fromisoformat(qs[-1])
+    start_m = MONTH[(first.month - 3) % 12]
+    start_y = first.year if first.month > 3 else first.year
+    months = f"{start_m} {start_y if start_y != last.year else ''}".strip() + f"–{MONTH[last.month - 1]} {last.year}"
+    if len(qs) == 4:
+        return f"{label}, all 4 quarters ({months})"
+    return f"{label} to date, {len(qs)} of 4 quarters ({_qrange(qs)}: {months})"
 
 
 def _todate(quarters: list[str]) -> str:

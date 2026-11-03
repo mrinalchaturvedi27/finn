@@ -37,16 +37,12 @@ function yoyOf(e: BriefEvent, id: string): Change | undefined {
   return e.results_headline?.find((h) => h.id === id)?.yoy;
 }
 
+/** "Revenue +28.6%; PAT +33.8% YoY": the figures, not an interpretation of them. */
 function pattern(e: BriefEvent): string | null {
-  const rev = yoyOf(e, "revenue") ?? yoyOf(e, "nii");
-  const pat = yoyOf(e, "pat");
-  if (rev?.state !== "ok" || pat?.state !== "ok" || rev.value == null || pat.value == null) return null;
-  if (rev.value > 0 && pat.value < 0) return "Revenue grew but profit fell, year on year.";
-  if (rev.value < 0 && pat.value > 0) return "Profit rose although revenue fell, year on year.";
-  if (rev.value < 0 && pat.value < 0) return "Revenue and profit both fell, year on year.";
-  if (pat.value - rev.value > 15) return "Profit grew much faster than revenue, year on year.";
-  if (rev.value - pat.value > 15) return "Profit grew more slowly than revenue, year on year.";
-  return "Revenue and profit grew roughly in step, year on year.";
+  const fmt = (label: string, c: Change | undefined) =>
+    c?.state === "ok" && c.value != null ? `${label} ${c.value >= 0 ? "+" : "−"}${Math.abs(c.value).toFixed(1)}%` : null;
+  const parts = [fmt(yoyOf(e, "nii") ? "NII" : "Revenue", yoyOf(e, "revenue") ?? yoyOf(e, "nii")), fmt("PAT", yoyOf(e, "pat"))].filter(Boolean);
+  return parts.length ? `${parts.join("; ")} YoY.` : null;
 }
 
 const BUNDLE: Record<string, string> = {

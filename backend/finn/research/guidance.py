@@ -37,8 +37,8 @@ SEGMENT = re.compile(r"\b(segment|division|vertical|business|category|subsidiary
 # case-sensitive: "UK" is a place, "us" is the company talking about itself
 GEO = re.compile(r"\b(UK|US|USA|Europe|America|Africa|Gulf|Middle East|Asia)\b")
 # "margins on FMEG": a business line named by an acronym (metric acronyms excluded)
-SEGMENT_ACRONYM = re.compile(r"\b(?:on|in|for|of)\s+(?:the\s+|our\s+)?(?!EBITDA\b|PAT\b|GDP\b|CAGR\b|EPS\b|ROCE\b|ROE\b)"
-                             r"[A-Z]{3,6}\b")
+SEGMENT_ACRONYM = re.compile(r"\b(?:[Oo]n|[Ii]n|[Ff]or|[Oo]f)\s+(?:the\s+|our\s+)?"
+                             r"(?!EBITDA\b|PAT\b|GDP\b|CAGR\b|EPS\b|ROCE\b|ROE\b|FY\b)[A-Z]{3,6}\b")
 # "Adhesive and Paint, we have given ..." names a business line FINN cannot know in advance
 SEGMENT_LEAD = re.compile(r"\b[A-Z][a-z]+(?:\s+and\s+[A-Z][a-z]+)?,\s+we\s+(?:have|are|will|had)\b")
 INDUSTRY = re.compile(r"\b(industry|gdp|economy|economic|market|sector|system|peers?|category growth|nominal|space)\b",
@@ -68,7 +68,7 @@ VERBAL = [  # standard Indian-call phrasings -> (low, high); "at least" when hig
 ]
 FY = re.compile(r"\b(?:FY|fiscal|financial year)\s*'?\s*(?:20)?(\d{2})\b", re.I)
 LONG = re.compile(r"\b(next|coming)\s+(two|three|four|five|2|3|4|5)(?:\s*(?:-|to)\s*(?:three|four|five|3|4|5))?\s+years|"
-                  r"medium[- ]term|long(?:er)?[- ]term|over the long run|over the years|by 20[3-9]\d|cagr", re.I)
+                  r"medium[- ]term|long(?:er)?[- ]term|over the long run|over the years|by (?:fy\s*'?)?20[3-9]\d|cagr", re.I)
 
 
 @dataclass
@@ -214,9 +214,11 @@ def _period(s: str, stated_on: date, metric: str) -> dict:
         return {"period_type": "long_horizon", "period_fy": None, "period_label": "multi-year"}
     m = FY.search(s)
     if m:
-        fy = 2000 + int(m.group(1))
+        fy = 2000 + int(m.group(1) if len(m.group(1)) == 2 else m.group(1)[-2:])
         if cur_fy - 1 <= fy <= cur_fy + 2:
             return {"period_type": "FY", "period_fy": fy, "period_label": f"FY{str(fy)[-2:]}"}
+        if fy > cur_fy + 2:  # "by FY 2030": beyond the quarters available
+            return {"period_type": "long_horizon", "period_fy": None, "period_label": "multi-year"}
     if re.search(r"\bnext (?:year|fiscal|financial year)\b", s, re.I):
         return {"period_type": "FY", "period_fy": cur_fy + 1, "period_label": f"FY{str(cur_fy + 1)[-2:]}"}
     # "growth over the previous year" is this year's growth

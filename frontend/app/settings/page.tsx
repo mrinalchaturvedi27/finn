@@ -33,19 +33,22 @@ export default function PreferencesPage() {
       <div className="kicker mt-3 text-accent">Preferences</div>
       <h1 className="serif mt-1 text-[30px] font-semibold leading-tight tracking-tight">What counts as unusual</h1>
 
-      <div className="mt-3 border-l-2 border-accent bg-surface px-3 py-2.5 text-[13px] leading-snug text-ink-2">
-        <p>
-          <span className="font-semibold">Saved in this browser only.</span> These lines decide which price moves and filings the
-          briefing flags as alerts for you, in both the demo and live briefings. They don’t change what the server monitors or
-          send notifications.
+      <details className="group mt-3 border-l-2 border-accent pl-3 text-[13px] leading-snug text-ink-2">
+        <summary className="flex min-h-[40px] cursor-pointer items-center gap-2">
+          <span><span className="font-semibold">Saved in this browser only</span> · server monitoring unchanged</span>
+          <span className="text-faint group-open:rotate-90" aria-hidden>›</span>
+        </summary>
+        <p className="pb-1">
+          These lines decide which price moves and filings the briefing flags as alerts for you, in the demo and live briefings.
+          They don’t change what the server monitors, and nothing sends notifications.
         </p>
         {defaults && (
-          <p className="mt-1.5 text-muted">
+          <p className="pb-2 text-muted">
             Background monitoring keeps the server defaults: ±{defaults.price_pct}% price, {defaults.volume_multiple}× volume,{" "}
             {defaults.alert_categories.map((c) => CATEGORY_LABEL[c] ?? c).join(", ")}.
           </p>
         )}
-      </div>
+      </details>
 
       {!server && <LoadStatus state={state} err={err} onRetry={retry} what="preferences" />}
 

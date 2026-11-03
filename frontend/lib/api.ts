@@ -244,6 +244,7 @@ export type Verdict = {
   reason?: string | null;
   tracking?: string | null;
   run_rate?: boolean;
+  ambiguous?: boolean;
   tolerance_pp?: number;
   quarters?: string[];
 };
@@ -266,6 +267,7 @@ export type GuidanceItem = {
   notes: string[];
   revisions: { stated_on: string; target: string; quote: string; page: number; source_url: string }[];
   reiterated_on?: string[];
+  conflicts?: { stated_on: string; target: string; quote: string; page: number; source_url: string; speaker?: string }[];
   verdict: Verdict;
 };
 

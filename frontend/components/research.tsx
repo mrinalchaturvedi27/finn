@@ -12,7 +12,7 @@ export const VERDICT: Record<Verdict["status"], { label: string; cls: string }> 
 
 export function VerdictChip({ v }: { v: Verdict }) {
   const s = VERDICT[v.status];
-  const label = v.status === "pending" && v.tracking ? "Pending · run-rate indication" : s.label;
+  const label = v.ambiguous ? "Conflicting targets" : v.status === "pending" && v.tracking ? "Pending · run-rate indication" : s.label;
   return <span className={`inline-flex shrink-0 items-center rounded-full px-2 py-0.5 text-[11px] font-medium ${s.cls}`}>{label}</span>;
 }
 
@@ -92,7 +92,7 @@ export function PromiseCard({ g }: { g: GuidanceItem }) {
         </div>
         <div className="border-l border-line py-2 pl-3">
           <dt className="text-[11px] text-faint">
-            {v.status === "pending" ? `Run-rate, ${v.quarters?.length ?? 0} of 4 quarters` : v.status === "not_comparable" ? "Delivered" : "Delivered (from filings)"}
+            {v.status === "pending" ? `Run-rate, ${v.quarters?.length ?? 0} of 4 quarters` : v.ambiguous ? "Actual (no verdict)" : v.status === "not_comparable" ? "Delivered" : "Delivered (from filings)"}
           </dt>
           <dd className={`num serif text-[21px] font-semibold leading-tight ${d ? "" : "text-faint"}`}>{d ?? "—"}</dd>
         </div>
@@ -103,6 +103,25 @@ export function PromiseCard({ g }: { g: GuidanceItem }) {
         <p className="mt-1.5 text-[12px] text-warn">
           Revised: {g.revisions.map((r) => `${r.target} (${fullDate(r.stated_on)})`).join(" → ")} → {g.target} ({fullDate(g.stated_on)})
         </p>
+      )}
+      {v.ambiguous && (
+        <p className="mt-1 text-[12px] font-medium leading-snug text-warn">
+          No verdict: management gave different targets on different calls and neither says it replaces the other.
+        </p>
+      )}
+      {(g.conflicts?.length ?? 0) > 0 && (
+        <div className="mt-2 border-l-2 border-warn pl-3 text-[12.5px] leading-snug">
+          <div className="font-semibold text-warn">Also said, with a different target:</div>
+          {g.conflicts!.map((c, i) => (
+            <p key={i} className="mt-1 text-ink-2">
+              <span className="num font-semibold">{c.target}</span> <span className="text-faint">({fullDate(c.stated_on)})</span>{" "}
+              <span className="serif italic">“{c.quote}”</span>{" "}
+              <a href={pageLink(c.source_url, c.page)} target="_blank" rel="noreferrer" className="font-semibold text-accent underline underline-offset-2">
+                p.{c.page} ↗
+              </a>
+            </p>
+          ))}
+        </div>
       )}
       {(g.reiterated_on?.length ?? 0) > 0 && (
         <p className="mt-1 text-[12px] text-faint">Also said on {g.reiterated_on!.map((x) => fullDate(x)).join(", ")}</p>

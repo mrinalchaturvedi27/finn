@@ -1,7 +1,7 @@
 {
  "ticker": "SUNPHARMA",
- "generated_at": "2026-11-03T23:19:36",
- "rules_version": 1,
+ "generated_at": "2026-11-03T23:49:38",
+ "rules_version": 2,
  "extract_version": 1,
  "sources": {
   "transcripts": [
@@ -308,6 +308,7 @@
    "notes": [],
    "target": "~27%",
    "revisions": [],
+   "conflicts": [],
    "reiterated_on": [],
    "verdict": {
     "status": "not_comparable",
@@ -374,5 +375,5 @@
   "calls_found": 5
  },
  "status": "done",
- "cache_key": "38f9158863574fb61a9bfddb"
+ "cache_key": "759b56ec0e0ec25cd0896be0"
 }

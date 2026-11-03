@@ -1,7 +1,7 @@
 {
  "ticker": "HAL",
- "generated_at": "2026-11-03T23:19:16",
- "rules_version": 1,
+ "generated_at": "2026-11-03T23:49:21",
+ "rules_version": 2,
  "extract_version": 1,
  "sources": {
   "transcripts": [
@@ -253,5 +253,5 @@
   "calls_found": 1
  },
  "status": "done",
- "cache_key": "5eb6f00267fe098828fe6e6b"
+ "cache_key": "d5579d44c9981b33047d499d"
 }

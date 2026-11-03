@@ -16,8 +16,9 @@ export default function ReportPage({ params }: { params: Promise<{ ticker: strin
   const notResearched = state === "not_found";
   const r = data?.report;
   const items = r?.guidance ?? [];
-  const checkable = items.filter((g) => g.verdict.status !== "not_comparable");
-  const other = items.filter((g) => g.verdict.status === "not_comparable");
+  // ambiguous items have a computable actual: they stay in view, with both statements, but no verdict
+  const checkable = items.filter((g) => g.verdict.status !== "not_comparable" || g.verdict.ambiguous);
+  const other = items.filter((g) => g.verdict.status === "not_comparable" && !g.verdict.ambiguous);
   const calls = r?.sources.transcripts.filter((s) => s.status === "read") ?? [];
 
   return (

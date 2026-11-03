@@ -1,7 +1,7 @@
 {
  "ticker": "TRENT",
- "generated_at": "2026-11-03T23:19:32",
- "rules_version": 1,
+ "generated_at": "2026-11-03T23:49:34",
+ "rules_version": 2,
  "extract_version": 1,
  "sources": {
   "transcripts": [],
@@ -240,5 +240,5 @@
   "calls_found": 0
  },
  "status": "done",
- "cache_key": "c366d542d5d3b1d42daff5a0"
+ "cache_key": "7df201207190660dad65f022"
 }

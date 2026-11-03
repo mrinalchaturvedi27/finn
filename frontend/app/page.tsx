@@ -59,12 +59,6 @@ export default function BriefPage() {
       <Masthead dateline={dateline} href={href} right={fresh && <span>{fresh.totals.filings} filings · {fresh.totals.events} events in {WINDOW_WORDS[win]}</span>} />
       <ModeSwitch mode={mode} setMode={setMode} />
 
-      {mode === "demo" && (
-        <p className="mt-2 text-[12px] leading-snug text-muted">
-          Real NSE filings and prices recorded by FINN, replayed as of <span className="font-medium text-ink">30 Oct 2026, 20:00 IST</span>{" "}
-          (a heavy results day). Not live.
-        </p>
-      )}
       {mode === "live" && fresh?.data_source !== "live" && fresh && (
         <p className="mt-2 border-l-2 border-warn pl-2 text-[12px] leading-snug text-warn">
           {fresh.data_source === "seed_fallback" ? "The live database is unavailable right now, so this" : "The live database isn’t connected, so this"} is the
@@ -80,6 +74,7 @@ export default function BriefPage() {
           source={fresh.data_source}
           asOf={fresh.as_of}
           scheduleNote={fresh.freshness.nse_announcements?.cadence}
+          session={fresh.movers.session}
         />
       )}
       <WindowTabs value={win} onChange={changeWin} />
@@ -89,7 +84,7 @@ export default function BriefPage() {
       {fresh && view && prefs && (
         <div className="lg:grid lg:grid-cols-[minmax(0,1fr)_320px] lg:gap-12">
           <div className="min-w-0">
-            <AlertSummary filings={view.alerts.length} moves={view.flagged.length} className="mt-4 lg:hidden" />
+            <AlertSummary filings={view.alerts.length} moves={view.flagged.length} className="mt-3 lg:hidden" />
 
             {view.lead ? (
               <LeadStory e={view.lead} asOf={fresh.as_of} move={view.moveBy.get(view.lead.ticker)} alert={alerting(view.lead, prefs)} href={ev(view.lead)} />
@@ -143,13 +138,11 @@ export default function BriefPage() {
 
 function AlertSummary({ filings, moves, className }: { filings: number; moves: number; className: string }) {
   if (!filings && !moves) return null;
-  const parts = [
-    filings ? `${filings} major filing${filings > 1 ? "s" : ""} of types you follow (marked ●)` : null,
-    moves ? `${moves} unusual move${moves > 1 ? "s" : ""}` : null,
-  ].filter(Boolean);
+  const parts = [filings ? `${filings} filings ●` : null, moves ? `${moves} price/volume` : null].filter(Boolean);
   return (
-    <p className={`bg-accent-bg px-3 py-2 text-[12.5px] leading-snug text-accent ${className}`}>
-      <span className="font-semibold">{filings + moves} alert{filings + moves > 1 ? "s" : ""} for you:</span> {parts.join(", ")}.
+    <p className={`text-[12.5px] leading-snug text-accent ${className}`}>
+      <span className="font-semibold">{filings + moves} alert{filings + moves > 1 ? "s" : ""} for you</span>
+      <span className="text-muted"> · {parts.join(" · ")}</span>
     </p>
   );
 }

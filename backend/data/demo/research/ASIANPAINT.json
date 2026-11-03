@@ -1,7 +1,7 @@
 {
  "ticker": "ASIANPAINT",
- "generated_at": "2026-11-03T23:20:12",
- "rules_version": 1,
+ "generated_at": "2026-11-03T23:49:41",
+ "rules_version": 2,
  "extract_version": 1,
  "sources": {
   "transcripts": [
@@ -308,10 +308,39 @@
    "notes": [],
    "target": "4\u20135%",
    "revisions": [],
+   "conflicts": [],
    "reiterated_on": [],
    "verdict": {
     "status": "not_comparable",
     "reason": "Volumes are not in the results filing."
+   }
+  },
+  {
+   "metric": "ebitda_margin",
+   "metric_label": "EBITDA margin",
+   "direction": "range",
+   "low": 18.0,
+   "high": 20.0,
+   "unit": "pct",
+   "period_type": "standing",
+   "period_fy": null,
+   "period_label": "standing band",
+   "quote": "Given all this, it is okay to maintain the whole guidance of 18 to 20% PBDIT margin band.",
+   "page": 27,
+   "speaker": "Amit Syngle",
+   "stated_on": "2025-11-18",
+   "source_url": "https://nsearchives.nseindia.com/corporate/ASIANPAINT_18112025120322_SEIntimationTranscriptQ2FY26Nov2025.pdf",
+   "notes": [
+    "margin type not stated (gross, EBITDA or segment)",
+    "may refer to a segment, not the whole company"
+   ],
+   "target": "18\u201320%",
+   "revisions": [],
+   "conflicts": [],
+   "reiterated_on": [],
+   "verdict": {
+    "status": "not_comparable",
+    "reason": "Refers to a segment; FINN checks company-level filings only."
    }
   },
   {
@@ -334,6 +363,7 @@
    ],
    "target": "8\u201310%",
    "revisions": [],
+   "conflicts": [],
    "reiterated_on": [],
    "verdict": {
     "status": "not_comparable",
@@ -358,6 +388,7 @@
    "notes": [],
    "target": "3\u20134%",
    "revisions": [],
+   "conflicts": [],
    "reiterated_on": [],
    "verdict": {
     "status": "not_comparable",
@@ -385,9 +416,8 @@
    ],
    "target": "18\u201320%",
    "revisions": [],
-   "reiterated_on": [
-    "2025-11-18"
-   ],
+   "conflicts": [],
+   "reiterated_on": [],
    "verdict": {
     "status": "not_comparable",
     "reason": "Refers to a segment; FINN checks company-level filings only."
@@ -413,6 +443,7 @@
    ],
    "target": "8\u20139%",
    "revisions": [],
+   "conflicts": [],
    "reiterated_on": [],
    "verdict": {
     "status": "not_comparable",
@@ -425,11 +456,11 @@
   "partial": 0,
   "missed": 0,
   "pending": 0,
-  "not_comparable": 5,
-  "statements": 5,
+  "not_comparable": 6,
+  "statements": 6,
   "calls_read": 5,
   "calls_found": 5
  },
  "status": "done",
- "cache_key": "71be0d8437e0407f1cb7b939"
+ "cache_key": "ebf6f722efaa513083912fa3"
 }

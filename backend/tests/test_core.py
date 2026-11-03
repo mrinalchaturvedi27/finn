@@ -630,6 +630,13 @@ def test_minimum_means_at_least():
     assert (st["direction"], st["low"]) == ("at_least", 20)
 
 
+def test_far_fiscal_target_in_a_named_segment_is_not_checkable():
+    from finn.research.guidance import _statement
+    st = _statement("In FMEG, we continue to outpace industry growth while progressing towards the 8%-10% EBITDA "
+                    "target by FY 2030.", date(2025, 10, 17))
+    assert st["period_type"] == "long_horizon" and "may refer to a segment, not the whole company" in st["notes"]
+
+
 def test_longer_term_is_multi_year():
     from finn.research.guidance import _statement
     st = _statement("So over the longer term, I believe we would end up in a range of 8% to 10% of the EBITDA margin.",
@@ -682,7 +689,7 @@ def test_scorecard_tolerance_supersession_and_gaps():
     from finn.research.scorecard import build
     s = _series({"2025-06-30": (100, 20), "2026-06-30": (114.5, 20)})
     early = _stmt(stated_on="2026-02-01", low=18, high=20)
-    late = _stmt(stated_on="2026-08-01", low=15, high=18)
+    late = _stmt(stated_on="2026-08-01", low=15, high=18, quote="We are lowering our growth guidance to 15% to 18%.")
     items = build([early, late], s, date(2026, 11, 3))
     assert len(items) == 1 and items[0]["revisions"][0]["target"] == "18–20%"  # revised down, trail kept
     clash = build([_stmt(stated_on="2026-08-12", low=20, high=25), _stmt(stated_on="2026-08-12", direction="at_least",
@@ -831,3 +838,57 @@ def test_demo_view_is_anchored_and_connected(tmp_path):
     assert d["session"] == "2026-10-30"  # price alerts evaluated for the reference date's session
     assert d["spot"] == "delivered" and d["dixon_research"] and d["req"] is False
     assert d["late"] <= "2026-10-30T20:00:00" and d["hidden"] == 1  # the 31 Oct newspaper notice is held back
+
+
+def test_different_target_without_explicit_replacement_is_ambiguous():
+    from finn.research.scorecard import build
+    s = _series({**{f"2024-{m}": (100, 20) for m in ("06-30", "09-30", "12-31")}, "2025-03-31": (100, 20),
+                 **{f"2025-{m}": (125.8, 20) for m in ("06-30", "09-30", "12-31")}, "2026-03-31": (125.8, 20)})
+    early = _stmt(stated_on="2025-07-28", period_fy=2026, period_label="FY26", direction="point", low=50, high=50,
+                  quote="We are confident of achieving 50% growth this fiscal.")
+    vague = _stmt(stated_on="2025-10-24", period_fy=2026, period_label="FY26", direction="at_least", low=10, high=None,
+                  quote="But my sense is it should be a double-digit kind of growth this year.")
+    item = build([early, vague], s, date(2026, 11, 3))[0]
+    v = item["verdict"]
+    assert v["status"] == "not_comparable" and v["ambiguous"] and item["revisions"] == []
+    assert item["conflicts"][0]["target"] == "~50%" and "+25.8%" in v["reason"]  # actual still shown
+    assert "FY26, all 4 quarters (Apr 2025–Mar 2026)" in v["reason"] and "in FY25" in v["reason"]
+    revised = _stmt(stated_on="2025-10-24", period_fy=2026, period_label="FY26", direction="at_least", low=10, high=None,
+                    quote="We are revising our guidance to double-digit growth for the year.")
+    item = build([early, revised], s, date(2026, 11, 3))[0]
+    assert item["revisions"][0]["target"] == "~50%" and item["verdict"]["status"] == "delivered"
+
+
+def test_segment_statements_never_conflict_with_company_targets():
+    from finn.research.scorecard import build
+    s = _series({"2026-03-31": (100, 23), "2026-06-30": (100, 22)})
+    band = _stmt(metric="ebitda_margin", metric_label="EBITDA margin", low=20, high=24, period_type="standing",
+                 period_fy=None, period_label="standing band", stated_on="2026-02-11")
+    seg = _stmt(metric="ebitda_margin", metric_label="EBITDA margin", low=2.8, high=3.1, period_type="standing",
+                period_fy=None, period_label="standing band", stated_on="2026-05-01",
+                notes=["may refer to a segment, not the whole company"])
+    # the latest is segment-flagged: nothing is grouped, each stands with its own verdict
+    items = build([band, seg], s, date(2026, 11, 3))
+    company = next(i for i in items if i["target"] == "20–24%")
+    assert company["verdict"]["status"] == "delivered" and not company["conflicts"]
+    assert next(i for i in items if i["target"] == "2.8–3.1%")["verdict"]["reason"].startswith("Refers to a segment")
+    # an earlier statement of uncertain scope still makes a later company-level target ambiguous
+    early = _stmt(stated_on="2025-07-28", period_fy=2026, period_label="FY26", direction="point", low=50, high=50,
+                  notes=["may refer to a segment, not the whole company"], quote="confident of achieving 50% growth this fiscal")
+    late = _stmt(stated_on="2025-10-24", period_fy=2026, period_label="FY26", direction="at_least", low=10, high=None,
+                 quote="it should be a double-digit kind of growth this year")
+    fy = _series({**{f"2024-{m}": (100, 20) for m in ("06-30", "09-30", "12-31")}, "2025-03-31": (100, 20),
+                  **{f"2025-{m}": (125.8, 20) for m in ("06-30", "09-30", "12-31")}, "2026-03-31": (125.8, 20)})
+    one = build([early, late], fy, date(2026, 11, 3))
+    assert len(one) == 1 and one[0]["verdict"].get("ambiguous")
+    # an industry statement never groups
+    ind = _stmt(stated_on="2025-07-28", period_fy=2026, period_label="FY26", notes=["refers to the industry or economy, not the company"])
+    two = build([ind, late], s, date(2026, 11, 3))
+    assert len(two) == 2 and not any(i["verdict"].get("ambiguous") for i in two)
+
+
+def test_partial_year_calc_names_its_quarters():
+    from finn.research.scorecard import build
+    s = _series({"2025-06-30": (100, 20), "2026-06-30": (116, 22)})
+    v = build([_stmt()], s, date(2026, 11, 3))[0]["verdict"]
+    assert v["calc"].startswith("FY27 to date, 1 of 4 quarters (Q1: Apr–Jun 2026)") and "in Q1 FY26" in v["calc"]

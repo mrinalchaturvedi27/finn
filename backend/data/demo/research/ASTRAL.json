@@ -1,7 +1,7 @@
 {
  "ticker": "ASTRAL",
- "generated_at": "2026-11-03T23:18:36",
- "rules_version": 1,
+ "generated_at": "2026-11-03T23:49:13",
+ "rules_version": 2,
  "extract_version": 1,
  "sources": {
   "transcripts": [
@@ -291,25 +291,60 @@
  },
  "guidance": [
   {
-   "metric": "revenue_growth",
-   "metric_label": "Revenue growth",
-   "direction": "point",
-   "low": 20.0,
-   "high": 20.0,
+   "metric": "ebitda_margin",
+   "metric_label": "EBITDA margin",
+   "direction": "range",
+   "low": 15.0,
+   "high": 16.0,
+   "unit": "pct",
+   "period_type": "standing",
+   "period_fy": null,
+   "period_label": "standing band",
+   "quote": "I am very happy to share that in this quarter also we have delivered a very healthy 20% volume growth and 15% value growth and above the guided margin range of 15% to 16% EBITDA on a consolidated basis.",
+   "page": 4,
+   "speaker": "Hiranand Savlani",
+   "stated_on": "2025-11-06",
+   "source_url": "https://www.astralltd.com/wp-content/uploads/2025/11/Transcript.pdf",
+   "notes": [],
+   "target": "15\u201316%",
+   "revisions": [],
+   "conflicts": [],
+   "reiterated_on": [],
+   "verdict": {
+    "status": "partial",
+    "value": 14.651457541191382,
+    "calc": "Operating EBITDA margin by quarter since the call: Q3 FY26 15.4%, Q4 FY26 18.3%, Q1 FY27 14.7% \u2014 1 of 3 within the band, 1 above it (FINN's EBITDA excludes other income)",
+    "tolerance_pp": 0.5,
+    "quarters": [
+     "2025-12-31",
+     "2026-03-31",
+     "2026-06-30"
+    ],
+    "reason": null
+   }
+  },
+  {
+   "metric": "ebitda_margin",
+   "metric_label": "EBITDA margin",
+   "direction": "range",
+   "low": 14.0,
+   "high": 16.0,
    "unit": "pct",
    "period_type": "unstated",
    "period_fy": null,
    "period_label": "period not stated",
-   "quote": "That is why we are confidently saying that we will be able to deliver 20% kind of growth because now the senior person has also joined, having rich experience from the similar industry.",
-   "page": 9,
-   "speaker": "Hiranand Savlani",
+   "quote": "Margins are within our guided limits of 14% to 16% in the adhesive business.",
+   "page": 2,
+   "speaker": "Kairav Engineer",
    "stated_on": "2025-08-18",
    "source_url": "https://www.astralltd.com/wp-content/uploads/2025/08/Transcript-of-Earning-Call-held-on-12th-August-2025.pdf",
    "notes": [
-    "may refer to a segment, not the whole company"
+    "may refer to a segment, not the whole company",
+    "margin type not stated (gross, EBITDA or segment)"
    ],
-   "target": "~20%",
+   "target": "14\u201316%",
    "revisions": [],
+   "conflicts": [],
    "reiterated_on": [],
    "verdict": {
     "status": "not_comparable",
@@ -317,25 +352,82 @@
    }
   },
   {
-   "metric": "revenue_growth",
-   "metric_label": "Revenue growth",
-   "direction": "at_least",
-   "low": 20.0,
-   "high": null,
-   "unit": "pct",
-   "period_type": "Q",
-   "period_fy": null,
-   "period_label": "next quarter",
-   "quote": "And we are confident that in the coming quarter also by year end, we are targeting minimum 20% kind of growth minimum I am telling you it can be high also.",
-   "page": 24,
+   "metric": "capex",
+   "metric_label": "Capex",
+   "direction": "point",
+   "low": 300.0,
+   "high": 300.0,
+   "unit": "crore",
+   "period_type": "FY",
+   "period_fy": 2026,
+   "period_label": "FY26",
+   "quote": "So, like this year we have guided around Rs. 300 crores kind of CAPEX because Kanpur plant building is ready.",
+   "page": 8,
    "speaker": "Hiranand Savlani",
    "stated_on": "2025-08-18",
    "source_url": "https://www.astralltd.com/wp-content/uploads/2025/08/Transcript-of-Earning-Call-held-on-12th-August-2025.pdf",
    "notes": [
     "may refer to a segment, not the whole company"
    ],
-   "target": "at least 20%",
+   "target": "~300 cr",
    "revisions": [],
+   "conflicts": [],
+   "reiterated_on": [],
+   "verdict": {
+    "status": "not_comparable",
+    "reason": "Refers to a segment; FINN checks company-level filings only."
+   }
+  },
+  {
+   "metric": "ebitda_margin",
+   "metric_label": "EBITDA margin",
+   "direction": "range",
+   "low": 16.0,
+   "high": 18.0,
+   "unit": "pct",
+   "period_type": "unstated",
+   "period_fy": null,
+   "period_label": "period not stated",
+   "quote": "So, whatever margin for the piping business, we have guided 16% to 18%.",
+   "page": 15,
+   "speaker": "Kairav Engineer",
+   "stated_on": "2025-08-18",
+   "source_url": "https://www.astralltd.com/wp-content/uploads/2025/08/Transcript-of-Earning-Call-held-on-12th-August-2025.pdf",
+   "notes": [
+    "may refer to a segment, not the whole company",
+    "margin type not stated (gross, EBITDA or segment)"
+   ],
+   "target": "16\u201318%",
+   "revisions": [],
+   "conflicts": [],
+   "reiterated_on": [],
+   "verdict": {
+    "status": "not_comparable",
+    "reason": "Refers to a segment; FINN checks company-level filings only."
+   }
+  },
+  {
+   "metric": "ebitda_margin",
+   "metric_label": "EBITDA margin",
+   "direction": "point",
+   "low": 2.0,
+   "high": 2.0,
+   "unit": "pct",
+   "period_type": "unstated",
+   "period_fy": null,
+   "period_label": "period not stated",
+   "quote": "As far as the demand is there in the market and we feel that we are able to get good growth by dropping 1% or 2% margin, I think we will be happy to do that thing.",
+   "page": 15,
+   "speaker": "Hiranand Savlani",
+   "stated_on": "2025-08-18",
+   "source_url": "https://www.astralltd.com/wp-content/uploads/2025/08/Transcript-of-Earning-Call-held-on-12th-August-2025.pdf",
+   "notes": [
+    "may refer to a segment, not the whole company",
+    "margin type not stated (gross, EBITDA or segment)"
+   ],
+   "target": "~2%",
+   "revisions": [],
+   "conflicts": [],
    "reiterated_on": [],
    "verdict": {
     "status": "not_comparable",
@@ -362,10 +454,198 @@
    ],
    "target": "at least 10%",
    "revisions": [],
+   "conflicts": [],
    "reiterated_on": [],
    "verdict": {
     "status": "not_comparable",
     "reason": "Refers to a segment; FINN checks company-level filings only."
+   }
+  },
+  {
+   "metric": "revenue_growth",
+   "metric_label": "Revenue growth",
+   "direction": "at_least",
+   "low": 10,
+   "high": null,
+   "unit": "pct",
+   "period_type": "FY",
+   "period_fy": 2026,
+   "period_label": "FY26",
+   "quote": "Now it looks like the volume has started picking up July onwards and we are confident of a double-digit growth this year as per our initial guidance.",
+   "page": 2,
+   "speaker": "Kairav Engineer",
+   "stated_on": "2025-08-18",
+   "source_url": "https://www.astralltd.com/wp-content/uploads/2025/08/Transcript-of-Earning-Call-held-on-12th-August-2025.pdf",
+   "notes": [
+    "may refer to a segment, not the whole company"
+   ],
+   "target": "at least 10%",
+   "revisions": [],
+   "conflicts": [],
+   "reiterated_on": [],
+   "verdict": {
+    "status": "not_comparable",
+    "reason": "Refers to a segment; FINN checks company-level filings only."
+   }
+  },
+  {
+   "metric": "revenue_growth",
+   "metric_label": "Revenue growth",
+   "direction": "at_least",
+   "low": 20.0,
+   "high": null,
+   "unit": "pct",
+   "period_type": "FY",
+   "period_fy": 2026,
+   "period_label": "FY26",
+   "quote": "Bathware has contributed 27% revenue and similarly paint, first time after acquisition, has delivered a 20% kind of topline growth, and we are confident that in the coming time we are expecting the paint to deliver good number, at least 20% kind of top-line growth for the full year.",
+   "page": 4,
+   "speaker": "Hiranand Savlani",
+   "stated_on": "2025-08-18",
+   "source_url": "https://www.astralltd.com/wp-content/uploads/2025/08/Transcript-of-Earning-Call-held-on-12th-August-2025.pdf",
+   "notes": [
+    "may refer to a segment, not the whole company"
+   ],
+   "target": "at least 20%",
+   "revisions": [],
+   "conflicts": [],
+   "reiterated_on": [],
+   "verdict": {
+    "status": "not_comparable",
+    "reason": "Refers to a segment; FINN checks company-level filings only."
+   }
+  },
+  {
+   "metric": "revenue_growth",
+   "metric_label": "Revenue growth",
+   "direction": "range",
+   "low": 25.0,
+   "high": 27.0,
+   "unit": "pct",
+   "period_type": "FY",
+   "period_fy": 2026,
+   "period_label": "FY26",
+   "quote": "So, Bathware also our aim, and if we are not entering the different geography, then committing a 25% to 27% growth for the year is also not possible.",
+   "page": 22,
+   "speaker": "Kairav Engineer",
+   "stated_on": "2025-08-18",
+   "source_url": "https://www.astralltd.com/wp-content/uploads/2025/08/Transcript-of-Earning-Call-held-on-12th-August-2025.pdf",
+   "notes": [
+    "may refer to a segment, not the whole company"
+   ],
+   "target": "25\u201327%",
+   "revisions": [],
+   "conflicts": [],
+   "reiterated_on": [],
+   "verdict": {
+    "status": "not_comparable",
+    "reason": "Refers to a segment; FINN checks company-level filings only."
+   }
+  },
+  {
+   "metric": "revenue_growth",
+   "metric_label": "Revenue growth",
+   "direction": "point",
+   "low": 20.0,
+   "high": 20.0,
+   "unit": "pct",
+   "period_type": "unstated",
+   "period_fy": null,
+   "period_label": "period not stated",
+   "quote": "That is why we are confidently saying that we will be able to deliver 20% kind of growth because now the senior person has also joined, having rich experience from the similar industry.",
+   "page": 9,
+   "speaker": "Hiranand Savlani",
+   "stated_on": "2025-08-18",
+   "source_url": "https://www.astralltd.com/wp-content/uploads/2025/08/Transcript-of-Earning-Call-held-on-12th-August-2025.pdf",
+   "notes": [
+    "may refer to a segment, not the whole company"
+   ],
+   "target": "~20%",
+   "revisions": [],
+   "conflicts": [],
+   "reiterated_on": [],
+   "verdict": {
+    "status": "not_comparable",
+    "reason": "Refers to a segment; FINN checks company-level filings only."
+   }
+  },
+  {
+   "metric": "revenue_growth",
+   "metric_label": "Revenue growth",
+   "direction": "at_least",
+   "low": 20.0,
+   "high": null,
+   "unit": "pct",
+   "period_type": "Q",
+   "period_fy": null,
+   "period_label": "next quarter",
+   "quote": "And we are confident that in the coming quarter also by year end, we are targeting minimum 20% kind of growth minimum I am telling you it can be high also.",
+   "page": 24,
+   "speaker": "Hiranand Savlani",
+   "stated_on": "2025-08-18",
+   "source_url": "https://www.astralltd.com/wp-content/uploads/2025/08/Transcript-of-Earning-Call-held-on-12th-August-2025.pdf",
+   "notes": [
+    "may refer to a segment, not the whole company"
+   ],
+   "target": "at least 20%",
+   "revisions": [],
+   "conflicts": [],
+   "reiterated_on": [],
+   "verdict": {
+    "status": "not_comparable",
+    "reason": "Refers to a segment; FINN checks company-level filings only."
+   }
+  },
+  {
+   "metric": "volume_growth",
+   "metric_label": "Volume growth",
+   "direction": "at_least",
+   "low": 10,
+   "high": null,
+   "unit": "pct",
+   "period_type": "unstated",
+   "period_fy": null,
+   "period_label": "period not stated",
+   "quote": "In spite of that we have delivered our number as per the guidance of the double digit growth in volume terms in H1.",
+   "page": 4,
+   "speaker": "Hiranand Savlani",
+   "stated_on": "2025-11-06",
+   "source_url": "https://www.astralltd.com/wp-content/uploads/2025/11/Transcript.pdf",
+   "notes": [],
+   "target": "at least 10%",
+   "revisions": [],
+   "conflicts": [],
+   "reiterated_on": [],
+   "verdict": {
+    "status": "not_comparable",
+    "reason": "Volumes are not in the results filing."
+   }
+  },
+  {
+   "metric": "ebitda_margin",
+   "metric_label": "EBITDA margin",
+   "direction": "range",
+   "low": 15.0,
+   "high": 16.0,
+   "unit": "pct",
+   "period_type": "unstated",
+   "period_fy": null,
+   "period_label": "period not stated",
+   "quote": "So definitely it is going to help us in the margin improvement also, but as of today we have given the guidance of 15%-16%.",
+   "page": 6,
+   "speaker": "Hiranand Savlani",
+   "stated_on": "2025-11-06",
+   "source_url": "https://www.astralltd.com/wp-content/uploads/2025/11/Transcript.pdf",
+   "notes": [
+    "margin type not stated (gross, EBITDA or segment)"
+   ],
+   "target": "15\u201316%",
+   "revisions": [],
+   "conflicts": [],
+   "reiterated_on": [],
+   "verdict": {
+    "status": "not_comparable",
+    "reason": "Doesn't say which margin (gross, EBITDA or a segment's), so it can't be matched to the filing."
    }
   },
   {
@@ -387,29 +667,8 @@
     "may refer to a segment, not the whole company"
    ],
    "target": "~20%",
-   "revisions": [
-    {
-     "stated_on": "2025-08-18",
-     "target": "at least 10%",
-     "quote": "Now it looks like the volume has started picking up July onwards and we are confident of a double-digit growth this year as per our initial guidance.",
-     "page": 2,
-     "source_url": "https://www.astralltd.com/wp-content/uploads/2025/08/Transcript-of-Earning-Call-held-on-12th-August-2025.pdf"
-    },
-    {
-     "stated_on": "2025-08-18",
-     "target": "at least 20%",
-     "quote": "Bathware has contributed 27% revenue and similarly paint, first time after acquisition, has delivered a 20% kind of topline growth, and we are confident that in the coming time we are expecting the paint to deliver good number, at least 20% kind of top-line growth for the full year.",
-     "page": 4,
-     "source_url": "https://www.astralltd.com/wp-content/uploads/2025/08/Transcript-of-Earning-Call-held-on-12th-August-2025.pdf"
-    },
-    {
-     "stated_on": "2025-08-18",
-     "target": "25\u201327%",
-     "quote": "So, Bathware also our aim, and if we are not entering the different geography, then committing a 25% to 27% growth for the year is also not possible.",
-     "page": 22,
-     "source_url": "https://www.astralltd.com/wp-content/uploads/2025/08/Transcript-of-Earning-Call-held-on-12th-August-2025.pdf"
-    }
-   ],
+   "revisions": [],
+   "conflicts": [],
    "reiterated_on": [],
    "verdict": {
     "status": "not_comparable",
@@ -436,34 +695,11 @@
    ],
    "target": "at least 10%",
    "revisions": [],
+   "conflicts": [],
    "reiterated_on": [],
    "verdict": {
     "status": "not_comparable",
     "reason": "Refers to a segment; FINN checks company-level filings only."
-   }
-  },
-  {
-   "metric": "volume_growth",
-   "metric_label": "Volume growth",
-   "direction": "at_least",
-   "low": 10,
-   "high": null,
-   "unit": "pct",
-   "period_type": "unstated",
-   "period_fy": null,
-   "period_label": "period not stated",
-   "quote": "In spite of that we have delivered our number as per the guidance of the double digit growth in volume terms in H1.",
-   "page": 4,
-   "speaker": "Hiranand Savlani",
-   "stated_on": "2025-11-06",
-   "source_url": "https://www.astralltd.com/wp-content/uploads/2025/11/Transcript.pdf",
-   "notes": [],
-   "target": "at least 10%",
-   "revisions": [],
-   "reiterated_on": [],
-   "verdict": {
-    "status": "not_comparable",
-    "reason": "Volumes are not in the results filing."
    }
   },
   {
@@ -486,68 +722,7 @@
    ],
    "target": "at least 10%",
    "revisions": [],
-   "reiterated_on": [],
-   "verdict": {
-    "status": "not_comparable",
-    "reason": "Refers to a segment; FINN checks company-level filings only."
-   }
-  },
-  {
-   "metric": "ebitda_margin",
-   "metric_label": "EBITDA margin",
-   "direction": "range",
-   "low": 12.0,
-   "high": 14.0,
-   "unit": "pct",
-   "period_type": "standing",
-   "period_fy": null,
-   "period_label": "standing band",
-   "quote": "We have given double digit guidance for volume and we are already 12%-13% in 9-month basis and EBITDA margin on polymer, we have given between 16%-18% range and Adhesive and Paint, we have given between 12%-14% margin.",
-   "page": 7,
-   "speaker": "Sandeep Engineer",
-   "stated_on": "2026-02-05",
-   "source_url": "https://www.astralltd.com/wp-content/uploads/2026/02/Investec-Astral-Feb05-2026.pdf",
-   "notes": [
-    "may refer to a segment, not the whole company"
-   ],
-   "target": "12\u201314%",
-   "revisions": [
-    {
-     "stated_on": "2025-08-18",
-     "target": "14\u201316%",
-     "quote": "Margins are within our guided limits of 14% to 16% in the adhesive business.",
-     "page": 2,
-     "source_url": "https://www.astralltd.com/wp-content/uploads/2025/08/Transcript-of-Earning-Call-held-on-12th-August-2025.pdf"
-    },
-    {
-     "stated_on": "2025-08-18",
-     "target": "16\u201318%",
-     "quote": "So, whatever margin for the piping business, we have guided 16% to 18%.",
-     "page": 15,
-     "source_url": "https://www.astralltd.com/wp-content/uploads/2025/08/Transcript-of-Earning-Call-held-on-12th-August-2025.pdf"
-    },
-    {
-     "stated_on": "2025-08-18",
-     "target": "~2%",
-     "quote": "As far as the demand is there in the market and we feel that we are able to get good growth by dropping 1% or 2% margin, I think we will be happy to do that thing.",
-     "page": 15,
-     "source_url": "https://www.astralltd.com/wp-content/uploads/2025/08/Transcript-of-Earning-Call-held-on-12th-August-2025.pdf"
-    },
-    {
-     "stated_on": "2025-11-06",
-     "target": "15\u201316%",
-     "quote": "I am very happy to share that in this quarter also we have delivered a very healthy 20% volume growth and 15% value growth and above the guided margin range of 15% to 16% EBITDA on a consolidated basis.",
-     "page": 4,
-     "source_url": "https://www.astralltd.com/wp-content/uploads/2025/11/Transcript.pdf"
-    },
-    {
-     "stated_on": "2025-11-06",
-     "target": "15\u201316%",
-     "quote": "So definitely it is going to help us in the margin improvement also, but as of today we have given the guidance of 15%-16%.",
-     "page": 6,
-     "source_url": "https://www.astralltd.com/wp-content/uploads/2025/11/Transcript.pdf"
-    }
-   ],
+   "conflicts": [],
    "reiterated_on": [],
    "verdict": {
     "status": "not_comparable",
@@ -571,19 +746,39 @@
    "source_url": "https://www.astralltd.com/wp-content/uploads/2026/02/Investec-Astral-Feb05-2026.pdf",
    "notes": [],
    "target": "~350 cr",
-   "revisions": [
-    {
-     "stated_on": "2025-08-18",
-     "target": "~300 cr",
-     "quote": "So, like this year we have guided around Rs. 300 crores kind of CAPEX because Kanpur plant building is ready.",
-     "page": 8,
-     "source_url": "https://www.astralltd.com/wp-content/uploads/2025/08/Transcript-of-Earning-Call-held-on-12th-August-2025.pdf"
-    }
-   ],
+   "revisions": [],
+   "conflicts": [],
    "reiterated_on": [],
    "verdict": {
     "status": "not_comparable",
     "reason": "Capex is in the half-yearly cash-flow statement, not the quarterly results FINN reads."
+   }
+  },
+  {
+   "metric": "ebitda_margin",
+   "metric_label": "EBITDA margin",
+   "direction": "range",
+   "low": 12.0,
+   "high": 14.0,
+   "unit": "pct",
+   "period_type": "standing",
+   "period_fy": null,
+   "period_label": "standing band",
+   "quote": "We have given double digit guidance for volume and we are already 12%-13% in 9-month basis and EBITDA margin on polymer, we have given between 16%-18% range and Adhesive and Paint, we have given between 12%-14% margin.",
+   "page": 7,
+   "speaker": "Sandeep Engineer",
+   "stated_on": "2026-02-05",
+   "source_url": "https://www.astralltd.com/wp-content/uploads/2026/02/Investec-Astral-Feb05-2026.pdf",
+   "notes": [
+    "may refer to a segment, not the whole company"
+   ],
+   "target": "12\u201314%",
+   "revisions": [],
+   "conflicts": [],
+   "reiterated_on": [],
+   "verdict": {
+    "status": "not_comparable",
+    "reason": "Refers to a segment; FINN checks company-level filings only."
    }
   },
   {
@@ -606,6 +801,7 @@
    ],
    "target": "at least 20%",
    "revisions": [],
+   "conflicts": [],
    "reiterated_on": [],
    "verdict": {
     "status": "not_comparable",
@@ -632,6 +828,7 @@
    ],
    "target": "~20%",
    "revisions": [],
+   "conflicts": [],
    "reiterated_on": [],
    "verdict": {
     "status": "not_comparable",
@@ -658,10 +855,86 @@
    ],
    "target": "~10 cr",
    "revisions": [],
+   "conflicts": [],
    "reiterated_on": [],
    "verdict": {
     "status": "not_comparable",
     "reason": "Refers to a segment; FINN checks company-level filings only."
+   }
+  },
+  {
+   "metric": "volume_growth",
+   "metric_label": "Volume growth",
+   "direction": "range",
+   "low": 15.0,
+   "high": 20.0,
+   "unit": "pct",
+   "period_type": "FY",
+   "period_fy": 2027,
+   "period_label": "FY27",
+   "quote": "So I don't want to jump in at this stage and tell you that full year basis, we are going to deliver 15%, 20% volume or something.",
+   "page": 8,
+   "speaker": "Hiranand Savlani",
+   "stated_on": "2026-08-12",
+   "source_url": "https://www.astralltd.com/wp-content/uploads/2026/08/Equirus-Astral-Aug12-2026-1.pdf",
+   "notes": [],
+   "target": "15\u201320%",
+   "revisions": [],
+   "conflicts": [],
+   "reiterated_on": [],
+   "verdict": {
+    "status": "not_comparable",
+    "reason": "Volumes are not in the results filing."
+   }
+  },
+  {
+   "metric": "volume_growth",
+   "metric_label": "Volume growth",
+   "direction": "range",
+   "low": 35.0,
+   "high": 40.0,
+   "unit": "pct",
+   "period_type": "unstated",
+   "period_fy": null,
+   "period_label": "period not stated",
+   "quote": "And the volume growth, I think, would be around 35% to 40%, I could put it.",
+   "page": 12,
+   "speaker": "Saumya Engineer",
+   "stated_on": "2026-08-12",
+   "source_url": "https://www.astralltd.com/wp-content/uploads/2026/08/Equirus-Astral-Aug12-2026-1.pdf",
+   "notes": [],
+   "target": "35\u201340%",
+   "revisions": [],
+   "conflicts": [],
+   "reiterated_on": [],
+   "verdict": {
+    "status": "not_comparable",
+    "reason": "Volumes are not in the results filing."
+   }
+  },
+  {
+   "metric": "volume_growth",
+   "metric_label": "Volume growth",
+   "direction": "at_least",
+   "low": 10,
+   "high": null,
+   "unit": "pct",
+   "period_type": "unstated",
+   "period_fy": null,
+   "period_label": "period not stated",
+   "quote": "So we have given the guidance of minimum double-digit growth for volume.",
+   "page": 17,
+   "speaker": "Hiranand Savlani",
+   "stated_on": "2026-08-12",
+   "source_url": "https://www.astralltd.com/wp-content/uploads/2026/08/Equirus-Astral-Aug12-2026-1.pdf",
+   "notes": [],
+   "target": "at least 10%",
+   "revisions": [],
+   "conflicts": [],
+   "reiterated_on": [],
+   "verdict": {
+    "status": "not_comparable",
+    "reason": "Volumes are not in the results filing."
    }
   },
   {
@@ -684,6 +957,7 @@
    ],
    "target": "~12.9%",
    "revisions": [],
+   "conflicts": [],
    "reiterated_on": [],
    "verdict": {
     "status": "not_comparable",
@@ -758,82 +1032,11 @@
    ],
    "target": "at least 10%",
    "revisions": [],
+   "conflicts": [],
    "reiterated_on": [],
    "verdict": {
     "status": "not_comparable",
     "reason": "Refers to a segment; FINN checks company-level filings only."
-   }
-  },
-  {
-   "metric": "volume_growth",
-   "metric_label": "Volume growth",
-   "direction": "range",
-   "low": 15.0,
-   "high": 20.0,
-   "unit": "pct",
-   "period_type": "FY",
-   "period_fy": 2027,
-   "period_label": "FY27",
-   "quote": "So I don't want to jump in at this stage and tell you that full year basis, we are going to deliver 15%, 20% volume or something.",
-   "page": 8,
-   "speaker": "Hiranand Savlani",
-   "stated_on": "2026-08-12",
-   "source_url": "https://www.astralltd.com/wp-content/uploads/2026/08/Equirus-Astral-Aug12-2026-1.pdf",
-   "notes": [],
-   "target": "15\u201320%",
-   "revisions": [],
-   "reiterated_on": [],
-   "verdict": {
-    "status": "not_comparable",
-    "reason": "Volumes are not in the results filing."
-   }
-  },
-  {
-   "metric": "volume_growth",
-   "metric_label": "Volume growth",
-   "direction": "range",
-   "low": 35.0,
-   "high": 40.0,
-   "unit": "pct",
-   "period_type": "unstated",
-   "period_fy": null,
-   "period_label": "period not stated",
-   "quote": "And the volume growth, I think, would be around 35% to 40%, I could put it.",
-   "page": 12,
-   "speaker": "Saumya Engineer",
-   "stated_on": "2026-08-12",
-   "source_url": "https://www.astralltd.com/wp-content/uploads/2026/08/Equirus-Astral-Aug12-2026-1.pdf",
-   "notes": [],
-   "target": "35\u201340%",
-   "revisions": [],
-   "reiterated_on": [],
-   "verdict": {
-    "status": "not_comparable",
-    "reason": "Volumes are not in the results filing."
-   }
-  },
-  {
-   "metric": "volume_growth",
-   "metric_label": "Volume growth",
-   "direction": "at_least",
-   "low": 10,
-   "high": null,
-   "unit": "pct",
-   "period_type": "unstated",
-   "period_fy": null,
-   "period_label": "period not stated",
-   "quote": "So we have given the guidance of minimum double-digit growth for volume.",
-   "page": 17,
-   "speaker": "Hiranand Savlani",
-   "stated_on": "2026-08-12",
-   "source_url": "https://www.astralltd.com/wp-content/uploads/2026/08/Equirus-Astral-Aug12-2026-1.pdf",
-   "notes": [],
-   "target": "at least 10%",
-   "revisions": [],
-   "reiterated_on": [],
-   "verdict": {
-    "status": "not_comparable",
-    "reason": "Volumes are not in the results filing."
    }
   },
   {
@@ -856,6 +1059,7 @@
    ],
    "target": "20\u201325%",
    "revisions": [],
+   "conflicts": [],
    "reiterated_on": [],
    "verdict": {
     "status": "not_comparable",
@@ -865,14 +1069,14 @@
  ],
  "summary": {
   "delivered": 0,
-  "partial": 0,
+  "partial": 1,
   "missed": 0,
   "pending": 0,
-  "not_comparable": 20,
-  "statements": 20,
+  "not_comparable": 28,
+  "statements": 29,
   "calls_read": 5,
   "calls_found": 5
  },
  "status": "done",
- "cache_key": "3731f6abffaffdf5fc97a788"
+ "cache_key": "d827f78168816f76a410eb90"
 }

@@ -76,8 +76,8 @@ export function ModeSwitch({ mode, setMode }: { mode: Mode; setMode: (m: Mode) =
 type Health = "ok" | "stale" | "fail" | "historical";
 
 /** One-line status (data age, failures, stale prices) that opens into the details. */
-export function StatusBar({ f, stale, mode, source, scheduleNote, asOf }: {
-  f: Freshness; stale: string[]; mode: string; source?: string; scheduleNote?: string; asOf: string;
+export function StatusBar({ f, stale, mode, source, scheduleNote, asOf, session }: {
+  f: Freshness; stale: string[]; mode: string; source?: string; scheduleNote?: string; asOf: string; session?: string | null;
 }) {
   const ann = f.nse_announcements;
   const pr = f.prices;
@@ -89,7 +89,7 @@ export function StatusBar({ f, stale, mode, source, scheduleNote, asOf }: {
     ok: "Data current",
     stale: "Data is stale",
     fail: `${failures} source failure${failures > 1 ? "s" : ""}`,
-    historical: mode === "demo" ? "Recorded data" : "Snapshot, not live",
+    historical: mode === "demo" ? "Demo" : "Snapshot, not live",
   }[health];
   return (
     <details className="group mt-3 border-y border-line text-[12.5px]">
@@ -98,7 +98,7 @@ export function StatusBar({ f, stale, mode, source, scheduleNote, asOf }: {
         <span className="font-medium">{lead}</span>
         <span className="min-w-0 flex-1 truncate text-muted">
           {mode === "demo"
-            ? ` · recorded ${istDate(ann?.last_success)} · shown as of ${istDate(asOf, true)}`
+            ? ` · as of ${istDate(asOf, true)} · prices through ${istDate(session)}`
             : ` · filings ${ann?.last_success ? istDate(ann.last_success, true) : "never"} · prices to ${istDate(pr?.data_through)}`}
           {stale.length ? ` · ${stale.length} stale` : ""}
         </span>
@@ -107,10 +107,15 @@ export function StatusBar({ f, stale, mode, source, scheduleNote, asOf }: {
       <dl className="grid grid-cols-[auto_1fr] gap-x-4 gap-y-1 pb-3 pl-4 text-[12px] text-muted">
         {mode === "demo" && (
           <>
-            <dt className="text-faint">Shown as of</dt>
-            <dd>{istDate(asOf, true)} IST. Times on this page are relative to it; nothing filed later is shown.</dd>
-            <dt className="text-faint">Recorded</dt>
-            <dd>filings captured {istDate(ann?.last_success, true)}, prices through {istDate(pr?.data_through)} (later dates are hidden)</dd>
+            <dt className="text-faint">What this is</dt>
+            <dd>Real NSE filings and prices recorded by FINN, replayed as of {istDate(asOf, true)} IST, a heavy results day. Not live.</dd>
+            <dt className="text-faint">Shown</dt>
+            <dd>filings up to {istDate(asOf, true)}; prices through the {istDate(session)} session. Times are relative to {istDate(asOf)}.</dd>
+            <dt className="text-faint">Provenance</dt>
+            <dd>
+              captured from NSE on {istDate(ann?.last_success, true)}; anything filed or traded after {istDate(asOf)} is hidden. Research
+              reports carry their own (later) dates.
+            </dd>
           </>
         )}
         {mode !== "demo" && <dt className="text-faint">Filings</dt>}
