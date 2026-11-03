@@ -24,6 +24,15 @@ class SourceError(Exception):
     pass
 
 
+def incomplete(body: bytes, content_length: str | None) -> str | None:
+    """Why a downloaded body is not the whole file, or None. Truncated files are never cached."""
+    if content_length and content_length.isdigit() and len(body) != int(content_length):
+        return f"{len(body)} of {content_length} bytes"
+    if body.startswith(b"%PDF") and b"%%EOF" not in body[-2048:]:
+        return "PDF has no end-of-file marker"
+    return None
+
+
 class NSE:
     def __init__(self, min_interval: float = 0.6):
         self.s = requests.Session()
@@ -99,10 +108,19 @@ class NSE:
         CACHE_DIR.mkdir(parents=True, exist_ok=True)
         key = hashlib.sha256(url.encode()).hexdigest()
         path = CACHE_DIR / key
-        if path.exists():
-            body = path.read_bytes()
-        else:
-            body = self._get(url, timeout=60).content
+        body = path.read_bytes() if path.exists() else None
+        if body is not None and incomplete(body, None):
+            body = None  # a truncated file cached by an older version
+        if body is None:
+            why = None
+            for _ in range(3):  # archives occasionally end a 200 response early
+                r = self._get(url, timeout=60)
+                why = incomplete(r.content, r.headers.get("content-length"))
+                if not why:
+                    body = r.content
+                    break
+            if body is None:
+                raise SourceError(f"{url}: incomplete download ({why})")
             path.write_bytes(body)
         sha = hashlib.sha256(body).hexdigest()
         if snapshot.MODE == "record":

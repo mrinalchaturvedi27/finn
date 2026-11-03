@@ -532,3 +532,23 @@ def test_snapshot_refuses_a_database_with_live_runs(tmp_path):
                        cwd=Path(__file__).resolve().parents[1], env={**os.environ, "FINN_DB_URL": url},
                        capture_output=True, text=True, timeout=120)
     assert r.returncode != 0 and "live runs" in r.stderr
+
+
+def test_truncated_archive_download_is_retried_and_never_cached(tmp_path, monkeypatch):
+    from types import SimpleNamespace
+    from finn.sources import nse as nse_mod
+    from finn.sources.nse import NSE, SourceError, incomplete
+    whole = b"%PDF-1.7\n" + b"x" * 5000 + b"\n%%EOF\n"
+    assert incomplete(whole, str(len(whole))) is None
+    assert incomplete(whole[:3000], str(len(whole))) == f"3000 of {len(whole)} bytes"
+    assert incomplete(whole[:3000], None) == "PDF has no end-of-file marker"
+    monkeypatch.setattr(nse_mod, "CACHE_DIR", tmp_path)
+    responses = [whole[:3000], whole]
+    n = NSE.__new__(NSE)
+    n._get = lambda url, timeout=60: SimpleNamespace(content=responses.pop(0), headers={"content-length": str(len(whole))})
+    body, _ = n.fetch_bytes("https://x/a.pdf")
+    assert body == whole and not responses  # retried once, got the whole file
+    n._get = lambda url, timeout=60: SimpleNamespace(content=whole[:3000], headers={})
+    with pytest.raises(SourceError, match="incomplete download"):
+        n.fetch_bytes("https://x/b.pdf")
+    assert len(list(tmp_path.iterdir())) == 1  # only the complete file was cached
