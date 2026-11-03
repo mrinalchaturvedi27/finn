@@ -1,0 +1,721 @@
+{
+  "host": "srv-dbkrmv15efls73ffr8pg-hibernate-6c6cb4c5df-7dgkb",
+  "platform": "Linux-7.0.0-1009-aws-x86_64-with-glibc2.41",
+  "run_at": "2026-11-03T11:03:18",
+  "runtime": {
+    "RENDER": "true",
+    "RENDER_SERVICE_NAME": "finn-api-pz1f",
+    "RENDER_INSTANCE_ID": "srv-dbkrmv15efls73ffr8pg-hibernate-6c6cb4c5df-7dgkb",
+    "RENDER_GIT_COMMIT": "69a309f66a9863b8422fa34abb8f15cf192c2095"
+  },
+  "records": [
+    {
+      "source": "yfinance",
+      "ticker": "HDFCBANK",
+      "at": "2026-11-03T11:03:21",
+      "valid": true,
+      "sessions": 40,
+      "last_bar": "2026-11-03",
+      "last_volume_positive": true,
+      "reason": null
+    },
+    {
+      "source": "yfinance",
+      "ticker": "BAJFINANCE",
+      "at": "2026-11-03T11:03:21",
+      "valid": true,
+      "sessions": 40,
+      "last_bar": "2026-11-03",
+      "last_volume_positive": true,
+      "reason": null
+    },
+    {
+      "source": "yfinance",
+      "ticker": "INFY",
+      "at": "2026-11-03T11:03:21",
+      "valid": true,
+      "sessions": 40,
+      "last_bar": "2026-11-03",
+      "last_volume_positive": true,
+      "reason": null
+    },
+    {
+      "source": "yfinance",
+      "ticker": "RELIANCE",
+      "at": "2026-11-03T11:03:21",
+      "valid": true,
+      "sessions": 40,
+      "last_bar": "2026-11-03",
+      "last_volume_positive": true,
+      "reason": null
+    },
+    {
+      "source": "yfinance",
+      "ticker": "SUNPHARMA",
+      "at": "2026-11-03T11:03:21",
+      "valid": true,
+      "sessions": 40,
+      "last_bar": "2026-11-03",
+      "last_volume_positive": true,
+      "reason": null
+    },
+    {
+      "source": "yfinance",
+      "ticker": "TITAN",
+      "at": "2026-11-03T11:03:21",
+      "valid": true,
+      "sessions": 40,
+      "last_bar": "2026-11-03",
+      "last_volume_positive": true,
+      "reason": null
+    },
+    {
+      "source": "yfinance",
+      "ticker": "DIXON",
+      "at": "2026-11-03T11:03:21",
+      "valid": true,
+      "sessions": 40,
+      "last_bar": "2026-11-03",
+      "last_volume_positive": true,
+      "reason": null
+    },
+    {
+      "source": "yfinance",
+      "ticker": "ETERNAL",
+      "at": "2026-11-03T11:03:21",
+      "valid": true,
+      "sessions": 40,
+      "last_bar": "2026-11-03",
+      "last_volume_positive": true,
+      "reason": null
+    },
+    {
+      "source": "yfinance",
+      "ticker": "KAYNES",
+      "at": "2026-11-03T11:03:21",
+      "valid": true,
+      "sessions": 40,
+      "last_bar": "2026-11-03",
+      "last_volume_positive": true,
+      "reason": null
+    },
+    {
+      "source": "nse_home",
+      "ticker": null,
+      "at": "2026-11-03T11:03:21",
+      "status": 403,
+      "valid": false
+    },
+    {
+      "source": "screener",
+      "ticker": "HDFCBANK",
+      "at": "2026-11-03T11:03:21",
+      "status": 200,
+      "final_url": "https://www.screener.in/company/HDFCBANK/consolidated/",
+      "valid": true,
+      "sections": {
+        "quarters": true,
+        "profit-loss": true,
+        "balance-sheet": true,
+        "cash-flow": true
+      },
+      "quarter_cols": [
+        "Jun 2025",
+        "Sep 2025",
+        "Dec 2025",
+        "Mar 2026",
+        "Jun 2026",
+        "Sep 2026"
+      ],
+      "n_quarters": 13,
+      "annual_reports": 15,
+      "transcripts": 21,
+      "bse_code": "500180",
+      "sample_ar": [
+        "https://www.bseindia.com/xml-data/corpfiling/AttachHis/7d621500-082a-4342-b98d-ba677d3890c5.pdf"
+      ],
+      "sample_transcript": [
+        "https://www.bseindia.com/stockinfo/AnnPdfOpen.aspx?Pname=d7e45614-ae12-4bb9-b92d-623b3a63f166.pdf"
+      ],
+      "reason": null
+    },
+    {
+      "source": "bse_announcements",
+      "ticker": "HDFCBANK",
+      "at": "2026-11-03T11:03:23",
+      "status": 403,
+      "scrip": "500180",
+      "valid": false,
+      "reason": "non-JSON body",
+      "snippet": "<HTML><HEAD>\n<TITLE>Access Denied</TITLE>\n</HEAD><BODY>\n<H1>Access Denied</H1>\n \nYou don't have permission to access \"ht"
+    },
+    {
+      "source": "nse_announcements",
+      "ticker": "HDFCBANK",
+      "at": "2026-11-03T11:03:23",
+      "status": 403,
+      "bytes": 410,
+      "valid": false,
+      "reason": "non-JSON body (likely bot block)",
+      "snippet": "<HTML><HEAD>\n<TITLE>Access Denied</TITLE>\n</HEAD><BODY>\n<H1>Access Denied</H1>\n \nYou don't have permission to access \"ht"
+    },
+    {
+      "source": "results_pdf",
+      "ticker": "HDFCBANK",
+      "at": "2026-11-03T11:03:23",
+      "valid": null,
+      "reason": "no results filing in window"
+    },
+    {
+      "source": "nse_results_xbrl",
+      "ticker": "HDFCBANK",
+      "at": "2026-11-03T11:03:34",
+      "valid": false,
+      "reason": "https://www.nseindia.com/api/integrated-filing-results?index=equities&symbol=HDFCBANK&type=Integrated%20Filing-%20Financials: HTTP 403"
+    },
+    {
+      "source": "screener",
+      "ticker": "BAJFINANCE",
+      "at": "2026-11-03T11:03:36",
+      "status": 200,
+      "final_url": "https://www.screener.in/company/BAJFINANCE/consolidated/",
+      "valid": true,
+      "sections": {
+        "quarters": true,
+        "profit-loss": true,
+        "balance-sheet": true,
+        "cash-flow": true
+      },
+      "quarter_cols": [
+        "Jun 2025",
+        "Sep 2025",
+        "Dec 2025",
+        "Mar 2026",
+        "Jun 2026",
+        "Sep 2026"
+      ],
+      "n_quarters": 13,
+      "annual_reports": 16,
+      "transcripts": 39,
+      "bse_code": "500034",
+      "sample_ar": [
+        "https://www.bseindia.com/xml-data/corpfiling/AttachHis/a2357f0b-2828-4790-8a02-61064bd1929b.pdf"
+      ],
+      "sample_transcript": [
+        "https://www.bseindia.com/stockinfo/AnnPdfOpen.aspx?Pname=7873abcb-7f97-487d-a474-028b0a26feea.pdf"
+      ],
+      "reason": null
+    },
+    {
+      "source": "bse_announcements",
+      "ticker": "BAJFINANCE",
+      "at": "2026-11-03T11:03:36",
+      "status": 403,
+      "scrip": "500034",
+      "valid": false,
+      "reason": "non-JSON body",
+      "snippet": "<HTML><HEAD>\n<TITLE>Access Denied</TITLE>\n</HEAD><BODY>\n<H1>Access Denied</H1>\n \nYou don't have permission to access \"ht"
+    },
+    {
+      "source": "nse_announcements",
+      "ticker": "BAJFINANCE",
+      "at": "2026-11-03T11:03:37",
+      "status": 403,
+      "bytes": 410,
+      "valid": false,
+      "reason": "non-JSON body (likely bot block)",
+      "snippet": "<HTML><HEAD>\n<TITLE>Access Denied</TITLE>\n</HEAD><BODY>\n<H1>Access Denied</H1>\n \nYou don't have permission to access \"ht"
+    },
+    {
+      "source": "results_pdf",
+      "ticker": "BAJFINANCE",
+      "at": "2026-11-03T11:03:37",
+      "valid": null,
+      "reason": "no results filing in window"
+    },
+    {
+      "source": "nse_results_xbrl",
+      "ticker": "BAJFINANCE",
+      "at": "2026-11-03T11:03:47",
+      "valid": false,
+      "reason": "https://www.nseindia.com/api/integrated-filing-results?index=equities&symbol=BAJFINANCE&type=Integrated%20Filing-%20Financials: HTTP 403"
+    },
+    {
+      "source": "screener",
+      "ticker": "INFY",
+      "at": "2026-11-03T11:03:49",
+      "status": 200,
+      "final_url": "https://www.screener.in/company/INFY/consolidated/",
+      "valid": true,
+      "sections": {
+        "quarters": true,
+        "profit-loss": true,
+        "balance-sheet": true,
+        "cash-flow": true
+      },
+      "quarter_cols": [
+        "Jun 2025",
+        "Sep 2025",
+        "Dec 2025",
+        "Mar 2026",
+        "Jun 2026",
+        "Sep 2026"
+      ],
+      "n_quarters": 13,
+      "annual_reports": 15,
+      "transcripts": 38,
+      "bse_code": "500209",
+      "sample_ar": [
+        "https://www.bseindia.com/xml-data/corpfiling/AttachHis/19dd605c-2b6b-4084-8dca-9d578a3eb7a0.pdf"
+      ],
+      "sample_transcript": [
+        "https://www.bseindia.com/stockinfo/AnnPdfOpen.aspx?Pname=7982fc61-7765-4981-ab3d-6aec36ba2137.pdf"
+      ],
+      "reason": null
+    },
+    {
+      "source": "bse_announcements",
+      "ticker": "INFY",
+      "at": "2026-11-03T11:03:50",
+      "status": 403,
+      "scrip": "500209",
+      "valid": false,
+      "reason": "non-JSON body",
+      "snippet": "<HTML><HEAD>\n<TITLE>Access Denied</TITLE>\n</HEAD><BODY>\n<H1>Access Denied</H1>\n \nYou don't have permission to access \"ht"
+    },
+    {
+      "source": "nse_announcements",
+      "ticker": "INFY",
+      "at": "2026-11-03T11:03:50",
+      "status": 403,
+      "bytes": 410,
+      "valid": false,
+      "reason": "non-JSON body (likely bot block)",
+      "snippet": "<HTML><HEAD>\n<TITLE>Access Denied</TITLE>\n</HEAD><BODY>\n<H1>Access Denied</H1>\n \nYou don't have permission to access \"ht"
+    },
+    {
+      "source": "results_pdf",
+      "ticker": "INFY",
+      "at": "2026-11-03T11:03:50",
+      "valid": null,
+      "reason": "no results filing in window"
+    },
+    {
+      "source": "nse_results_xbrl",
+      "ticker": "INFY",
+      "at": "2026-11-03T11:04:01",
+      "valid": false,
+      "reason": "https://www.nseindia.com/api/integrated-filing-results?index=equities&symbol=INFY&type=Integrated%20Filing-%20Financials: HTTP 403"
+    },
+    {
+      "source": "screener",
+      "ticker": "RELIANCE",
+      "at": "2026-11-03T11:04:03",
+      "status": 200,
+      "final_url": "https://www.screener.in/company/RELIANCE/consolidated/",
+      "valid": true,
+      "sections": {
+        "quarters": true,
+        "profit-loss": true,
+        "balance-sheet": true,
+        "cash-flow": true
+      },
+      "quarter_cols": [
+        "Jun 2025",
+        "Sep 2025",
+        "Dec 2025",
+        "Mar 2026",
+        "Jun 2026",
+        "Sep 2026"
+      ],
+      "n_quarters": 13,
+      "annual_reports": 15,
+      "transcripts": 20,
+      "bse_code": "500325",
+      "sample_ar": [
+        "https://www.bseindia.com/xml-data/corpfiling/AttachHis/cc08294f-ec68-4f15-aaa4-c14a3c4bdfb2.pdf"
+      ],
+      "sample_transcript": [
+        "https://www.bseindia.com/stockinfo/AnnPdfOpen.aspx?Pname=8e997741-4d35-4188-933a-cf020fb9c816.pdf"
+      ],
+      "reason": null
+    },
+    {
+      "source": "bse_announcements",
+      "ticker": "RELIANCE",
+      "at": "2026-11-03T11:04:03",
+      "status": 403,
+      "scrip": "500325",
+      "valid": false,
+      "reason": "non-JSON body",
+      "snippet": "<HTML><HEAD>\n<TITLE>Access Denied</TITLE>\n</HEAD><BODY>\n<H1>Access Denied</H1>\n \nYou don't have permission to access \"ht"
+    },
+    {
+      "source": "nse_announcements",
+      "ticker": "RELIANCE",
+      "at": "2026-11-03T11:04:04",
+      "status": 403,
+      "bytes": 410,
+      "valid": false,
+      "reason": "non-JSON body (likely bot block)",
+      "snippet": "<HTML><HEAD>\n<TITLE>Access Denied</TITLE>\n</HEAD><BODY>\n<H1>Access Denied</H1>\n \nYou don't have permission to access \"ht"
+    },
+    {
+      "source": "results_pdf",
+      "ticker": "RELIANCE",
+      "at": "2026-11-03T11:04:04",
+      "valid": null,
+      "reason": "no results filing in window"
+    },
+    {
+      "source": "nse_results_xbrl",
+      "ticker": "RELIANCE",
+      "at": "2026-11-03T11:04:15",
+      "valid": false,
+      "reason": "https://www.nseindia.com/api/integrated-filing-results?index=equities&symbol=RELIANCE&type=Integrated%20Filing-%20Financials: HTTP 403"
+    },
+    {
+      "source": "screener",
+      "ticker": "SUNPHARMA",
+      "at": "2026-11-03T11:04:16",
+      "status": 200,
+      "final_url": "https://www.screener.in/company/SUNPHARMA/consolidated/",
+      "valid": true,
+      "sections": {
+        "quarters": true,
+        "profit-loss": true,
+        "balance-sheet": true,
+        "cash-flow": true
+      },
+      "quarter_cols": [
+        "Jun 2025",
+        "Sep 2025",
+        "Dec 2025",
+        "Mar 2026",
+        "Jun 2026",
+        "Sep 2026"
+      ],
+      "n_quarters": 13,
+      "annual_reports": 15,
+      "transcripts": 26,
+      "bse_code": "524715",
+      "sample_ar": [
+        "https://www.bseindia.com/xml-data/corpfiling/AttachHis/cb65dea5-416a-4f98-95e2-0b58761b7442.pdf"
+      ],
+      "sample_transcript": [
+        "https://www.bseindia.com/stockinfo/AnnPdfOpen.aspx?Pname=34be7c92-1d9f-4010-ba30-2344c959bc5e.pdf"
+      ],
+      "reason": null
+    },
+    {
+      "source": "bse_announcements",
+      "ticker": "SUNPHARMA",
+      "at": "2026-11-03T11:04:17",
+      "status": 403,
+      "scrip": "524715",
+      "valid": false,
+      "reason": "non-JSON body",
+      "snippet": "<HTML><HEAD>\n<TITLE>Access Denied</TITLE>\n</HEAD><BODY>\n<H1>Access Denied</H1>\n \nYou don't have permission to access \"ht"
+    },
+    {
+      "source": "nse_announcements",
+      "ticker": "SUNPHARMA",
+      "at": "2026-11-03T11:04:17",
+      "status": 403,
+      "bytes": 410,
+      "valid": false,
+      "reason": "non-JSON body (likely bot block)",
+      "snippet": "<HTML><HEAD>\n<TITLE>Access Denied</TITLE>\n</HEAD><BODY>\n<H1>Access Denied</H1>\n \nYou don't have permission to access \"ht"
+    },
+    {
+      "source": "results_pdf",
+      "ticker": "SUNPHARMA",
+      "at": "2026-11-03T11:04:17",
+      "valid": null,
+      "reason": "no results filing in window"
+    },
+    {
+      "source": "nse_results_xbrl",
+      "ticker": "SUNPHARMA",
+      "at": "2026-11-03T11:04:28",
+      "valid": false,
+      "reason": "https://www.nseindia.com/api/integrated-filing-results?index=equities&symbol=SUNPHARMA&type=Integrated%20Filing-%20Financials: HTTP 403"
+    },
+    {
+      "source": "screener",
+      "ticker": "TITAN",
+      "at": "2026-11-03T11:04:30",
+      "status": 200,
+      "final_url": "https://www.screener.in/company/TITAN/consolidated/",
+      "valid": true,
+      "sections": {
+        "quarters": true,
+        "profit-loss": true,
+        "balance-sheet": true,
+        "cash-flow": true
+      },
+      "quarter_cols": [
+        "Mar 2025",
+        "Jun 2025",
+        "Sep 2025",
+        "Dec 2025",
+        "Mar 2026",
+        "Jun 2026"
+      ],
+      "n_quarters": 13,
+      "annual_reports": 15,
+      "transcripts": 37,
+      "bse_code": "500114",
+      "sample_ar": [
+        "https://www.bseindia.com/xml-data/corpfiling/AttachHis/1e85b157-d3b6-44c8-ab75-4776048dab00.pdf"
+      ],
+      "sample_transcript": [
+        "https://www.bseindia.com/stockinfo/AnnPdfOpen.aspx?Pname=f70a0a33-43cf-40b6-a753-67b06123e8de.pdf"
+      ],
+      "reason": null
+    },
+    {
+      "source": "bse_announcements",
+      "ticker": "TITAN",
+      "at": "2026-11-03T11:04:31",
+      "status": 403,
+      "scrip": "500114",
+      "valid": false,
+      "reason": "non-JSON body",
+      "snippet": "<HTML><HEAD>\n<TITLE>Access Denied</TITLE>\n</HEAD><BODY>\n<H1>Access Denied</H1>\n \nYou don't have permission to access \"ht"
+    },
+    {
+      "source": "nse_announcements",
+      "ticker": "TITAN",
+      "at": "2026-11-03T11:04:31",
+      "status": 403,
+      "bytes": 410,
+      "valid": false,
+      "reason": "non-JSON body (likely bot block)",
+      "snippet": "<HTML><HEAD>\n<TITLE>Access Denied</TITLE>\n</HEAD><BODY>\n<H1>Access Denied</H1>\n \nYou don't have permission to access \"ht"
+    },
+    {
+      "source": "results_pdf",
+      "ticker": "TITAN",
+      "at": "2026-11-03T11:04:31",
+      "valid": null,
+      "reason": "no results filing in window"
+    },
+    {
+      "source": "nse_results_xbrl",
+      "ticker": "TITAN",
+      "at": "2026-11-03T11:04:42",
+      "valid": false,
+      "reason": "https://www.nseindia.com/api/integrated-filing-results?index=equities&symbol=TITAN&type=Integrated%20Filing-%20Financials: HTTP 403"
+    },
+    {
+      "source": "screener",
+      "ticker": "DIXON",
+      "at": "2026-11-03T11:04:43",
+      "status": 200,
+      "final_url": "https://www.screener.in/company/DIXON/consolidated/",
+      "valid": true,
+      "sections": {
+        "quarters": true,
+        "profit-loss": true,
+        "balance-sheet": true,
+        "cash-flow": true
+      },
+      "quarter_cols": [
+        "Jun 2025",
+        "Sep 2025",
+        "Dec 2025",
+        "Mar 2026",
+        "Jun 2026",
+        "Sep 2026"
+      ],
+      "n_quarters": 13,
+      "annual_reports": 10,
+      "transcripts": 36,
+      "bse_code": "540699",
+      "sample_ar": [
+        "https://www.bseindia.com/xml-data/corpfiling/AttachHis/5ef88e3c-352d-4223-a8ec-bdd7d3aa31c1.pdf"
+      ],
+      "sample_transcript": [
+        "https://www.bseindia.com/stockinfo/AnnPdfOpen.aspx?Pname=7ce2ca16-3043-48f4-97f9-a62a6a086c2f.pdf"
+      ],
+      "reason": null
+    },
+    {
+      "source": "bse_announcements",
+      "ticker": "DIXON",
+      "at": "2026-11-03T11:04:44",
+      "status": 403,
+      "scrip": "540699",
+      "valid": false,
+      "reason": "non-JSON body",
+      "snippet": "<HTML><HEAD>\n<TITLE>Access Denied</TITLE>\n</HEAD><BODY>\n<H1>Access Denied</H1>\n \nYou don't have permission to access \"ht"
+    },
+    {
+      "source": "nse_announcements",
+      "ticker": "DIXON",
+      "at": "2026-11-03T11:04:44",
+      "status": 403,
+      "bytes": 410,
+      "valid": false,
+      "reason": "non-JSON body (likely bot block)",
+      "snippet": "<HTML><HEAD>\n<TITLE>Access Denied</TITLE>\n</HEAD><BODY>\n<H1>Access Denied</H1>\n \nYou don't have permission to access \"ht"
+    },
+    {
+      "source": "results_pdf",
+      "ticker": "DIXON",
+      "at": "2026-11-03T11:04:44",
+      "valid": null,
+      "reason": "no results filing in window"
+    },
+    {
+      "source": "nse_results_xbrl",
+      "ticker": "DIXON",
+      "at": "2026-11-03T11:04:55",
+      "valid": false,
+      "reason": "https://www.nseindia.com/api/integrated-filing-results?index=equities&symbol=DIXON&type=Integrated%20Filing-%20Financials: HTTP 403"
+    },
+    {
+      "source": "screener",
+      "ticker": "ETERNAL",
+      "at": "2026-11-03T11:04:57",
+      "status": 200,
+      "final_url": "https://www.screener.in/company/ETERNAL/consolidated/",
+      "valid": true,
+      "sections": {
+        "quarters": true,
+        "profit-loss": true,
+        "balance-sheet": true,
+        "cash-flow": true
+      },
+      "quarter_cols": [
+        "Jun 2025",
+        "Sep 2025",
+        "Dec 2025",
+        "Mar 2026",
+        "Jun 2026",
+        "Sep 2026"
+      ],
+      "n_quarters": 13,
+      "annual_reports": 7,
+      "transcripts": 21,
+      "bse_code": "543320",
+      "sample_ar": [
+        "https://www.bseindia.com/xml-data/corpfiling/AttachHis/4b6a4218-6bde-4c99-b10c-39ec7553cc42.pdf"
+      ],
+      "sample_transcript": [
+        "https://www.bseindia.com/stockinfo/AnnPdfOpen.aspx?Pname=64f36e3b-87e9-426e-be3e-515dca4525d2.pdf"
+      ],
+      "reason": null
+    },
+    {
+      "source": "bse_announcements",
+      "ticker": "ETERNAL",
+      "at": "2026-11-03T11:04:59",
+      "status": 403,
+      "scrip": "543320",
+      "valid": false,
+      "reason": "non-JSON body",
+      "snippet": "<HTML><HEAD>\n<TITLE>Access Denied</TITLE>\n</HEAD><BODY>\n<H1>Access Denied</H1>\n \nYou don't have permission to access \"ht"
+    },
+    {
+      "source": "nse_announcements",
+      "ticker": "ETERNAL",
+      "at": "2026-11-03T11:05:00",
+      "status": 403,
+      "bytes": 410,
+      "valid": false,
+      "reason": "non-JSON body (likely bot block)",
+      "snippet": "<HTML><HEAD>\n<TITLE>Access Denied</TITLE>\n</HEAD><BODY>\n<H1>Access Denied</H1>\n \nYou don't have permission to access \"ht"
+    },
+    {
+      "source": "results_pdf",
+      "ticker": "ETERNAL",
+      "at": "2026-11-03T11:05:00",
+      "valid": null,
+      "reason": "no results filing in window"
+    },
+    {
+      "source": "nse_results_xbrl",
+      "ticker": "ETERNAL",
+      "at": "2026-11-03T11:05:10",
+      "valid": false,
+      "reason": "https://www.nseindia.com/api/integrated-filing-results?index=equities&symbol=ETERNAL&type=Integrated%20Filing-%20Financials: HTTP 403"
+    },
+    {
+      "source": "screener",
+      "ticker": "KAYNES",
+      "at": "2026-11-03T11:05:12",
+      "status": 200,
+      "final_url": "https://www.screener.in/company/KAYNES/consolidated/",
+      "valid": true,
+      "sections": {
+        "quarters": true,
+        "profit-loss": true,
+        "balance-sheet": true,
+        "cash-flow": true
+      },
+      "quarter_cols": [
+        "Mar 2025",
+        "Jun 2025",
+        "Sep 2025",
+        "Dec 2025",
+        "Mar 2026",
+        "Jun 2026"
+      ],
+      "n_quarters": 13,
+      "annual_reports": 5,
+      "transcripts": 18,
+      "bse_code": "543664",
+      "sample_ar": [
+        "https://www.bseindia.com/xml-data/corpfiling/AttachHis/7b3ec474-8dc9-46bc-bf3b-64d55d3b6c30.pdf"
+      ],
+      "sample_transcript": [
+        "https://www.bseindia.com/stockinfo/AnnPdfOpen.aspx?Pname=e8d82234-f369-467f-a76f-75bb2747aaa1.pdf"
+      ],
+      "reason": null
+    },
+    {
+      "source": "bse_announcements",
+      "ticker": "KAYNES",
+      "at": "2026-11-03T11:05:13",
+      "status": 403,
+      "scrip": "543664",
+      "valid": false,
+      "reason": "non-JSON body",
+      "snippet": "<HTML><HEAD>\n<TITLE>Access Denied</TITLE>\n</HEAD><BODY>\n<H1>Access Denied</H1>\n \nYou don't have permission to access \"ht"
+    },
+    {
+      "source": "nse_announcements",
+      "ticker": "KAYNES",
+      "at": "2026-11-03T11:05:13",
+      "status": 403,
+      "bytes": 410,
+      "valid": false,
+      "reason": "non-JSON body (likely bot block)",
+      "snippet": "<HTML><HEAD>\n<TITLE>Access Denied</TITLE>\n</HEAD><BODY>\n<H1>Access Denied</H1>\n \nYou don't have permission to access \"ht"
+    },
+    {
+      "source": "results_pdf",
+      "ticker": "KAYNES",
+      "at": "2026-11-03T11:05:13",
+      "valid": null,
+      "reason": "no results filing in window"
+    },
+    {
+      "source": "nse_results_xbrl",
+      "ticker": "KAYNES",
+      "at": "2026-11-03T11:05:24",
+      "valid": false,
+      "reason": "https://www.nseindia.com/api/integrated-filing-results?index=equities&symbol=KAYNES&type=Integrated%20Filing-%20Financials: HTTP 403"
+    }
+  ],
+  "captured_via": {
+    "status": "ok",
+    "started_at": "2026-11-03T11:03:13",
+    "finished_at": "2026-11-03T11:05:27",
+    "timeout_s": 600,
+    "returncode": 0,
+    "endpoint": "https://finn-api-pz1f.onrender.com/api/probe-report (FINN_STARTUP_PROBE=1)"
+  }
+}

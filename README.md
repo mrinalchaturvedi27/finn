@@ -5,7 +5,11 @@ numbers taken from the company's own XBRL filing and located on the printed stat
 
 **Status: milestone 1** — seeded historical snapshot (visibly labelled), ranked brief,
 results detail view, price/volume thresholds, freshness indicators.
-Cloud source access is **unverified** until `probe/source_probe.py` runs on the backend host.
+Cloud source access (probe run inside the Render Singapore container, 2026-11-03,
+`probe/report-render.json`): yfinance 9/9 and screener.in 9/9 work. **NSE's announcement and
+results/XBRL APIs return 403 from Render (0/9 each)**, although they work from a local machine. So live
+NSE ingestion cannot run from this host as deployed. The NSE archive host (PDF/XBRL files) wasn't
+reached, because the index calls failed first. The deployed demo serves the recorded snapshot.
 
 ## Layout
 ```
@@ -64,4 +68,4 @@ To capture a new snapshot: `python -m finn.ingest snapshot --days 30 --record da
   labelled, and excluded from comparisons that need the printed figure.
 - **EBITDA** is not in the filing; shown as *Operating EBITDA (calculated)* with its formula.
   Banks and NBFCs use their own metric sets.
-- **BSE** fallback currently returns 403 (preserved in probe reports); not pursued in milestone 1.
+- **BSE** fallback returns 403 both locally and from Render (preserved in probe reports); not pursued in milestone 1.
