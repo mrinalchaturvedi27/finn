@@ -3,13 +3,16 @@
 Mobile-first investor brief: portfolio filings ranked by what matters, with results
 numbers taken from the company's own XBRL filing and located on the printed statement page.
 
-**Status: milestone 1 deployed; milestone 2 (live ingestion) in progress** — seeded historical snapshot (visibly labelled), ranked brief,
-results detail view, price/volume thresholds, freshness indicators.
-Cloud source access (probe run inside the Render Singapore container, 2026-11-03,
-`probe/report-render.json`): yfinance 9/9 and screener.in 9/9 work. **NSE's announcement and
-results/XBRL APIs return 403 from Render (0/9 each)**, although they work from a local machine. So live
-NSE ingestion cannot run from this host as deployed. The NSE archive host (PDF/XBRL files) wasn't
-reached, because the index calls failed first. The deployed demo serves the recorded snapshot.
+**Push:** a ranked brief of portfolio filings for a chosen window (routine collapsed), results
+cards with Revenue / EBITDA / PBT / PAT QoQ and YoY from the company's XBRL filing, located on
+the printed statement page, and per-stock price/volume alerts against thresholds you set.
+**Pull:** promised vs delivered for any NSE ticker, using management's guidance from its own
+earnings-call transcripts, checked against the quarterly results it then filed.
+
+Hosting: the API is on Render (Singapore) and the web app on Vercel. The worker runs on GitHub
+Actions, because NSE's APIs return 403 to Render (`probe/report-render.json`) but answer GitHub
+runners (`probe/report-gha.json`, four runs). Live data goes to hosted Postgres. Without it, the
+API serves a labelled historical snapshot recorded on 2026-11-03.
 
 ## Layout
 ```
@@ -18,6 +21,8 @@ backend/   FastAPI + SQLite. finn/models.py is the frozen evidence model.
   finn/classify.py          category and materiality (separate)
   finn/events.py            grouping / dedup of related filings
   finn/prices.py            per-ticker EOD thresholds, staleness
+  finn/research/            pull side: transcripts -> guidance -> promised vs delivered
+  finn/worker.py            scheduled live ingestion (GitHub Actions), finn/migrate.py schema
 frontend/  Next.js (app router), mobile-first
 probe/     source-access probe, results evaluation, manually confirmed fixture
 ```
@@ -39,7 +44,34 @@ PDFs), price bars, and the capture clock. `--replay` rebuilds the identical data
 (asserted in `tests/test_core.py::test_snapshot_replay_is_offline_and_reproducible`).
 To capture a new snapshot: `python -m finn.ingest snapshot --days 30 --record data/snapshot-<date>`.
 
-## Live ingestion (milestone 2, in progress)
+## Research: promised vs delivered
+
+`python -m finn.research.run TICKER` (or the worker, for queued tickers and the demo set). Sources
+are the company's own filings only, with no news, broker notes or model knowledge:
+
+1. **Delivered:** up to 10 quarters from NSE XBRL results (integrated filings from 2025, legacy
+   index before that), using the latest revision of each quarter on one basis throughout. Metric
+   definitions are the same as the results cards.
+2. **Promised:** earnings-call transcripts among the company's NSE filings. A cover letter that only
+   links to the transcript is followed to the company's PDF. Speaker turns are tagged, and only
+   management's answers are read, not analysts' questions.
+3. **Extraction (rules, no model):** a sentence needs explicit guidance language, a metric (revenue,
+   EBITDA margin, profit, volume, capex) and a number or standard phrase ("high single digit").
+   Results being described are dropped. Statements about segments, geographies, the industry or
+   economy, AUM or loan books, constant currency, or an unspecified "margin" are kept but marked
+   not checkable. That includes when the segment was named a sentence or two earlier.
+4. **Verdicts (rules v1, `scorecard.py`):** year-to-date growth or margin against the same quarters a
+   year earlier. Pending, with an on-track reading, until all four quarters are in; a finished year
+   with missing data is not checkable. Standing margin bands are checked quarter by quarter.
+   Tolerance is 1pp on growth and 0.5pp on margins. A later call's target supersedes an earlier one
+   (shown as a revision); the same target said again is a reiteration; conflicting targets in one
+   call are not checkable. Every verdict shows its calculation, the quote and its page.
+
+Precision over recall: every claimed verdict on 11 companies was checked by hand against its
+quote, and each false one became a rule and a test. Most Indian guidance is segment-level, so many
+statements are listed as not checkable, with the reason.
+
+## Live ingestion (milestone 2)
 
 `python -m finn.worker` runs the live pipeline (`--once` for a single cron-style tick). Each tick
 reads the `ingest_run` log to decide what is due, so repeating a tick is safe. Only one tick runs
