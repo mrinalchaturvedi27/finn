@@ -2,8 +2,9 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { FreshnessLine, Pill, SectionLabel, SnapshotBanner, Spark, Delta } from "@/components/ui";
-import { get, type Brief, type BriefEvent, type Mover } from "@/lib/api";
+import { FreshnessLine, LoadStatus, Pill, SectionLabel, SnapshotBanner, Spark, Delta } from "@/components/ui";
+import { type Brief, type BriefEvent, type Mover } from "@/lib/api";
+import { useApi } from "@/lib/useApi";
 import { CATEGORY_LABEL, ago, istDate } from "@/lib/format";
 
 const WINDOWS = [
@@ -15,8 +16,6 @@ const WINDOWS = [
 
 export default function BriefPage() {
   const [win, setWin] = useState<string>("24h");
-  const [data, setData] = useState<Brief | null>(null);
-  const [err, setErr] = useState<string | null>(null);
   const [showRoutine, setShowRoutine] = useState(false);
 
   useEffect(() => {
@@ -26,11 +25,9 @@ export default function BriefPage() {
     } catch {}
   }, []);
 
+  const { data, state, err, retry } = useApi<Brief>(`/api/brief?window=${win}`);
+
   useEffect(() => {
-    setErr(null);
-    get<Brief>(`/api/brief?window=${win}`)
-      .then(setData)
-      .catch((e) => setErr(String(e)));
     try {
       localStorage.setItem("finn.window", win);
     } catch {}
@@ -68,11 +65,7 @@ export default function BriefPage() {
         ))}
       </nav>
 
-      {err && (
-        <p className="mt-6 rounded-xl border border-down/30 bg-surface p-3 text-[13px] text-down">
-          Couldn’t reach the FINN API ({err}).
-        </p>
-      )}
+      <LoadStatus state={state} err={err} onRetry={retry} what="the brief" />
 
       {data && (
         <>

@@ -1,6 +1,5 @@
-# FINN backend. Same image runs the API and the one-off cloud source probe:
-#   API:   (default CMD)
-#   Probe: python probe/source_probe.py --out -
+# FINN backend. The cloud source probe runs at container startup when FINN_STARTUP_PROBE=1
+# (in the runtime, not at build: a build-time run would test the build environment).
 FROM python:3.12-slim
 WORKDIR /app
 COPY backend/requirements.txt backend/requirements.txt

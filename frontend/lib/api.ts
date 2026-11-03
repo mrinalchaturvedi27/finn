@@ -63,6 +63,7 @@ export type Settings = {
   price_pct: number;
   eod_buffer_min: number;
   alert_categories: string[];
+  read_only?: boolean;
 };
 
 export type Check = { check: string; ok: boolean; detail: string };
@@ -122,10 +123,58 @@ export type EventDetail = BriefEvent & {
   results: ResultsCard | null;
 };
 
-export async function get<T>(path: string): Promise<T> {
-  const r = await fetch(`${API}${path}`, { cache: "no-store" });
-  if (!r.ok) throw new Error(`${r.status} ${path}`);
+export class ApiError extends Error {
+  constructor(public status: number | null, message: string) {
+    super(message);
+  }
+}
+
+export async function get<T>(path: string, signal?: AbortSignal): Promise<T> {
+  let r: Response;
+  try {
+    r = await fetch(`${API}${path}`, { cache: "no-store", signal });
+  } catch (e) {
+    if (signal?.aborted) throw e;
+    throw new ApiError(null, "network error"); // also what a CORS rejection looks like
+  }
+  if (!r.ok) throw new ApiError(r.status, `${r.status} ${path}`);
   return r.json();
+}
+
+// The free backend sleeps when idle and takes about a minute to start. Retry for a bounded
+// time and report "waking"; only give up (error state) once the budget is spent.
+const WAKE_BUDGET_MS = 100_000;
+const ATTEMPT_TIMEOUT_MS = 30_000;
+const SLOW_MS = 3_000;
+const RETRYABLE = new Set([502, 503, 504]);
+
+export async function getWaking<T>(path: string, onWaking: () => void, signal: AbortSignal): Promise<T> {
+  const t0 = Date.now();
+  const slow = setTimeout(onWaking, SLOW_MS);
+  try {
+    for (let attempt = 0; ; attempt++) {
+      const ctl = new AbortController();
+      const abort = () => ctl.abort();
+      signal.addEventListener("abort", abort);
+      const timer = setTimeout(abort, ATTEMPT_TIMEOUT_MS);
+      try {
+        return await get<T>(path, ctl.signal);
+      } catch (e) {
+        if (signal.aborted) throw e;
+        const retryable = !(e instanceof ApiError) || e.status === null || RETRYABLE.has(e.status);
+        if (!retryable || Date.now() - t0 > WAKE_BUDGET_MS) {
+          throw e instanceof ApiError ? e : new ApiError(null, "timed out");
+        }
+        onWaking();
+        await new Promise((ok) => setTimeout(ok, Math.min(2000 * 2 ** attempt, 8000)));
+      } finally {
+        clearTimeout(timer);
+        signal.removeEventListener("abort", abort);
+      }
+    }
+  } finally {
+    clearTimeout(slow);
+  }
 }
 
 export async function put<T>(path: string, body: unknown): Promise<T> {

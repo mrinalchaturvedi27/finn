@@ -40,7 +40,18 @@ To capture a new snapshot: `python -m finn.ingest snapshot --days 30 --record da
   Vercel origin. Free instances sleep and have ephemeral disk — fine for a labelled snapshot,
   not for persistent settings or live ingestion (those need durable storage + scheduled jobs).
 - Frontend on Vercel with `NEXT_PUBLIC_API_BASE` set to the Render URL.
-- Cloud source probe: `python probe/source_probe.py --out -` from the Render shell/job.
+- The deployed API is read-only (`FINN_READ_ONLY=1`): settings changes are refused, since CORS only
+  restrains browsers.
+- Cloud source probe: Render's free plan has no shell or one-off jobs, so the probe runs as a temporary
+  startup task inside the deployed container (`FINN_STARTUP_PROBE=1`, `FINN_PROBE_TIMEOUT=600`). It runs
+  in the background, so the health check passes while it works. The report is printed to the logs between
+  `=== FINN_PROBE_REPORT_JSON ===` markers and served at `GET /api/probe-report` while the flag is on.
+  Save it as `probe/report-render.json`, then set the flag to `0`; the endpoint then returns 404.
+- Restart/redeploy check: `GET /api/health` returns `booted_at`, the deployed commit and a fingerprint
+  of the seeded events and metric values. After a restart or redeploy, `booted_at` should change and
+  the fingerprint should stay the same.
+- Cold start: the free instance sleeps when idle. The frontend shows "Backend waking up…" and retries
+  for up to ~100 s before showing an error with a retry button.
 
 ## Data decisions
 - **Results numbers** come from NSE Integrated Filing XBRL (one file per quarter × basis; latest

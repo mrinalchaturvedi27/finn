@@ -235,3 +235,33 @@ def test_snapshot_replay_is_offline_and_reproducible(tmp_path):
     aligned = con.execute("select count(*) from metric_obs where corroboration_page is not null").fetchone()[0]
     statuses = {s for (s,) in con.execute("select status from ingest_run")}
     assert n_cards == 14 and aligned == 39 and statuses == {"ok"}
+
+
+def test_rebuilt_seed_has_same_fingerprint_and_api_is_read_only(tmp_path):
+    """A redeploy rebuilds the DB from the snapshot: the /api/health fingerprint must not change."""
+    import json
+    import os
+    import subprocess
+    import sys
+    from pathlib import Path
+    backend = Path(__file__).resolve().parents[1]
+    probe = ("import json; from fastapi.testclient import TestClient; from finn.api import app\n"
+             "with TestClient(app) as c:\n"
+             "    put = c.put('/api/settings', json={'volume_multiple': 3, 'price_pct': 5, 'alert_categories': []})\n"
+             "    print(json.dumps({'health': c.get('/api/health').json(), 'put': put.status_code,\n"
+             "                      'probe': c.get('/api/probe-report').status_code}))")
+    seen = []
+    for i in range(2):
+        env = {**os.environ, "FINN_DB_URL": f"sqlite:///{tmp_path / f'seed{i}.db'}", "FINN_READ_ONLY": "1",
+               "FINN_STARTUP_PROBE": "0"}
+        r = subprocess.run([sys.executable, "-m", "finn.ingest", "snapshot", "--replay", "data/snapshot"],
+                           cwd=backend, env=env, capture_output=True, text=True, timeout=300)
+        assert r.returncode == 0, r.stderr[-2000:]
+        r = subprocess.run([sys.executable, "-c", probe], cwd=backend, env=env, capture_output=True, text=True,
+                           timeout=60)
+        assert r.returncode == 0, r.stderr[-2000:]
+        seen.append(json.loads(r.stdout.strip().splitlines()[-1]))
+    assert seen[0]["put"] == 403 and seen[0]["probe"] == 404
+    assert seen[0]["health"]["read_only"] is True
+    assert seen[0]["health"]["seed"] == seen[1]["health"]["seed"]
+    assert seen[0]["health"]["seed"]["metric_obs"] > 0

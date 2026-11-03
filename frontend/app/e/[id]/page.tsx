@@ -1,24 +1,20 @@
 "use client";
 
-import { use, useEffect, useState } from "react";
-import { BackLink, Pill, SectionLabel } from "@/components/ui";
+import { use } from "react";
+import { BackLink, LoadStatus, Pill, SectionLabel } from "@/components/ui";
 import { ResultsView } from "@/components/results";
-import { get, type EventDetail } from "@/lib/api";
+import { type EventDetail } from "@/lib/api";
+import { useApi } from "@/lib/useApi";
 import { CATEGORY_LABEL, istDate } from "@/lib/format";
 
 export default function EventPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = use(params);
-  const [e, setE] = useState<EventDetail | null>(null);
-  const [err, setErr] = useState<string | null>(null);
-
-  useEffect(() => {
-    get<EventDetail>(`/api/events/${id}`).then(setE).catch((x) => setErr(String(x)));
-  }, [id]);
+  const { data: e, state, err, retry } = useApi<EventDetail>(`/api/events/${id}`);
 
   return (
     <main className="mx-auto max-w-[560px] px-4 pb-24 pt-5">
       <BackLink />
-      {err && <p className="mt-6 text-[13px] text-down">Couldn’t load this event ({err}).</p>}
+      <LoadStatus state={state} err={err} onRetry={retry} what="this event" />
       {e && (
         <>
           <div className="mt-4 flex items-center gap-2 text-[12px] text-muted">

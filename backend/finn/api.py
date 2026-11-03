@@ -1,21 +1,30 @@
 """FINN HTTP API (milestone 1: brief, event detail, settings, freshness)."""
+import hashlib
+import json
 import os
 from datetime import datetime, timedelta
+from pathlib import Path
 
-from fastapi import FastAPI, HTTPException, Query
+from fastapi import FastAPI, HTTPException, Query, Response
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, Field
 from sqlalchemy import select
 
 from . import prices as px
+from . import startup_probe
 from .classify import tier
 from .db import Session, init_db
 from .ingest import DEFAULT_SETTINGS
-from .models import Company, Event, Filing, IngestRun, PriceBar, Setting
+from .models import Company, Event, Filing, IngestRun, MetricObs, PriceBar, Setting
+
+# Deployed demo stays read-only (FINN_READ_ONLY=1): CORS only restrains browsers, not direct calls.
+READ_ONLY = os.environ.get("FINN_READ_ONLY") == "1"
+SNAPSHOT_MANIFEST = Path(__file__).resolve().parents[1] / "data" / "snapshot" / "manifest.json"
+BOOTED_AT = datetime.now().isoformat(timespec="seconds")
 
 app = FastAPI(title="FINN")
 app.add_middleware(CORSMiddleware, allow_origins=os.environ.get("FINN_CORS", "*").split(","),
-                   allow_methods=["GET", "PUT"], allow_headers=["*"])
+                   allow_methods=["GET"] if READ_ONLY else ["GET", "PUT"], allow_headers=["*"])
 
 CADENCE = {"nse_announcements": "every 15 min in market hours, hourly otherwise",
            "prices": "once per session, 90 min after the 15:30 close",
@@ -26,6 +35,7 @@ WINDOWS = {"24h": timedelta(hours=24), "3d": timedelta(days=3), "7d": timedelta(
 @app.on_event("startup")
 def _startup():
     init_db()
+    startup_probe.start()
 
 
 def _settings(db) -> dict:
@@ -160,13 +170,16 @@ class SettingsIn(BaseModel):
 
 
 @app.get("/api/settings")
-def get_settings():
+def get_settings(response: Response):
+    response.headers["x-finn-read-only"] = "1" if READ_ONLY else "0"
     with Session() as db:
-        return _settings(db)
+        return {**_settings(db), "read_only": READ_ONLY}
 
 
 @app.put("/api/settings")
 def put_settings(body: SettingsIn):
+    if READ_ONLY:
+        raise HTTPException(403, "This deployment is read-only.")
     with Session() as db:
         s = db.get(Setting, "alerts") or Setting(key="alerts", value={})
         s.value = {**_settings(db), **body.model_dump()}
@@ -177,4 +190,30 @@ def put_settings(body: SettingsIn):
 
 @app.get("/api/health")
 def health():
-    return {"ok": True}
+    """Liveness plus a fingerprint of the seeded data, to check it survives restarts and redeploys."""
+    with Session() as db:
+        events = db.scalars(select(Event.group_key).order_by(Event.group_key)).all()
+        obs = db.scalars(select(MetricObs.value).order_by(MetricObs.id)).all()
+        n_obs = len(obs)
+    digest = hashlib.sha256(json.dumps([events, obs], default=str).encode()).hexdigest()[:16]
+    return {"ok": True, "booted_at": BOOTED_AT, "commit": os.environ.get("RENDER_GIT_COMMIT"),
+            "read_only": READ_ONLY,
+            "seed": {"captured_at": _manifest_captured_at(), "events": len(events), "metric_obs": n_obs,
+                     "fingerprint": digest}}
+
+
+def _manifest_captured_at():
+    try:
+        return json.loads(SNAPSHOT_MANIFEST.read_text()).get("captured_at")
+    except (OSError, ValueError):
+        return None
+
+
+@app.get("/api/probe-report")
+def probe_report():
+    """Only while FINN_STARTUP_PROBE=1; turn the flag off after capture."""
+    if not startup_probe.enabled():
+        raise HTTPException(404)
+    st = dict(startup_probe.STATE)
+    rep = st.pop("report_json", None)
+    return {**st, "report": json.loads(rep) if rep else None}

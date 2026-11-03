@@ -9,6 +9,7 @@ coverage and failure reasons. HTTP 200 alone is not treated as success.
 import argparse
 import io
 import json
+import os
 import platform
 import re
 import socket
@@ -215,7 +216,11 @@ def main():
     args = ap.parse_args()
     all_tickers = TICKERS + [UNSEEN]
     report = {"host": socket.gethostname(), "platform": platform.platform(),
-              "run_at": datetime.now().isoformat(timespec="seconds"), "records": []}
+              "run_at": datetime.now().isoformat(timespec="seconds"),
+              # set by Render at runtime; absent locally
+              "runtime": {k: os.environ.get(k) for k in ("RENDER", "RENDER_SERVICE_NAME", "RENDER_INSTANCE_ID",
+                                                          "RENDER_GIT_COMMIT") if os.environ.get(k)},
+              "records": []}
     R = report["records"]
 
     R.extend(probe_prices(all_tickers))

@@ -78,3 +78,22 @@ export function BackLink() {
     </Link>
   );
 }
+
+export function LoadStatus({ state, err, onRetry, what }: {
+  state: "loading" | "waking" | "ready" | "error"; err: string | null; onRetry: () => void; what: string;
+}) {
+  if (state === "waking")
+    return (
+      <p role="status" className="mt-6 rounded-xl border border-line bg-surface p-3 text-[13px] text-muted">
+        Backend waking up… The demo server sleeps when idle and takes about a minute to start. Retrying.
+      </p>
+    );
+  if (state === "error")
+    return (
+      <div role="alert" className="mt-6 rounded-xl border border-down/30 bg-surface p-3 text-[13px] text-down">
+        Couldn’t load {what} ({err}).{" "}
+        <button onClick={onRetry} className="underline underline-offset-2">Try again</button>
+      </div>
+    );
+  return null;
+}

@@ -1,23 +1,22 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { BackLink, SectionLabel } from "@/components/ui";
-import { get, put, type Settings } from "@/lib/api";
+import { useState } from "react";
+import { BackLink, LoadStatus, SectionLabel } from "@/components/ui";
+import { put, type Settings } from "@/lib/api";
+import { useApi } from "@/lib/useApi";
 import { CATEGORY_LABEL } from "@/lib/format";
 
 const WATCHABLE = ["results", "M&A", "management_change", "fund_raise", "litigation", "credit_rating", "pledging",
   "insider_trading", "capex", "dividend", "bonus_split", "press_release"];
 
 export default function SettingsPage() {
-  const [s, setS] = useState<Settings | null>(null);
+  const { data: s, setData: setS, state, err, retry } = useApi<Settings>("/api/settings");
   const [saved, setSaved] = useState<"idle" | "saving" | "saved" | "error">("idle");
-
-  useEffect(() => {
-    get<Settings>("/api/settings").then(setS);
-  }, []);
+  const ro = s?.read_only ?? false;
 
   async function save(next: Settings) {
     setS(next);
+    if (ro) return;
     setSaved("saving");
     try {
       await put("/api/settings", {
@@ -38,6 +37,12 @@ export default function SettingsPage() {
         {saved === "saved" && <span className="text-up"> Saved.</span>}
         {saved === "error" && <span className="text-down"> Couldn’t save.</span>}
       </p>
+      {ro && (
+        <p className="mt-3 rounded-xl border border-line bg-surface-2 p-3 text-[12.5px] text-muted">
+          Read-only demo: these are the thresholds the brief uses. You can try other values here, but they aren’t saved.
+        </p>
+      )}
+      <LoadStatus state={state} err={err} onRetry={retry} what="settings" />
       {s && (
         <>
           <SectionLabel>Price move</SectionLabel>
