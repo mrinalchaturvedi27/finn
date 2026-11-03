@@ -13,13 +13,14 @@ Exchange holidays are not modelled: a holiday just produces an empty or stale ru
 """
 import argparse
 import time
+from contextlib import contextmanager
 from datetime import datetime, time as dtime, timedelta
 
-from sqlalchemy import select
+from sqlalchemy import select, text
 
 from . import live
 from . import prices as px
-from .db import Session, init_db
+from .db import DATA_DIR, Session, engine, init_db
 from .extract.results import build_results_card
 from .ingest import (_finish, _run, _settings_or_default, ingest_announcements, ingest_prices, load_portfolio,
                      persist_observations, rebuild_events, seed_companies)
@@ -28,6 +29,48 @@ from .sources.nse import NSE, SourceError
 
 MARKET_OPEN, MARKET_CLOSE = dtime(9, 0), dtime(15, 45)
 PRICE_RETRY_UNTIL = dtime(21, 0)
+LOCK_KEY = 0x46494E4E  # "FINN"
+ABANDONED_AFTER = timedelta(minutes=30)  # longer than the job timeout
+
+
+@contextmanager
+def single_worker():
+    """Yield True if this process holds the worker lock; False if another run is in progress.
+    Postgres: session advisory lock (released if the runner dies). SQLite: a lock file."""
+    if engine.dialect.name == "postgresql":
+        with engine.connect() as c:
+            got = c.execute(text("select pg_try_advisory_lock(:k)"), {"k": LOCK_KEY}).scalar()
+            try:
+                yield bool(got)
+            finally:
+                if got:
+                    c.execute(text("select pg_advisory_unlock(:k)"), {"k": LOCK_KEY})
+                c.commit()
+    else:
+        import fcntl
+        DATA_DIR.mkdir(parents=True, exist_ok=True)
+        with open(DATA_DIR / "worker.lock", "w") as f:
+            try:
+                fcntl.flock(f, fcntl.LOCK_EX | fcntl.LOCK_NB)
+            except BlockingIOError:
+                yield False
+                return
+            try:
+                yield True
+            finally:
+                fcntl.flock(f, fcntl.LOCK_UN)
+
+
+def close_abandoned(db, now: datetime) -> int:
+    """Runs left 'running' by a killed job (timeout, cancelled runner) are marked abandoned."""
+    n = 0
+    for r in db.scalars(select(IngestRun).where(IngestRun.status == "running",
+                                                IngestRun.started_at < now - ABANDONED_AFTER)):
+        r.status, r.finished_at = "abandoned", now
+        r.errors = [*(r.errors or []), {"error": "run did not finish (job killed or timed out)"}]
+        n += 1
+    db.commit()
+    return n
 
 
 def market_hours(now: datetime) -> bool:
@@ -105,8 +148,17 @@ def recheck_xbrl(db, nse: NSE, now: datetime):
 
 def tick(now: datetime | None = None) -> list[str]:
     now = now or px.now_ist()
+    with single_worker() as mine:
+        if not mine:
+            print("another worker run holds the lock; skipping", flush=True)
+            return []
+        return _tick(now)
+
+
+def _tick(now: datetime) -> list[str]:
     nse = NSE()
     with Session() as db:
+        close_abandoned(db, now)
         seed_companies(db)
         tickers = [p["ticker"] for p in load_portfolio()]
         jobs = due(db, now)

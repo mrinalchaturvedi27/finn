@@ -45,9 +45,14 @@ export function FreshnessLine({ f, stale }: { f: Freshness; stale?: number }) {
   return (
     <div className="mt-2 space-y-0.5 px-1 text-[11.5px] leading-snug text-faint">
       <div>
-        Filings: last checked {istDate(ann?.last_checked, true)}
-        {ann?.last_status && ann.last_status !== "ok" && <span className="text-warn"> ({ann.last_status})</span>}
-        {ann?.overdue && <span className="text-warn"> · overdue</span>} · checks {ann?.cadence}
+        Filings: last successful check {ann?.last_success ? istDate(ann.last_success, true) : "none yet"}
+        {ann?.overdue && <span className="text-warn"> · overdue</span>}
+        {ann?.last_status && !["ok", "running"].includes(ann.last_status) && (
+          <span className="text-warn">
+            {" "}· last attempt {ann.last_status} {istTime(ann.last_checked)}
+          </span>
+        )}
+        <span> · {ann?.cadence}</span>
       </div>
       <div>
         Prices: through {istDate(pr?.data_through)} close · checked {istTime(pr?.last_checked)}

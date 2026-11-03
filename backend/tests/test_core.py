@@ -325,8 +325,10 @@ def test_backfill_then_incremental_windows(tmp_path):
     db = _live_db(tmp_path)
     now = datetime(2026, 11, 3, 12, 0)
     assert live.announcement_windows(db, ["PERSISTENT"], now)["PERSISTENT"] == (date(2026, 10, 4), date(2026, 11, 3), True)
-    _filing(db, 1, datetime(2026, 11, 2, 18, 0), "Press Release")
+    live.set_cursor(db, "PERSISTENT", datetime(2026, 11, 2, 18, 0))
     assert live.announcement_windows(db, ["PERSISTENT"], now)["PERSISTENT"] == (date(2026, 10, 31), date(2026, 11, 3), False)
+    # a 3-month outage is capped at the backfill window
+    assert live.announcement_windows(db, ["PERSISTENT"], datetime(2027, 2, 3))["PERSISTENT"][0] == date(2027, 1, 4)
 
 
 def test_card_rebuild_policy():
@@ -400,3 +402,75 @@ def test_worker_schedule(tmp_path):
     assert "prices" not in due(db, datetime(2026, 11, 3, 17, 30))
     assert "prices" in due(db, datetime(2026, 11, 3, 18, 2))
     assert "xbrl_recheck" in due(db, datetime(2026, 11, 4, 0, 1))
+
+
+class FakeNSE:
+    """Announcements only; records the windows asked for. A ticker in `fail` raises."""
+    def __init__(self, rows, fail=()):
+        self.rows, self.fail, self.calls = rows, set(fail), []
+
+    def announcements(self, t, start, end):
+        from finn.sources.nse import SourceError
+        self.calls.append((t, start, end))
+        if t in self.fail:
+            raise SourceError("HTTP 403")
+        return [r for r in self.rows if r["symbol"] == t]
+
+
+def _ann(seq, sym, when, desc, text):
+    return {"seq_id": seq, "symbol": sym, "an_dt": when, "sort_date": when, "desc": desc,
+            "attchmntText": text, "attchmntFile": f"https://x/{seq}.pdf", "sm_name": sym}
+
+
+def test_worker_rerun_is_idempotent_and_backfills_failed_ticker(tmp_path, monkeypatch):
+    from finn import ingest, live
+    from finn.models import Alert, Company, Event, Filing
+    db = _live_db(tmp_path)
+    db.add(Company(ticker="TRENT", in_portfolio=True))
+    db.commit()
+    monkeypatch.setattr(ingest, "build_results_card", lambda *a, **k: {"status": "failed", "problems": ["test"]})
+    rows = [_ann(1, "PERSISTENT", "02-Nov-2026 18:00:00", "Press Release", "Persistent wins a contract"),
+            {**_ann(2, "PERSISTENT", "02-Nov-2026 18:05:00", "Press Release", "Persistent wins a contract"),
+             "attchmntFile": "https://x/1.pdf"},  # re-post of the same document
+            _ann(3, "TRENT", "02-Nov-2026 10:00:00", "Credit Rating", "CRISIL reaffirmed AA+")]
+    t0 = datetime(2026, 11, 3, 12, 0)
+    monkeypatch.setattr(ingest.px, "now_ist", lambda: t0)
+    nse = FakeNSE(rows, fail={"TRENT"})
+    tickers = ["PERSISTENT", "TRENT"]
+    for _ in range(2):  # same run twice: nothing duplicated
+        raw = ingest.ingest_announcements(db, nse, tickers, 30, "live", windows=live.announcement_windows(db, tickers, t0))
+        ingest.rebuild_events(db, tickers, raw, "live")
+    assert db.query(Filing).count() == 2 and db.query(Filing).filter(Filing.duplicate_of.isnot(None)).count() == 1
+    assert db.query(Event).count() == 1
+    assert "TRENT" not in live.get_cursors(db)
+    # TRENT recovers: its window still reaches back to the full backfill, so the missed filing arrives
+    nse.fail.clear()
+    t1 = datetime(2026, 11, 3, 13, 0)
+    monkeypatch.setattr(ingest.px, "now_ist", lambda: t1)
+    w = live.announcement_windows(db, tickers, t1)
+    assert w["TRENT"][2] is True and w["PERSISTENT"][0] == date(2026, 11, 1)
+    raw = ingest.ingest_announcements(db, nse, tickers, 30, "live", windows=w)
+    ingest.rebuild_events(db, tickers, raw, "live")
+    assert db.query(Filing).count() == 3 and db.query(Event).count() == 2
+    assert db.query(Alert).count() == 0  # nothing alerts before live_since is set
+
+
+def test_worker_lock_blocks_overlapping_run():
+    from finn.worker import single_worker
+    with single_worker() as first:
+        with single_worker() as second:
+            assert first is True and second is False
+    with single_worker() as again:
+        assert again is True  # released
+
+
+def test_killed_run_is_marked_abandoned(tmp_path):
+    from finn.models import IngestRun
+    from finn.worker import close_abandoned
+    db = _live_db(tmp_path)
+    now = datetime(2026, 11, 3, 12, 0)
+    db.add(IngestRun(source="nse_announcements", mode="live", started_at=datetime(2026, 11, 3, 11, 0), status="running"))
+    db.add(IngestRun(source="prices", mode="live", started_at=datetime(2026, 11, 3, 11, 50), status="running"))
+    db.commit()
+    assert close_abandoned(db, now) == 1
+    assert {r.source: r.status for r in db.query(IngestRun)} == {"nse_announcements": "abandoned", "prices": "running"}

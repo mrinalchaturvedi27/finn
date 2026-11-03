@@ -1,0 +1,36 @@
+# Live ingestion: one worker tick (python -m finn.worker --once) writing to hosted Postgres.
+# The tick decides what is due from the ingest_run log, so a delayed, dropped or repeated run
+# is harmless; the next one backfills from each ticker's last successful fetch.
+# Scheduled runs are best effort (GitHub may delay or drop them). The cadence is provisional
+# until measured runtimes are in; the app shows actual last-success times, not this schedule.
+name: worker
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "17 * * * *"  # hourly, off the top of the hour
+permissions:
+  contents: read
+concurrency:
+  group: finn-worker
+  cancel-in-progress: false  # never kill a tick mid-write; a queued tick waits
+jobs:
+  tick:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15  # a killed run is marked abandoned by the next tick
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: backend/requirements.txt
+      - run: pip install -r backend/requirements.txt
+      - name: Tick
+        working-directory: backend
+        env:
+          FINN_DB_URL: ${{ secrets.FINN_DB_URL }}
+        run: |
+          if [ -z "$FINN_DB_URL" ]; then echo "::error::repository secret FINN_DB_URL is not set"; exit 1; fi
+          start=$(date +%s)
+          python -m finn.worker --once
+          echo "tick_seconds=$(( $(date +%s) - start ))" | tee -a "$GITHUB_STEP_SUMMARY"

@@ -136,7 +136,9 @@ def probe_results_pdf(s, ticker, rows):
     from finn.extract.results import results_pdf_candidates
     hits = results_pdf_candidates(rows, None)
     if not hits:
-        return rec("results_pdf", ticker, valid=None, reason="no results filing in window")
+        # not a failure: the company has not filed results in the window (e.g. reports later)
+        return rec("results_pdf", ticker, valid=None, reason="no results filing in window",
+                   announcements_checked=len(rows))
     row = hits[0]
     url = row.get("attchmntFile")
     out = rec("results_pdf", ticker, filing_dt=row.get("an_dt"), url=url, subject=row.get("desc"))

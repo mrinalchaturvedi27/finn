@@ -42,10 +42,18 @@ To capture a new snapshot: `python -m finn.ingest snapshot --days 30 --record da
 ## Live ingestion (milestone 2, in progress)
 
 `python -m finn.worker` runs the live pipeline (`--once` for a single cron-style tick). Each tick
-reads the `ingest_run` log to decide what is due, so repeating a tick is safe:
+reads the `ingest_run` log to decide what is due, so repeating a tick is safe. Only one tick runs
+at a time (Postgres advisory lock; lock file on SQLite), and a tick killed mid-way is marked
+abandoned by the next one.
 
-- **Announcements:** every 15 min in market hours (Mon–Fri 09:00–15:45 IST), hourly otherwise.
-  The first run backfills 30 days per ticker; later runs re-read from the last filing minus 2 days.
+Deployed: `.github/workflows/worker.yml` runs `--once` on GitHub Actions (manual, plus an hourly
+schedule that GitHub may delay or drop) against hosted Postgres from the `FINN_DB_URL` repository
+secret; the Render API reads the same database (`FINN_DB_URL` set in the Render dashboard).
+
+- **Announcements:** due every 15 min in market hours and hourly otherwise, but only as often as
+  the worker is actually invoked (hourly on Actions for now). Each ticker is fetched from its last
+  successful fetch minus 2 days, so a failed ticker or a missed run is backfilled next time; a
+  ticker never fetched gets 30 days.
   Re-posts are marked duplicates. A corrigendum/addendum is linked to the filing it amends (by
   the date it cites, else by subject overlap) and joins that filing's event.
 - **Results cards:** built when a results outcome or press release arrives; retried every 2 h for
@@ -58,8 +66,8 @@ reads the `ingest_run` log to decide what is due, so repeating a tick is safe:
 - **Alerts:** stored in `alert` and shown in the brief. Announcement alerts fire only for events
   filed after the first live run, so the backfill never alerts. "New" is tracked per viewer in the
   browser, because the deployed API is read-only.
-- **Freshness:** a source is marked overdue when its last check is older than twice its
-  scheduled interval.
+- **Freshness:** the brief shows the actual last successful check and the failed status of a
+  later attempt; a source is marked overdue after `FINN_OVERDUE_HOURS` (default 3) without success.
 
 Exchange holidays are not modelled; a holiday produces an empty or stale run.
 

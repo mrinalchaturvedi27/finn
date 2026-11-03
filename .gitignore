@@ -8,3 +8,4 @@ backend/data/cache/
 .DS_Store
 backend/data/finn*.db
 *.pdf
+backend/data/worker.lock

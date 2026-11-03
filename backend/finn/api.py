@@ -26,12 +26,16 @@ app = FastAPI(title="FINN")
 app.add_middleware(CORSMiddleware, allow_origins=os.environ.get("FINN_CORS", "*").split(","),
                    allow_methods=["GET"] if READ_ONLY else ["GET", "PUT"], allow_headers=["*"])
 
-CADENCE = {"nse_announcements": "every 15 min in market hours, hourly otherwise",
-           "prices": "once per session, 90 min after the 15:30 close",
+# Describes the real schedule of the deployment (set where the worker is scheduled); not a promise.
+SCHEDULE_NOTE = os.environ.get("FINN_SCHEDULE_NOTE", "not scheduled (historical snapshot)")
+CADENCE = {"nse_announcements": SCHEDULE_NOTE,
+           "prices": "after each session's close, when the worker runs",
            "results_xbrl": "when a results filing is detected"}
-# A source is overdue when its last check is older than twice its longest scheduled interval.
-OVERDUE_AFTER = {"nse_announcements": timedelta(hours=2), "prices": timedelta(hours=26 + 72),
-                 "results_xbrl": timedelta(hours=2)}
+# A source is overdue when its last successful check is older than this (scheduled runs can be
+# delayed or dropped, so the line shows the actual last success either way).
+_OVERDUE_H = float(os.environ.get("FINN_OVERDUE_HOURS", "3"))
+OVERDUE_AFTER = {"nse_announcements": timedelta(hours=_OVERDUE_H), "prices": timedelta(hours=26 + 72),
+                 "results_xbrl": timedelta(hours=_OVERDUE_H)}
 WINDOWS = {"24h": timedelta(hours=24), "3d": timedelta(days=3), "7d": timedelta(days=7), "30d": timedelta(days=30)}
 
 
@@ -54,15 +58,15 @@ def _freshness(db) -> dict:
         last_any = db.scalar(select(IngestRun).where(IngestRun.source == src)
                              .order_by(IngestRun.started_at.desc()).limit(1))
         out[src] = {
-            "cadence": CADENCE[src],
+            "cadence": CADENCE[src] if last_any and last_any.mode == "live" else "not scheduled (historical snapshot)",
             "last_checked": last_any.finished_at.isoformat() if last_any and last_any.finished_at else None,
             "last_status": last_any.status if last_any else None,
             "last_success": last_ok.finished_at.isoformat() if last_ok and last_ok.finished_at else None,
             "data_through": last_ok.data_through.isoformat() if last_ok and last_ok.data_through else None,
             "mode": last_ok.mode if last_ok else None,
             "errors": (last_any.errors or [])[:5] if last_any else [],
-            "overdue": bool(last_any and last_any.mode == "live" and last_any.finished_at
-                            and px.now_ist() - last_any.finished_at > OVERDUE_AFTER[src]),
+            "overdue": bool(last_any and last_any.mode == "live"
+                            and (last_ok is None or px.now_ist() - last_ok.finished_at > OVERDUE_AFTER[src])),
         }
     return out
 

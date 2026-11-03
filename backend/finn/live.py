@@ -25,15 +25,30 @@ REVISION_RX = re.compile(r"\b(corrigendum|addendum|erratum|errata|rectification|
 # ---------- announcement windows ----------
 
 def announcement_windows(db, tickers: list[str], now: datetime, backfill_days: int = BACKFILL_DAYS) -> dict:
-    """Per ticker (start, end, is_backfill): a full backfill first, then from the last filing minus overlap."""
+    """Per ticker (start, end, is_backfill): from the ticker's last successful fetch minus overlap, so a
+    missed or failed run is backfilled by the next one; a ticker never fetched gets the full backfill."""
+    cursors = get_cursors(db)
     out = {}
     for t in tickers:
-        last = db.scalar(select(Filing.filed_at).where(Filing.ticker == t).order_by(Filing.filed_at.desc()).limit(1))
-        if last is None:
+        last_ok = datetime.fromisoformat(cursors[t]) if t in cursors else None
+        if last_ok is None:
             out[t] = (now.date() - timedelta(days=backfill_days), now.date(), True)
         else:
-            out[t] = (min((last - OVERLAP).date(), now.date()), now.date(), False)
+            start = max(last_ok - OVERLAP, now - timedelta(days=backfill_days))  # cap very long outages
+            out[t] = (min(start.date(), now.date()), now.date(), False)
     return out
+
+
+def get_cursors(db) -> dict:
+    s = db.get(Setting, "announcement_cursors")
+    return dict(s.value) if s else {}
+
+
+def set_cursor(db, ticker: str, fetched_at: datetime):
+    """Record a successful fetch for this ticker (called only when the exchange call succeeded)."""
+    s = db.get(Setting, "announcement_cursors") or Setting(key="announcement_cursors", value={})
+    s.value = {**(s.value or {}), ticker: fetched_at.isoformat()}  # reassign so the JSON change is saved
+    db.add(s)
 
 
 # ---------- revisions ----------

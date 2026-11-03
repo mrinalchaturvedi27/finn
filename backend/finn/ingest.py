@@ -66,6 +66,8 @@ def ingest_announcements(db, nse: NSE, tickers: list[str], days: int, mode: str,
             errors.append({"ticker": t, "error": str(e)})
             continue
         raw[t] = rows
+        if windows:
+            live.set_cursor(db, t, run.started_at)
         co = db.get(Company, t)
         if rows and co and not co.name:
             co.name, co.isin = rows[0].get("sm_name"), rows[0].get("sm_isin")
