@@ -42,6 +42,11 @@ export function istDate(iso: string | null | undefined, withTime = false): strin
   return withTime ? `${date}, ${istTime(iso)}` : date;
 }
 
+export function monthYear(iso: string | null | undefined): string {
+  if (!iso) return "—";
+  return asIst(iso).toLocaleDateString("en-IN", { month: "short", year: "numeric", timeZone: "Asia/Kolkata" });
+}
+
 export function ago(iso: string, now: string): string {
   const mins = Math.round((asIst(now).getTime() - asIst(iso).getTime()) / 60000);
   if (mins < 60) return `${Math.max(mins, 1)}m`;

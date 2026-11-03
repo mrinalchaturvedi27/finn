@@ -684,6 +684,11 @@ def test_scorecard_tolerance_supersession_and_gaps():
     late = _stmt(stated_on="2026-08-01", low=15, high=18)
     items = build([early, late], s, date(2026, 11, 3))
     assert len(items) == 1 and items[0]["revisions"][0]["target"] == "18–20%"  # revised down, trail kept
+    clash = build([_stmt(stated_on="2026-08-12", low=20, high=25), _stmt(stated_on="2026-08-12", direction="at_least",
+                                                                          low=10, high=None)], s, date(2026, 11, 3))
+    assert [c["verdict"]["status"] for c in clash] == ["not_comparable"] * 2 and all(not c["revisions"] for c in clash)
+    same = build([_stmt(stated_on="2026-02-01"), _stmt(stated_on="2026-08-01")], s, date(2026, 11, 3))[0]
+    assert same["revisions"] == [] and same["reiterated_on"] == ["2026-02-01"]
     assert items[0]["verdict"]["tracking"] == "slightly behind"  # 14.5% is within 1pp of 15%
     # a finished year with missing quarters is a data gap, not "pending"
     gap = build([_stmt(period_fy=2026, period_label="FY26")], _series({"2025-03-31": (90, 18), "2026-03-31": (100, 20)}),

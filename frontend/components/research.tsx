@@ -16,6 +16,30 @@ export function VerdictChip({ v }: { v: Verdict }) {
   return <span className={`inline-flex shrink-0 items-center rounded-full px-2 py-0.5 text-[11px] font-medium ${s.cls}`}>{label}</span>;
 }
 
+/** One line for lists: only what was found. */
+export function SummaryLine({ s }: { s: ResearchSummary }) {
+  const parts: [Verdict["status"], number][] = (
+    [["delivered", s.delivered], ["partial", s.partial], ["missed", s.missed], ["pending", s.pending]] as [Verdict["status"], number][]
+  ).filter(([, n]) => n > 0);
+  if (!parts.length) {
+    return (
+      <span className="text-[12px] text-faint">
+        {s.statements ? `No checkable guidance · ${s.not_comparable} statements not checkable` : `No numeric guidance in ${s.calls_read} calls`}
+      </span>
+    );
+  }
+  return (
+    <span className="flex flex-wrap gap-1.5">
+      {parts.map(([k, n]) => (
+        <span key={k} className={`rounded-full px-2 py-0.5 text-[11.5px] ${VERDICT[k].cls}`}>
+          <span className="num font-semibold">{n}</span> {VERDICT[k].label.toLowerCase()}
+        </span>
+      ))}
+      {s.not_comparable > 0 && <span className="self-center text-[11.5px] text-faint">+{s.not_comparable} not checkable</span>}
+    </span>
+  );
+}
+
 export function SummaryStrip({ s }: { s: ResearchSummary }) {
   const items: [Verdict["status"], number][] = [
     ["delivered", s.delivered],
@@ -80,6 +104,11 @@ export function PromiseCard({ g }: { g: GuidanceItem }) {
       {g.revisions.length > 0 && (
         <p className="mt-1.5 text-[12px] text-warn">
           Revised: {g.revisions.map((r) => `${r.target} (${istDate(r.stated_on)})`).join(" → ")} → {g.target} ({istDate(g.stated_on)})
+        </p>
+      )}
+      {(g.reiterated_on?.length ?? 0) > 0 && (
+        <p className="mt-1.5 text-[11.5px] text-faint">
+          Also said on {g.reiterated_on!.map((d) => istDate(d)).join(", ")}
         </p>
       )}
       <details className="mt-2 group">

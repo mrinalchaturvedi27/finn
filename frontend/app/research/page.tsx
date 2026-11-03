@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { BackLink, LoadStatus, SectionLabel } from "@/components/ui";
-import { SummaryStrip } from "@/components/research";
+import { SummaryLine } from "@/components/research";
 import { type ResearchIndex } from "@/lib/api";
 import { istDate } from "@/lib/format";
 import { useApi } from "@/lib/useApi";
@@ -76,8 +76,8 @@ export default function ResearchPage() {
                     </div>
                     <div className="truncate text-[12px] text-muted">{r.company}</div>
                     {r.summary && (
-                      <div className="mt-2">
-                        <SummaryStrip s={r.summary} />
+                      <div className="mt-1.5">
+                        <SummaryLine s={r.summary} />
                       </div>
                     )}
                   </Link>

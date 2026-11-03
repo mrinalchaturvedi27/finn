@@ -4,7 +4,7 @@ import { use, useState } from "react";
 import { BackLink, LoadStatus, SectionLabel } from "@/components/ui";
 import { NotCheckable, PromiseCard, Sources, SummaryStrip, Trajectory } from "@/components/research";
 import { ApiError, post, type ResearchResponse } from "@/lib/api";
-import { istDate } from "@/lib/format";
+import { istDate, monthYear } from "@/lib/format";
 import { useApi } from "@/lib/useApi";
 
 export default function ReportPage({ params }: { params: Promise<{ ticker: string }> }) {
@@ -39,7 +39,7 @@ export default function ReportPage({ params }: { params: Promise<{ ticker: strin
         <>
           <p className="mt-1 text-[12px] leading-snug text-faint">
             {calls.length} earnings call{calls.length === 1 ? "" : "s"}
-            {calls.length > 0 && ` (${istDate(calls[calls.length - 1].call_date)} – ${istDate(calls[0].call_date)})`} and{" "}
+            {calls.length > 0 && ` (${monthYear(calls[calls.length - 1].call_date)} – ${monthYear(calls[0].call_date)})`} and{" "}
             {r.sources.xbrl.length} quarterly results filings · {r.financials?.basis} · rules v{r.rules_version} · read{" "}
             {istDate(r.generated_at, true)}
           </p>

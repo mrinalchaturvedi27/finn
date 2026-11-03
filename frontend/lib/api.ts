@@ -246,6 +246,7 @@ export type GuidanceItem = {
   source_url: string;
   notes: string[];
   revisions: { stated_on: string; target: string; quote: string; page: number; source_url: string }[];
+  reiterated_on?: string[];
   verdict: Verdict;
 };
 

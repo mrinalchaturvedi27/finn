@@ -24,10 +24,24 @@ def build(statements: list[dict], series: dict, today: date) -> list[dict]:
         groups.setdefault(_key(s), []).append(s)
     out = []
     for items in groups.values():
+        last_call = [s for s in items if s["stated_on"] == items[-1]["stated_on"]]
+        if len({target_text(s) for s in last_call}) > 1:
+            # two targets for one metric and period in the same call: usually different scopes
+            # (a segment vs the company, value vs volume); FINN does not pick one
+            for s in last_call:
+                out.append({**s, "target": target_text(s), "revisions": [], "reiterated_on": [],
+                            "verdict": {"status": "not_comparable",
+                                        "reason": "The same call gives different targets for this metric and period "
+                                                  f"({', '.join(sorted({target_text(x) for x in last_call}))}); "
+                                                  "FINN can't tell which is company-level."}})
+            continue
         latest = items[-1]
-        trail = [{"stated_on": s["stated_on"], "target": target_text(s), "quote": s["quote"], "page": s["page"],
-                  "source_url": s["source_url"]} for s in items[:-1]]
-        out.append({**latest, "target": target_text(latest), "revisions": trail,
+        earlier = [{"stated_on": s["stated_on"], "target": target_text(s), "quote": s["quote"], "page": s["page"],
+                    "source_url": s["source_url"]} for s in items[:-1]]
+        # saying the same target again is a reiteration, not a revision
+        trail = [e for e in earlier if e["target"] != target_text(latest)]
+        reiterated = [e["stated_on"] for e in earlier if e["target"] == target_text(latest)]
+        out.append({**latest, "target": target_text(latest), "revisions": trail, "reiterated_on": reiterated,
                     "verdict": verdict(latest, q, series, today)})
     order = {"missed": 0, "partial": 1, "delivered": 2, "pending": 3, "not_comparable": 4}
     out.sort(key=lambda s: (order[s["verdict"]["status"]], s["stated_on"]), reverse=False)
