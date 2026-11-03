@@ -1,5 +1,10 @@
 export const API = process.env.NEXT_PUBLIC_API_BASE ?? "http://localhost:8000";
 
+/** Every read carries the briefing it belongs to (the demo reads the bundled snapshot). */
+export function withView(path: string, view: string) {
+  return `${path}${path.includes("?") ? "&" : "?"}view=${view}`;
+}
+
 export type Change = { value: number | null; state: "ok" | "n/m" | "missing"; unit?: string; why?: string };
 
 export type Freshness = Record<
@@ -58,8 +63,19 @@ export type Brief = {
   settings: Settings;
   alerts?: AlertItem[];
   data_source?: "live" | "seed" | "seed_fallback";
+  view?: "demo" | "live";
+  reference?: { as_of: string; label: string; captured_at: string | null } | null;
+  spotlight?: Spotlight | null;
   alerts_since?: string | null;
   totals: { events: number; filings: number };
+};
+
+export type Spotlight = {
+  ticker: string;
+  company: string | null;
+  generated_at: string | null;
+  summary: ResearchSummary | null;
+  item: Pick<GuidanceItem, "metric_label" | "period_label" | "target" | "quote" | "page" | "speaker" | "stated_on" | "source_url" | "verdict">;
 };
 
 export type AlertItem = {
@@ -135,9 +151,11 @@ export type ResultsCard = {
 };
 
 export type EventDetail = BriefEvent & {
+  research?: { ticker: string; summary: ResearchSummary | null; generated_at: string | null } | null;
   reporting_format: string | null;
   filings: { id: number; subject: string; text: string | null; filed_at: string; url: string | null; exchange: string; category: string; category_source: string; is_primary: boolean }[];
   duplicates_hidden: number;
+  later_filings_hidden?: number;
   results: ResultsCard | null;
 };
 

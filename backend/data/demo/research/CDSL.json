@@ -1,0 +1,305 @@
+{
+ "ticker": "CDSL",
+ "generated_at": "2026-11-03T23:19:20",
+ "rules_version": 1,
+ "extract_version": 1,
+ "sources": {
+  "transcripts": [
+   {
+    "call_date": "2026-08-03",
+    "filed_at": "2026-08-07T15:58:13",
+    "url": "https://nsearchives.nseindia.com/corporate/CDSL_07082026155803_NSEintimationtranscript.pdf",
+    "nse_url": "https://nsearchives.nseindia.com/corporate/CDSL_07082026155803_NSEintimationtranscript.pdf",
+    "source": "nse_filing",
+    "pages": 12,
+    "sha256": "15730f1be5244863565a20fdd93895c8d813437d4d8f6e5085c705e497c890c0",
+    "status": "read",
+    "management_turns": 45,
+    "statements": 0
+   },
+   {
+    "call_date": "2026-05-04",
+    "filed_at": "2026-05-07T19:33:53",
+    "url": "https://nsearchives.nseindia.com/corporate/CDSL_07052026193244_NSEintimationtranscript_Sign.pdf",
+    "nse_url": "https://nsearchives.nseindia.com/corporate/CDSL_07052026193244_NSEintimationtranscript_Sign.pdf",
+    "source": "nse_filing",
+    "pages": 18,
+    "sha256": "0354415c22d4520a9a37dcdb0376076c0f33ca2d4643ed9c65360f333d40521e",
+    "status": "read",
+    "management_turns": 41,
+    "statements": 0
+   },
+   {
+    "call_date": "2026-02-02",
+    "filed_at": "2026-02-06T15:25:57",
+    "url": "https://nsearchives.nseindia.com/corporate/CDSL_06022026152040_NSEintimationtranscriptSigned.pdf",
+    "nse_url": "https://nsearchives.nseindia.com/corporate/CDSL_06022026152040_NSEintimationtranscriptSigned.pdf",
+    "source": "nse_filing",
+    "pages": 15,
+    "sha256": "c3d7ff0b6ba6d184a19940c998662c26987ee4a300b0c3526676fbd9f64897d8",
+    "status": "read",
+    "management_turns": 52,
+    "statements": 0
+   },
+   {
+    "call_date": "2025-11-03",
+    "filed_at": "2025-11-06T19:29:38",
+    "url": "https://nsearchives.nseindia.com/corporate/CDSL_06112025192633_NSEintimationtranscript_03112025_Signed.pdf",
+    "nse_url": "https://nsearchives.nseindia.com/corporate/CDSL_06112025192633_NSEintimationtranscript_03112025_Signed.pdf",
+    "source": "nse_filing",
+    "pages": 13,
+    "sha256": "1dc98dd91b36123e666dc18fe4d91aa5bb86054e848407c1cf44316bd6944038",
+    "status": "read",
+    "management_turns": 48,
+    "statements": 0
+   },
+   {
+    "call_date": "2025-07-28",
+    "filed_at": "2025-08-01T16:45:43",
+    "url": "https://nsearchives.nseindia.com/corporate/CDSL_01082025164114_NSEIntimationConcallTranscript.pdf",
+    "nse_url": "https://nsearchives.nseindia.com/corporate/CDSL_01082025164114_NSEIntimationConcallTranscript.pdf",
+    "source": "nse_filing",
+    "pages": 17,
+    "sha256": "caeaeb64fc75ba175b085d83374a443ce421ad6f091eef7c7afef45e2dd5b8ee",
+    "status": "read",
+    "management_turns": 74,
+    "statements": 0
+   }
+  ],
+  "xbrl": [
+   {
+    "quarter": "Q1 FY25",
+    "url": "https://nsearchives.nseindia.com/corporate/xbrl/INDAS_110297_1211666_03082024032538.xml"
+   },
+   {
+    "quarter": "Q2 FY25",
+    "url": "https://nsearchives.nseindia.com/corporate/xbrl/INDAS_113508_1289686_26102024023101.xml"
+   },
+   {
+    "quarter": "Q3 FY25",
+    "url": "https://nsearchives.nseindia.com/corporate/xbrl/INDAS_117709_1361197_25012025022220.xml"
+   },
+   {
+    "quarter": "Q4 FY25",
+    "url": "https://nsearchives.nseindia.com/corporate/xbrl/INTEGRATED_FILING_INDAS_1432082_06052025113950_WEB.xml"
+   },
+   {
+    "quarter": "Q1 FY26",
+    "url": "https://nsearchives.nseindia.com/corporate/xbrl/INTEGRATED_FILING_INDAS_1494395_26072025030156_WEB.xml"
+   },
+   {
+    "quarter": "Q2 FY26",
+    "url": "https://nsearchives.nseindia.com/corporate/xbrl/INTEGRATED_FILING_INDAS_1563146_01112025030113_WEB.xml"
+   },
+   {
+    "quarter": "Q3 FY26",
+    "url": "https://nsearchives.nseindia.com/corporate/xbrl/INTEGRATED_FILING_INDAS_1615518_31012026021742_WEB.xml"
+   },
+   {
+    "quarter": "Q4 FY26",
+    "url": "https://nsearchives.nseindia.com/corporate/xbrl/INTEGRATED_FILING_INDAS_1662957_02052026035329_WEB.xml"
+   },
+   {
+    "quarter": "Q1 FY27",
+    "url": "https://nsearchives.nseindia.com/corporate/xbrl/INTEGRATED_FILING_INDAS_1706520_01082026011858_WEB.xml"
+   },
+   {
+    "quarter": "Q2 FY27",
+    "url": "https://nsearchives.nseindia.com/corporate/xbrl/INTEGRATED_FILING_INDAS_1750643_31102026034333_WEB.xml"
+   }
+  ]
+ },
+ "failures": [],
+ "company": "Central Depository Services (India) Limited",
+ "financials": {
+  "basis": "consolidated",
+  "taxonomy": "indas",
+  "quarters": [
+   {
+    "quarter_end": "2024-06-30",
+    "label": "Q1 FY25",
+    "xbrl_url": "https://nsearchives.nseindia.com/corporate/xbrl/INDAS_110297_1211666_03082024032538.xml",
+    "values": {
+     "revenue": 2573882000.0,
+     "ebitda_op_proxy": 1544409000.0,
+     "pbt": 1741280000.0,
+     "pat": 1341672000.0,
+     "ebitda_margin": 60.00310037523088
+    },
+    "locators": {
+     "revenue": "RevenueFromOperations@OneD",
+     "pbt": "ProfitBeforeTax@OneD",
+     "pat": "ProfitLossForPeriod@OneD"
+    }
+   },
+   {
+    "quarter_end": "2024-09-30",
+    "label": "Q2 FY25",
+    "xbrl_url": "https://nsearchives.nseindia.com/corporate/xbrl/INDAS_113508_1289686_26102024023101.xml",
+    "values": {
+     "revenue": 3222637000.0,
+     "ebitda_op_proxy": 1997999000.0,
+     "pbt": 2241037000.0,
+     "pat": 1619578000.0,
+     "ebitda_margin": 61.99888476424742
+    },
+    "locators": {
+     "revenue": "RevenueFromOperations@OneD",
+     "pbt": "ProfitBeforeTax@OneD",
+     "pat": "ProfitLossForPeriod@OneD"
+    }
+   },
+   {
+    "quarter_end": "2024-12-31",
+    "label": "Q3 FY25",
+    "xbrl_url": "https://nsearchives.nseindia.com/corporate/xbrl/INDAS_117709_1361197_25012025022220.xml",
+    "values": {
+     "revenue": 2781076000.0,
+     "ebitda_op_proxy": 1606358000.0,
+     "pbt": 1676568000.0,
+     "pat": 1298095000.0,
+     "ebitda_margin": 57.760305723396264
+    },
+    "locators": {
+     "revenue": "RevenueFromOperations@OneD",
+     "pbt": "ProfitBeforeTax@OneD",
+     "pat": "ProfitLossForPeriod@OneD"
+    }
+   },
+   {
+    "quarter_end": "2025-03-31",
+    "label": "Q4 FY25",
+    "xbrl_url": "https://nsearchives.nseindia.com/corporate/xbrl/INTEGRATED_FILING_INDAS_1432082_06052025113950_WEB.xml",
+    "values": {
+     "revenue": 2244485000.0,
+     "ebitda_op_proxy": 1093788000.0,
+     "pbt": 1263740000.0,
+     "pat": 1003919000.0,
+     "ebitda_margin": 48.732248154921955
+    },
+    "locators": {
+     "revenue": "RevenueFromOperations@OneD",
+     "pbt": "ProfitBeforeTax@OneD",
+     "pat": "ProfitLossForPeriod@OneD"
+    }
+   },
+   {
+    "quarter_end": "2025-06-30",
+    "label": "Q1 FY26",
+    "xbrl_url": "https://nsearchives.nseindia.com/corporate/xbrl/INTEGRATED_FILING_INDAS_1494395_26072025030156_WEB.xml",
+    "values": {
+     "revenue": 2588074000.0,
+     "ebitda_op_proxy": 1304504000.0,
+     "pbt": 1515526000.0,
+     "pat": 1024034000.0,
+     "ebitda_margin": 50.40443202165008
+    },
+    "locators": {
+     "revenue": "RevenueFromOperations@OneD",
+     "pbt": "ProfitBeforeTax@OneD",
+     "pat": "ProfitLossForPeriod@OneD"
+    }
+   },
+   {
+    "quarter_end": "2025-09-30",
+    "label": "Q2 FY26",
+    "xbrl_url": "https://nsearchives.nseindia.com/corporate/xbrl/INTEGRATED_FILING_INDAS_1563146_01112025030113_WEB.xml",
+    "values": {
+     "revenue": 3188884000.0,
+     "ebitda_op_proxy": 1776159000.0,
+     "pbt": 1839585000.0,
+     "pat": 1399341000.0,
+     "ebitda_margin": 55.69845124501236
+    },
+    "locators": {
+     "revenue": "RevenueFromOperations@OneD",
+     "pbt": "ProfitBeforeTax@OneD",
+     "pat": "ProfitLossForPeriod@OneD"
+    }
+   },
+   {
+    "quarter_end": "2025-12-31",
+    "label": "Q3 FY26",
+    "xbrl_url": "https://nsearchives.nseindia.com/corporate/xbrl/INTEGRATED_FILING_INDAS_1615518_31012026021742_WEB.xml",
+    "values": {
+     "revenue": 3043550000.0,
+     "ebitda_op_proxy": 1610245000.0,
+     "pbt": 1731521000.0,
+     "pat": 1329481000.0,
+     "ebitda_margin": 52.90680291107424
+    },
+    "locators": {
+     "revenue": "RevenueFromOperations@OneD",
+     "pbt": "ProfitBeforeTax@OneD",
+     "pat": "ProfitLossForPeriod@OneD"
+    }
+   },
+   {
+    "quarter_end": "2026-03-31",
+    "label": "Q4 FY26",
+    "xbrl_url": "https://nsearchives.nseindia.com/corporate/xbrl/INTEGRATED_FILING_INDAS_1662957_02052026035329_WEB.xml",
+    "values": {
+     "revenue": 2628480000.0,
+     "ebitda_op_proxy": 1167511000.0,
+     "pbt": 1044258000.0,
+     "pat": 797910000.0,
+     "ebitda_margin": 44.417724312149986
+    },
+    "locators": {
+     "revenue": "RevenueFromOperations@OneD",
+     "pbt": "ProfitBeforeTax@OneD",
+     "pat": "ProfitLossForPeriod@OneD"
+    }
+   },
+   {
+    "quarter_end": "2026-06-30",
+    "label": "Q1 FY27",
+    "xbrl_url": "https://nsearchives.nseindia.com/corporate/xbrl/INTEGRATED_FILING_INDAS_1706520_01082026011858_WEB.xml",
+    "values": {
+     "revenue": 2927600000.0,
+     "ebitda_op_proxy": 1379000000.0,
+     "pbt": 1664200000.0,
+     "pat": 1176700000.0,
+     "ebitda_margin": 47.10342943025003
+    },
+    "locators": {
+     "revenue": "RevenueFromOperations@OneD",
+     "pbt": "ProfitBeforeTax@OneD",
+     "pat": "ProfitLossForPeriod@OneD"
+    }
+   },
+   {
+    "quarter_end": "2026-09-30",
+    "label": "Q2 FY27",
+    "xbrl_url": "https://nsearchives.nseindia.com/corporate/xbrl/INTEGRATED_FILING_INDAS_1750643_31102026034333_WEB.xml",
+    "values": {
+     "revenue": 3944800000.0,
+     "ebitda_op_proxy": 2284800000.0,
+     "pbt": 2307800000.0,
+     "pat": 1733000000.0,
+     "ebitda_margin": 57.91928614885419
+    },
+    "locators": {
+     "revenue": "RevenueFromOperations@OneD",
+     "pbt": "ProfitBeforeTax@OneD",
+     "pat": "ProfitLossForPeriod@OneD"
+    }
+   }
+  ],
+  "failures": [],
+  "company": "Central Depository Services (India) Limited"
+ },
+ "guidance": [],
+ "summary": {
+  "delivered": 0,
+  "partial": 0,
+  "missed": 0,
+  "pending": 0,
+  "not_comparable": 0,
+  "statements": 0,
+  "calls_read": 5,
+  "calls_found": 5
+ },
+ "status": "done",
+ "cache_key": "b1157239b873142a58e852e5"
+}

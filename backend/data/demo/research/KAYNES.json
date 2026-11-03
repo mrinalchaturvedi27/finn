@@ -1,0 +1,484 @@
+{
+ "ticker": "KAYNES",
+ "generated_at": "2026-11-03T23:19:23",
+ "rules_version": 1,
+ "extract_version": 1,
+ "sources": {
+  "transcripts": [
+   {
+    "call_date": "2026-08-12",
+    "filed_at": "2026-08-12T16:49:59",
+    "url": "https://nsearchives.nseindia.com/corporate/KAYNESTECH_12082026164943_TranscriptoftheEarningAnnouncement.pdf",
+    "nse_url": "https://nsearchives.nseindia.com/corporate/KAYNESTECH_12082026164943_TranscriptoftheEarningAnnouncement.pdf",
+    "source": "nse_filing",
+    "pages": 20,
+    "sha256": "9893742be2a0064de7d0a45ebc31f3fed5b06033037d7c98504dbacdf4fd3942",
+    "status": "read",
+    "management_turns": 45,
+    "statements": 1
+   },
+   {
+    "call_date": "2026-05-19",
+    "filed_at": "2026-05-19T17:21:18",
+    "url": "https://nsearchives.nseindia.com/corporate/KAYNESTECH_19052026172024_Transcriptinvsetormeetsigned.pdf",
+    "nse_url": "https://nsearchives.nseindia.com/corporate/KAYNESTECH_19052026172024_Transcriptinvsetormeetsigned.pdf",
+    "source": "nse_filing",
+    "pages": 20,
+    "sha256": "799e749871507c18eedd0d91cc653ad53981455c764759ae2df85ce93004fef1",
+    "status": "read",
+    "management_turns": 39,
+    "statements": 4
+   },
+   {
+    "call_date": "2026-02-12",
+    "filed_at": "2026-02-12T21:25:28",
+    "url": "https://nsearchives.nseindia.com/corporate/KAYNESTECH_12022026212332_EaningscallTranscriptQ32026Signed.pdf",
+    "nse_url": "https://nsearchives.nseindia.com/corporate/KAYNESTECH_12022026212332_EaningscallTranscriptQ32026Signed.pdf",
+    "source": "nse_filing",
+    "pages": 19,
+    "sha256": "d2f6ea1f3881a155957e4ee78a0aa6e0e2971000335c277b9549a1ea2552bf4b",
+    "status": "read",
+    "management_turns": 55,
+    "statements": 0
+   },
+   {
+    "call_date": "2025-12-12",
+    "filed_at": "2025-12-12T17:38:11",
+    "url": "https://nsearchives.nseindia.com/corporate/KAYNESTECH_12122025173731_TranscriptBusinessCallSigned.pdf",
+    "nse_url": "https://nsearchives.nseindia.com/corporate/KAYNESTECH_12122025173731_TranscriptBusinessCallSigned.pdf",
+    "source": "nse_filing",
+    "pages": 22,
+    "sha256": "4a10eae4b5ec491874bad1d626ab45643e25d956a997ca77b83e321816d602a1",
+    "status": "read",
+    "management_turns": 60,
+    "statements": 0
+   },
+   {
+    "call_date": "2025-11-08",
+    "filed_at": "2025-11-08T17:58:02",
+    "url": "https://nsearchives.nseindia.com/corporate/KAYNESTECH_08112025175717_EarningscalltranscriptQ22026Signed.pdf",
+    "nse_url": "https://nsearchives.nseindia.com/corporate/KAYNESTECH_08112025175717_EarningscalltranscriptQ22026Signed.pdf",
+    "source": "nse_filing",
+    "pages": 19,
+    "sha256": "098e268bc48f076a48c12ccaf1ff2951982125766dc0fe7b1009371d4049403c",
+    "status": "read",
+    "management_turns": 23,
+    "statements": 2
+   }
+  ],
+  "xbrl": [
+   {
+    "quarter": "Q4 FY24",
+    "url": "https://nsearchives.nseindia.com/corporate/xbrl/INDAS_106155_1127397_16052024081744.xml"
+   },
+   {
+    "quarter": "Q1 FY25",
+    "url": "https://nsearchives.nseindia.com/corporate/xbrl/INDAS_109603_1203976_26072024074038.xml"
+   },
+   {
+    "quarter": "Q2 FY25",
+    "url": "https://nsearchives.nseindia.com/corporate/xbrl/INDAS_113853_1292840_29102024055805.xml"
+   },
+   {
+    "quarter": "Q3 FY25",
+    "url": "https://nsearchives.nseindia.com/corporate/xbrl/INDAS_117898_1363553_28012025062830.xml"
+   },
+   {
+    "quarter": "Q4 FY25",
+    "url": "https://nsearchives.nseindia.com/corporate/xbrl/INTEGRATED_FILING_INDAS_1441102_16052025040930_WEB.xml"
+   },
+   {
+    "quarter": "Q1 FY26",
+    "url": "https://nsearchives.nseindia.com/corporate/xbrl/INTEGRATED_FILING_INDAS_1498497_30072025074123_WEB.xml"
+   },
+   {
+    "quarter": "Q2 FY26",
+    "url": "https://nsearchives.nseindia.com/corporate/xbrl/INTEGRATED_FILING_INDAS_1565317_04112025101148_WEB.xml"
+   },
+   {
+    "quarter": "Q3 FY26",
+    "url": "https://nsearchives.nseindia.com/corporate/xbrl/INTEGRATED_FILING_INDAS_1619561_05022026075049_WEB.xml"
+   },
+   {
+    "quarter": "Q4 FY26",
+    "url": "https://nsearchives.nseindia.com/corporate/xbrl/INTEGRATED_FILING_INDAS_1721794_05092026055416_WEB.xml"
+   },
+   {
+    "quarter": "Q1 FY27",
+    "url": "https://nsearchives.nseindia.com/corporate/xbrl/INTEGRATED_FILING_INDAS_1710119_07082026070207_WEB.xml"
+   }
+  ]
+ },
+ "failures": [],
+ "company": "Kaynes Technology India Limited",
+ "financials": {
+  "basis": "consolidated",
+  "taxonomy": "indas",
+  "quarters": [
+   {
+    "quarter_end": "2024-03-31",
+    "label": "Q4 FY24",
+    "xbrl_url": "https://nsearchives.nseindia.com/corporate/xbrl/INDAS_106155_1127397_16052024081744.xml",
+    "values": {
+     "revenue": 6373040000.0,
+     "ebitda_op_proxy": 952390000.0,
+     "pbt": 1019310000.0,
+     "pat": 810700000.0,
+     "ebitda_margin": 14.944045541845021
+    },
+    "locators": {
+     "revenue": "RevenueFromOperations@OneD",
+     "pbt": "ProfitBeforeTax@OneD",
+     "pat": "ProfitLossForPeriod@OneD"
+    }
+   },
+   {
+    "quarter_end": "2024-06-30",
+    "label": "Q1 FY25",
+    "xbrl_url": "https://nsearchives.nseindia.com/corporate/xbrl/INDAS_109603_1203976_26072024074038.xml",
+    "values": {
+     "revenue": 5039780000.0,
+     "ebitda_op_proxy": 669030000.0,
+     "pbt": 641160000.0,
+     "pat": 507770000.0,
+     "ebitda_margin": 13.274984225501907
+    },
+    "locators": {
+     "revenue": "RevenueFromOperations@OneD",
+     "pbt": "ProfitBeforeTax@OneD",
+     "pat": "ProfitLossForPeriod@OneD"
+    }
+   },
+   {
+    "quarter_end": "2024-09-30",
+    "label": "Q2 FY25",
+    "xbrl_url": "https://nsearchives.nseindia.com/corporate/xbrl/INDAS_113853_1292840_29102024055805.xml",
+    "values": {
+     "revenue": 5721160000.0,
+     "ebitda_op_proxy": 821250000.0,
+     "pbt": 849430000.0,
+     "pat": 602080000.0,
+     "ebitda_margin": 14.354606408490586
+    },
+    "locators": {
+     "revenue": "RevenueFromOperations@OneD",
+     "pbt": "ProfitBeforeTax@OneD",
+     "pat": "ProfitLossForPeriod@OneD"
+    }
+   },
+   {
+    "quarter_end": "2024-12-31",
+    "label": "Q3 FY25",
+    "xbrl_url": "https://nsearchives.nseindia.com/corporate/xbrl/INDAS_117898_1363553_28012025062830.xml",
+    "values": {
+     "revenue": 6611750000.0,
+     "ebitda_op_proxy": 940270000.0,
+     "pbt": 808480000.0,
+     "pat": 664620000.0,
+     "ebitda_margin": 14.22119711120354
+    },
+    "locators": {
+     "revenue": "RevenueFromOperations@OneD",
+     "pbt": "ProfitBeforeTax@OneD",
+     "pat": "ProfitLossForPeriod@OneD"
+    }
+   },
+   {
+    "quarter_end": "2025-03-31",
+    "label": "Q4 FY25",
+    "xbrl_url": "https://nsearchives.nseindia.com/corporate/xbrl/INTEGRATED_FILING_INDAS_1441102_16052025040930_WEB.xml",
+    "values": {
+     "revenue": 9844830000.0,
+     "ebitda_op_proxy": 1678590000.0,
+     "pbt": 1419320000.0,
+     "pat": 1162020000.0,
+     "ebitda_margin": 17.050472176766892
+    },
+    "locators": {
+     "revenue": "RevenueFromOperations@OneD",
+     "pbt": "ProfitBeforeTax@OneD",
+     "pat": "ProfitLossForPeriod@OneD"
+    }
+   },
+   {
+    "quarter_end": "2025-06-30",
+    "label": "Q1 FY26",
+    "xbrl_url": "https://nsearchives.nseindia.com/corporate/xbrl/INTEGRATED_FILING_INDAS_1498497_30072025074123_WEB.xml",
+    "values": {
+     "revenue": 6734660000.0,
+     "ebitda_op_proxy": 1130390000.0,
+     "pbt": 960870000.0,
+     "pat": 746120000.0,
+     "ebitda_margin": 16.784663219821045
+    },
+    "locators": {
+     "revenue": "RevenueFromOperations@OneD",
+     "pbt": "ProfitBeforeTax@OneD",
+     "pat": "ProfitLossForPeriod@OneD"
+    }
+   },
+   {
+    "quarter_end": "2025-09-30",
+    "label": "Q2 FY26",
+    "xbrl_url": "https://nsearchives.nseindia.com/corporate/xbrl/INTEGRATED_FILING_INDAS_1565317_04112025101148_WEB.xml",
+    "values": {
+     "revenue": 9062180000.0,
+     "ebitda_op_proxy": 1480070000.0,
+     "pbt": 1516770000.0,
+     "pat": 1214130000.0,
+     "ebitda_margin": 16.33238359864845
+    },
+    "locators": {
+     "revenue": "RevenueFromOperations@OneD",
+     "pbt": "ProfitBeforeTax@OneD",
+     "pat": "ProfitLossForPeriod@OneD"
+    }
+   },
+   {
+    "quarter_end": "2025-12-31",
+    "label": "Q3 FY26",
+    "xbrl_url": "https://nsearchives.nseindia.com/corporate/xbrl/INTEGRATED_FILING_INDAS_1619561_05022026075049_WEB.xml",
+    "values": {
+     "revenue": 8040320000.0,
+     "ebitda_op_proxy": 1193120000.0,
+     "pbt": 1163170000.0,
+     "pat": 766420000.0,
+     "ebitda_margin": 14.83921037968638
+    },
+    "locators": {
+     "revenue": "RevenueFromOperations@OneD",
+     "pbt": "ProfitBeforeTax@OneD",
+     "pat": "ProfitLossForPeriod@OneD"
+    }
+   },
+   {
+    "quarter_end": "2026-03-31",
+    "label": "Q4 FY26",
+    "xbrl_url": "https://nsearchives.nseindia.com/corporate/xbrl/INTEGRATED_FILING_INDAS_1721794_05092026055416_WEB.xml",
+    "values": {
+     "revenue": 12426380000.0,
+     "ebitda_op_proxy": 1936970000.0,
+     "pbt": 1402330000.0,
+     "pat": 912230000.0,
+     "ebitda_margin": 15.587564519996974
+    },
+    "locators": {
+     "revenue": "RevenueFromOperations@OneD",
+     "pbt": "ProfitBeforeTax@OneD",
+     "pat": "ProfitLossForPeriod@OneD"
+    }
+   },
+   {
+    "quarter_end": "2026-06-30",
+    "label": "Q1 FY27",
+    "xbrl_url": "https://nsearchives.nseindia.com/corporate/xbrl/INTEGRATED_FILING_INDAS_1710119_07082026070207_WEB.xml",
+    "values": {
+     "revenue": 9460170000.0,
+     "ebitda_op_proxy": 1475690000.0,
+     "pbt": 878760000.0,
+     "pat": 564260000.0,
+     "ebitda_margin": 15.598979722351714
+    },
+    "locators": {
+     "revenue": "RevenueFromOperations@OneD",
+     "pbt": "ProfitBeforeTax@OneD",
+     "pat": "ProfitLossForPeriod@OneD"
+    }
+   }
+  ],
+  "failures": [],
+  "company": "Kaynes Technology India Limited"
+ },
+ "guidance": [
+  {
+   "metric": "volume_growth",
+   "metric_label": "Volume growth",
+   "direction": "range",
+   "low": 50.0,
+   "high": 60.0,
+   "unit": "pct",
+   "period_type": "unstated",
+   "period_fy": null,
+   "period_label": "period not stated",
+   "quote": "And we are pretty confident that as the second half goes by the volumes also will increase dramatically, more than 50%, 60% of the first half volumes.",
+   "page": 8,
+   "speaker": "Jairam Sampath",
+   "stated_on": "2025-11-08",
+   "source_url": "https://nsearchives.nseindia.com/corporate/KAYNESTECH_08112025175717_EarningscalltranscriptQ22026Signed.pdf",
+   "notes": [],
+   "target": "50\u201360%",
+   "revisions": [],
+   "reiterated_on": [],
+   "verdict": {
+    "status": "not_comparable",
+    "reason": "Volumes are not in the results filing."
+   }
+  },
+  {
+   "metric": "revenue_growth",
+   "metric_label": "Revenue growth",
+   "direction": "point",
+   "low": 50.0,
+   "high": 50.0,
+   "unit": "pct",
+   "period_type": "unstated",
+   "period_fy": null,
+   "period_label": "period not stated",
+   "quote": "So as we go forward, we expect automotive to grow at the rate of growth of our company's growth rate, which will be anywhere around 50% plus/minus, you can take.",
+   "page": 13,
+   "speaker": "Jairam Sampath",
+   "stated_on": "2025-11-08",
+   "source_url": "https://nsearchives.nseindia.com/corporate/KAYNESTECH_08112025175717_EarningscalltranscriptQ22026Signed.pdf",
+   "notes": [],
+   "target": "~50%",
+   "revisions": [],
+   "reiterated_on": [],
+   "verdict": {
+    "status": "not_comparable",
+    "reason": "No target period stated, so there is nothing definite to check it against."
+   }
+  },
+  {
+   "metric": "revenue_growth",
+   "metric_label": "Revenue growth",
+   "direction": "point",
+   "low": 55.0,
+   "high": 55.0,
+   "unit": "pct",
+   "period_type": "FY",
+   "period_fy": 2027,
+   "period_label": "FY27",
+   "quote": "Giving a guidance of INR4,500 crores is almost 55% growth over the previous year.",
+   "page": 8,
+   "speaker": "N. Muthukumar",
+   "stated_on": "2026-05-19",
+   "source_url": "https://nsearchives.nseindia.com/corporate/KAYNESTECH_19052026172024_Transcriptinvsetormeetsigned.pdf",
+   "notes": [],
+   "target": "~55%",
+   "revisions": [],
+   "reiterated_on": [],
+   "verdict": {
+    "status": "not_comparable",
+    "reason": "The same call gives different targets for this metric and period (~55%, ~8%); FINN can't tell which is company-level."
+   }
+  },
+  {
+   "metric": "revenue_growth",
+   "metric_label": "Revenue growth",
+   "direction": "point",
+   "low": 8.0,
+   "high": 8.0,
+   "unit": "pct",
+   "period_type": "FY",
+   "period_fy": 2027,
+   "period_label": "FY27",
+   "quote": "When we are saying that the industry in India, the GDP growth is at 8%, the EMS space where we are playing has grown at about 18% last year or is expected to grow in this year 16% to 18%.",
+   "page": 11,
+   "speaker": "N. Muthukumar",
+   "stated_on": "2026-05-19",
+   "source_url": "https://nsearchives.nseindia.com/corporate/KAYNESTECH_19052026172024_Transcriptinvsetormeetsigned.pdf",
+   "notes": [
+    "may refer to a segment, not the whole company",
+    "refers to the industry or economy, not the company"
+   ],
+   "target": "~8%",
+   "revisions": [],
+   "reiterated_on": [],
+   "verdict": {
+    "status": "not_comparable",
+    "reason": "The same call gives different targets for this metric and period (~55%, ~8%); FINN can't tell which is company-level."
+   }
+  },
+  {
+   "metric": "revenue_growth",
+   "metric_label": "Revenue growth",
+   "direction": "point",
+   "low": 39.0,
+   "high": 39.0,
+   "unit": "pct",
+   "period_type": "unstated",
+   "period_fy": null,
+   "period_label": "period not stated",
+   "quote": "I think these are the 2 things that while we have delivered about 33% growth in revenue and 39% growth in the bottom line, we sincerely understand and appreciate that the guidance what we have given, we could not meet.",
+   "page": 8,
+   "speaker": "N. Muthukumar",
+   "stated_on": "2026-05-19",
+   "source_url": "https://nsearchives.nseindia.com/corporate/KAYNESTECH_19052026172024_Transcriptinvsetormeetsigned.pdf",
+   "notes": [
+    "may refer to a segment, not the whole company"
+   ],
+   "target": "~39%",
+   "revisions": [],
+   "reiterated_on": [],
+   "verdict": {
+    "status": "not_comparable",
+    "reason": "Refers to a segment; FINN checks company-level filings only."
+   }
+  },
+  {
+   "metric": "ebitda_margin",
+   "metric_label": "EBITDA margin",
+   "direction": "point",
+   "low": 30.0,
+   "high": 30.0,
+   "unit": "pct",
+   "period_type": "unstated",
+   "period_fy": null,
+   "period_label": "period not stated",
+   "quote": "And the margins are going to be north of current 30% plus.",
+   "page": 13,
+   "speaker": "Ramesh Kunhikannan",
+   "stated_on": "2026-05-19",
+   "source_url": "https://nsearchives.nseindia.com/corporate/KAYNESTECH_19052026172024_Transcriptinvsetormeetsigned.pdf",
+   "notes": [
+    "margin type not stated (gross, EBITDA or segment)",
+    "may refer to a segment, not the whole company"
+   ],
+   "target": "~30%",
+   "revisions": [],
+   "reiterated_on": [],
+   "verdict": {
+    "status": "not_comparable",
+    "reason": "Refers to a segment; FINN checks company-level filings only."
+   }
+  },
+  {
+   "metric": "capex",
+   "metric_label": "Capex",
+   "direction": "point",
+   "low": 300.0,
+   "high": 300.0,
+   "unit": "crore",
+   "period_type": "FY",
+   "period_fy": 2027,
+   "period_label": "FY27",
+   "quote": "We said we will be funding for this capex for this year is about INR300 crores for OSAT, INR300 crores for PCB, and about INR250 crores for EMS business.",
+   "page": 16,
+   "speaker": "N. Muthukumar",
+   "stated_on": "2026-08-12",
+   "source_url": "https://nsearchives.nseindia.com/corporate/KAYNESTECH_12082026164943_TranscriptoftheEarningAnnouncement.pdf",
+   "notes": [
+    "may refer to a segment, not the whole company"
+   ],
+   "target": "~300 cr",
+   "revisions": [],
+   "reiterated_on": [],
+   "verdict": {
+    "status": "not_comparable",
+    "reason": "Refers to a segment; FINN checks company-level filings only."
+   }
+  }
+ ],
+ "summary": {
+  "delivered": 0,
+  "partial": 0,
+  "missed": 0,
+  "pending": 0,
+  "not_comparable": 7,
+  "statements": 7,
+  "calls_read": 5,
+  "calls_found": 5
+ },
+ "status": "done",
+ "cache_key": "20445037405bb93eec7387de"
+}

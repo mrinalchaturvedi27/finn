@@ -1,0 +1,435 @@
+{
+ "ticker": "ASIANPAINT",
+ "generated_at": "2026-11-03T23:20:12",
+ "rules_version": 1,
+ "extract_version": 1,
+ "sources": {
+  "transcripts": [
+   {
+    "call_date": "2026-10-29",
+    "filed_at": "2026-11-03T18:24:12",
+    "url": "https://nsearchives.nseindia.com/corporate/ASIANPAINT_03112026182217_Stock_exchange_intimation_Transcript_Q2FY26.pdf",
+    "nse_url": "https://nsearchives.nseindia.com/corporate/ASIANPAINT_03112026182217_Stock_exchange_intimation_Transcript_Q2FY26.pdf",
+    "source": "nse_filing",
+    "pages": 34,
+    "sha256": "5194bb1483895afd0e5f41ebfab2c9cc29913ee850c7cb480a2d48cde126f4bf",
+    "status": "read",
+    "management_turns": 21,
+    "statements": 1
+   },
+   {
+    "call_date": "2026-08-03",
+    "filed_at": "2026-08-03T14:42:01",
+    "url": "https://nsearchives.nseindia.com/corporate/ASIANPAINT_03082026144133_Regulation_30_Intimation_-_Transcript_for_Investor_Conference_Signed.pdf",
+    "nse_url": "https://nsearchives.nseindia.com/corporate/ASIANPAINT_03082026144133_Regulation_30_Intimation_-_Transcript_for_Investor_Conference_Signed.pdf",
+    "source": "nse_filing",
+    "pages": 26,
+    "sha256": "579a8a98c6eb6bd9864e44c62469ba5f311e4cf7a6137ae42040f5a8fe17794c",
+    "status": "read",
+    "management_turns": 31,
+    "statements": 1
+   },
+   {
+    "call_date": "2026-05-29",
+    "filed_at": "2026-06-03T15:47:01",
+    "url": "https://nsearchives.nseindia.com/corporate/ASIANPAINT_03062026154629_Reg30_Transcript_Q4FY26.pdf",
+    "nse_url": "https://nsearchives.nseindia.com/corporate/ASIANPAINT_03062026154629_Reg30_Transcript_Q4FY26.pdf",
+    "source": "nse_filing",
+    "pages": 26,
+    "sha256": "2d66e2c4b51545d6c235e7d0d6ad69f47dd5f503e88e80a5314c520420521aed",
+    "status": "read",
+    "management_turns": 32,
+    "statements": 2
+   },
+   {
+    "call_date": "2026-02-02",
+    "filed_at": "2026-02-02T13:11:13",
+    "url": "https://nsearchives.nseindia.com/corporate/ASIANPAINT_02022026131104_SE_intimation_Transcript_Q3FY26_Jan2026_signed.pdf",
+    "nse_url": "https://nsearchives.nseindia.com/corporate/ASIANPAINT_02022026131104_SE_intimation_Transcript_Q3FY26_Jan2026_signed.pdf",
+    "source": "nse_filing",
+    "pages": 38,
+    "sha256": "caab390714911346d2a59c399a196f5b607b3f5bc6cf5f729577ec6130328545",
+    "status": "read",
+    "management_turns": 25,
+    "statements": 0
+   },
+   {
+    "call_date": "2025-11-18",
+    "filed_at": "2025-11-18T12:03:51",
+    "url": "https://nsearchives.nseindia.com/corporate/ASIANPAINT_18112025120322_SEIntimationTranscriptQ2FY26Nov2025.pdf",
+    "nse_url": "https://nsearchives.nseindia.com/corporate/ASIANPAINT_18112025120322_SEIntimationTranscriptQ2FY26Nov2025.pdf",
+    "source": "nse_filing",
+    "pages": 30,
+    "sha256": "0aa546dde07d39253eeef5618855c02422b2752f55e7450177a4d9276418fce8",
+    "status": "read",
+    "management_turns": 16,
+    "statements": 2
+   }
+  ],
+  "xbrl": [
+   {
+    "quarter": "Q1 FY25",
+    "url": "https://nsearchives.nseindia.com/corporate/xbrl/INDAS_109063_1189783_17072024051339.xml"
+   },
+   {
+    "quarter": "Q2 FY25",
+    "url": "https://nsearchives.nseindia.com/corporate/xbrl/INDAS_114752_1302989_09112024045711.xml"
+   },
+   {
+    "quarter": "Q3 FY25",
+    "url": "https://nsearchives.nseindia.com/corporate/xbrl/INDAS_118658_1370927_04022025080634.xml"
+   },
+   {
+    "quarter": "Q4 FY25",
+    "url": "https://nsearchives.nseindia.com/corporate/xbrl/INTEGRATED_FILING_INDAS_1434305_08052025080224_WEB.xml"
+   },
+   {
+    "quarter": "Q1 FY26",
+    "url": "https://nsearchives.nseindia.com/corporate/xbrl/INTEGRATED_FILING_INDAS_1497018_29072025071144_WEB.xml"
+   },
+   {
+    "quarter": "Q2 FY26",
+    "url": "https://nsearchives.nseindia.com/corporate/xbrl/INTEGRATED_FILING_INDAS_1572848_12112025081025_WEB.xml"
+   },
+   {
+    "quarter": "Q3 FY26",
+    "url": "https://nsearchives.nseindia.com/corporate/xbrl/INTEGRATED_FILING_INDAS_1611229_28012026112809_WEB.xml"
+   },
+   {
+    "quarter": "Q4 FY26",
+    "url": "https://nsearchives.nseindia.com/corporate/xbrl/INTEGRATED_FILING_INDAS_1693690_15072026083521_WEB.xml"
+   },
+   {
+    "quarter": "Q1 FY27",
+    "url": "https://nsearchives.nseindia.com/corporate/xbrl/INTEGRATED_FILING_INDAS_1704404_29072026065419_WEB.xml"
+   },
+   {
+    "quarter": "Q2 FY27",
+    "url": "https://nsearchives.nseindia.com/corporate/xbrl/INTEGRATED_FILING_INDAS_1749465_29102026092521_WEB.xml"
+   }
+  ]
+ },
+ "failures": [],
+ "company": "Asian Paints Limited",
+ "financials": {
+  "basis": "consolidated",
+  "taxonomy": "indas",
+  "quarters": [
+   {
+    "quarter_end": "2024-06-30",
+    "label": "Q1 FY25",
+    "xbrl_url": "https://nsearchives.nseindia.com/corporate/xbrl/INDAS_109063_1189783_17072024051339.xml",
+    "values": {
+     "revenue": 89697300000.0,
+     "ebitda_op_proxy": 16937700000.0,
+     "pbt": 15669000000.0,
+     "pat": 11867900000.0,
+     "ebitda_margin": 18.883177085597893
+    },
+    "locators": {
+     "revenue": "RevenueFromOperations@OneD",
+     "pbt": "ProfitBeforeTax@OneD",
+     "pat": "ProfitLossForPeriod@OneD"
+    }
+   },
+   {
+    "quarter_end": "2024-09-30",
+    "label": "Q2 FY25",
+    "xbrl_url": "https://nsearchives.nseindia.com/corporate/xbrl/INDAS_114752_1302989_09112024045711.xml",
+    "values": {
+     "revenue": 80275400000.0,
+     "ebitda_op_proxy": 12395100000.0,
+     "pbt": 9279200000.0,
+     "pat": 6936600000.0,
+     "ebitda_margin": 15.440720320297377
+    },
+    "locators": {
+     "revenue": "RevenueFromOperations@OneD",
+     "pbt": "ProfitBeforeTax@OneD",
+     "pat": "ProfitLossForPeriod@OneD"
+    }
+   },
+   {
+    "quarter_end": "2024-12-31",
+    "label": "Q3 FY25",
+    "xbrl_url": "https://nsearchives.nseindia.com/corporate/xbrl/INDAS_118658_1370927_04022025080634.xml",
+    "values": {
+     "revenue": 85494400000.0,
+     "ebitda_op_proxy": 16367300000.0,
+     "pbt": 14683400000.0,
+     "pat": 11284300000.0,
+     "ebitda_margin": 19.144294831006476
+    },
+    "locators": {
+     "revenue": "RevenueFromOperations@OneD",
+     "pbt": "ProfitBeforeTax@OneD",
+     "pat": "ProfitLossForPeriod@OneD"
+    }
+   },
+   {
+    "quarter_end": "2025-03-31",
+    "label": "Q4 FY25",
+    "xbrl_url": "https://nsearchives.nseindia.com/corporate/xbrl/INTEGRATED_FILING_INDAS_1434305_08052025080224_WEB.xml",
+    "values": {
+     "revenue": 83589100000.0,
+     "ebitda_op_proxy": 14362000000.0,
+     "pbt": 9992000000.0,
+     "pat": 7008300000.0,
+     "ebitda_margin": 17.181666030618825
+    },
+    "locators": {
+     "revenue": "RevenueFromOperations@OneD",
+     "pbt": "ProfitBeforeTax@OneD",
+     "pat": "ProfitLossForPeriod@OneD"
+    }
+   },
+   {
+    "quarter_end": "2025-06-30",
+    "label": "Q1 FY26",
+    "xbrl_url": "https://nsearchives.nseindia.com/corporate/xbrl/INTEGRATED_FILING_INDAS_1497018_29072025071144_WEB.xml",
+    "values": {
+     "revenue": 89385500000.0,
+     "ebitda_op_proxy": 16249700000.0,
+     "pbt": 14723900000.0,
+     "pat": 11170500000.0,
+     "ebitda_margin": 18.179346762058724
+    },
+    "locators": {
+     "revenue": "RevenueFromOperations@OneD",
+     "pbt": "ProfitBeforeTax@OneD",
+     "pat": "ProfitLossForPeriod@OneD"
+    }
+   },
+   {
+    "quarter_end": "2025-09-30",
+    "label": "Q2 FY26",
+    "xbrl_url": "https://nsearchives.nseindia.com/corporate/xbrl/INTEGRATED_FILING_INDAS_1572848_12112025081025_WEB.xml",
+    "values": {
+     "revenue": 85312700000.0,
+     "ebitda_op_proxy": 15033800000.0,
+     "pbt": 13532200000.0,
+     "pat": 10182300000.0,
+     "ebitda_margin": 17.621995318399254
+    },
+    "locators": {
+     "revenue": "RevenueFromOperations@OneD",
+     "pbt": "ProfitBeforeTax@OneD",
+     "pat": "ProfitLossForPeriod@OneD"
+    }
+   },
+   {
+    "quarter_end": "2025-12-31",
+    "label": "Q3 FY26",
+    "xbrl_url": "https://nsearchives.nseindia.com/corporate/xbrl/INTEGRATED_FILING_INDAS_1611229_28012026112809_WEB.xml",
+    "values": {
+     "revenue": 88670200000.0,
+     "ebitda_op_proxy": 17809600000.0,
+     "pbt": 14233400000.0,
+     "pat": 10739200000.0,
+     "ebitda_margin": 20.08521464934104
+    },
+    "locators": {
+     "revenue": "RevenueFromOperations@OneD",
+     "pbt": "ProfitBeforeTax@OneD",
+     "pat": "ProfitLossForPeriod@OneD"
+    }
+   },
+   {
+    "quarter_end": "2026-03-31",
+    "label": "Q4 FY26",
+    "xbrl_url": "https://nsearchives.nseindia.com/corporate/xbrl/INTEGRATED_FILING_INDAS_1693690_15072026083521_WEB.xml",
+    "values": {
+     "revenue": 92467000000.0,
+     "ebitda_op_proxy": 17866100000.0,
+     "pbt": 15889000000.0,
+     "pat": 11854900000.0,
+     "ebitda_margin": 19.321595812560158
+    },
+    "locators": {
+     "revenue": "RevenueFromOperations@OneD",
+     "pbt": "ProfitBeforeTax@OneD",
+     "pat": "ProfitLossForPeriod@OneD"
+    }
+   },
+   {
+    "quarter_end": "2026-06-30",
+    "label": "Q1 FY27",
+    "xbrl_url": "https://nsearchives.nseindia.com/corporate/xbrl/INTEGRATED_FILING_INDAS_1704404_29072026065419_WEB.xml",
+    "values": {
+     "revenue": 105419400000.0,
+     "ebitda_op_proxy": 21687600000.0,
+     "pbt": 20575900000.0,
+     "pat": 15594500000.0,
+     "ebitda_margin": 20.572683965190468
+    },
+    "locators": {
+     "revenue": "RevenueFromOperations@OneD",
+     "pbt": "ProfitBeforeTax@OneD",
+     "pat": "ProfitLossForPeriod@OneD"
+    }
+   },
+   {
+    "quarter_end": "2026-09-30",
+    "label": "Q2 FY27",
+    "xbrl_url": "https://nsearchives.nseindia.com/corporate/xbrl/INTEGRATED_FILING_INDAS_1749465_29102026092521_WEB.xml",
+    "values": {
+     "revenue": 99765100000.0,
+     "ebitda_op_proxy": 15570700000.0,
+     "pbt": 14357900000.0,
+     "pat": 10853500000.0,
+     "ebitda_margin": 15.607361692615953
+    },
+    "locators": {
+     "revenue": "RevenueFromOperations@OneD",
+     "pbt": "ProfitBeforeTax@OneD",
+     "pat": "ProfitLossForPeriod@OneD"
+    }
+   }
+  ],
+  "failures": [],
+  "company": "Asian Paints Limited"
+ },
+ "guidance": [
+  {
+   "metric": "volume_growth",
+   "metric_label": "Volume growth",
+   "direction": "range",
+   "low": 4.0,
+   "high": 5.0,
+   "unit": "pct",
+   "period_type": "unstated",
+   "period_fy": null,
+   "period_label": "period not stated",
+   "quote": "And therefore, we would anticipate that the gap between the volume and the value would remain in that zone of about 4-5%.",
+   "page": 25,
+   "speaker": "Amit Syngle",
+   "stated_on": "2025-11-18",
+   "source_url": "https://nsearchives.nseindia.com/corporate/ASIANPAINT_18112025120322_SEIntimationTranscriptQ2FY26Nov2025.pdf",
+   "notes": [],
+   "target": "4\u20135%",
+   "revisions": [],
+   "reiterated_on": [],
+   "verdict": {
+    "status": "not_comparable",
+    "reason": "Volumes are not in the results filing."
+   }
+  },
+  {
+   "metric": "volume_growth",
+   "metric_label": "Volume growth",
+   "direction": "range",
+   "low": 8.0,
+   "high": 10.0,
+   "unit": "pct",
+   "period_type": "unstated",
+   "period_fy": null,
+   "period_label": "period not stated",
+   "quote": "So, while there could be a little bit of upstocking, which could happen because of the price increases, we are still confident that demand conditions should continue giving us closer to high single-digit volume growth in the band of about 8 -10%, as we predict going forward.",
+   "page": 21,
+   "speaker": "Amit Syngle",
+   "stated_on": "2026-05-29",
+   "source_url": "https://nsearchives.nseindia.com/corporate/ASIANPAINT_03062026154629_Reg30_Transcript_Q4FY26.pdf",
+   "notes": [
+    "may refer to a segment, not the whole company"
+   ],
+   "target": "8\u201310%",
+   "revisions": [],
+   "reiterated_on": [],
+   "verdict": {
+    "status": "not_comparable",
+    "reason": "Refers to a segment; FINN checks company-level filings only."
+   }
+  },
+  {
+   "metric": "revenue_growth",
+   "metric_label": "Revenue growth",
+   "direction": "range",
+   "low": 3.0,
+   "high": 4.0,
+   "unit": "pct",
+   "period_type": "unstated",
+   "period_fy": null,
+   "period_label": "period not stated",
+   "quote": "The impact of that would be for the month of March, the March growth rates would be higher by 3-4% mark, which would be the impact of the upstocking which would have happened in the month of March.",
+   "page": 25,
+   "speaker": "Amit Syngle",
+   "stated_on": "2026-05-29",
+   "source_url": "https://nsearchives.nseindia.com/corporate/ASIANPAINT_03062026154629_Reg30_Transcript_Q4FY26.pdf",
+   "notes": [],
+   "target": "3\u20134%",
+   "revisions": [],
+   "reiterated_on": [],
+   "verdict": {
+    "status": "not_comparable",
+    "reason": "No target period stated, so there is nothing definite to check it against."
+   }
+  },
+  {
+   "metric": "ebitda_margin",
+   "metric_label": "EBITDA margin",
+   "direction": "range",
+   "low": 18.0,
+   "high": 20.0,
+   "unit": "pct",
+   "period_type": "unstated",
+   "period_fy": null,
+   "period_label": "period not stated",
+   "quote": "We are still garnering around the guidance of 18-20% of our PBDIT margins holds.",
+   "page": 20,
+   "speaker": "Amit Syngle",
+   "stated_on": "2026-08-03",
+   "source_url": "https://nsearchives.nseindia.com/corporate/ASIANPAINT_03082026144133_Regulation_30_Intimation_-_Transcript_for_Investor_Conference_Signed.pdf",
+   "notes": [
+    "may refer to a segment, not the whole company",
+    "margin type not stated (gross, EBITDA or segment)"
+   ],
+   "target": "18\u201320%",
+   "revisions": [],
+   "reiterated_on": [
+    "2025-11-18"
+   ],
+   "verdict": {
+    "status": "not_comparable",
+    "reason": "Refers to a segment; FINN checks company-level filings only."
+   }
+  },
+  {
+   "metric": "volume_growth",
+   "metric_label": "Volume growth",
+   "direction": "range",
+   "low": 8.0,
+   "high": 9.0,
+   "unit": "pct",
+   "period_type": "unstated",
+   "period_fy": null,
+   "period_label": "period not stated",
+   "quote": "We also have a wedding season which is coming, while rural will come into some question with the monsoon deficit of what is really, we are talking of, but we feel that it would be reasonable to expect to see a volume growth of about 8% to 9% going forward.",
+   "page": 29,
+   "speaker": "Amit Syngle",
+   "stated_on": "2026-10-29",
+   "source_url": "https://nsearchives.nseindia.com/corporate/ASIANPAINT_03112026182217_Stock_exchange_intimation_Transcript_Q2FY26.pdf",
+   "notes": [
+    "may refer to a segment, not the whole company"
+   ],
+   "target": "8\u20139%",
+   "revisions": [],
+   "reiterated_on": [],
+   "verdict": {
+    "status": "not_comparable",
+    "reason": "Refers to a segment; FINN checks company-level filings only."
+   }
+  }
+ ],
+ "summary": {
+  "delivered": 0,
+  "partial": 0,
+  "missed": 0,
+  "pending": 0,
+  "not_comparable": 5,
+  "statements": 5,
+  "calls_read": 5,
+  "calls_found": 5
+ },
+ "status": "done",
+ "cache_key": "71be0d8437e0407f1cb7b939"
+}

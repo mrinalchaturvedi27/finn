@@ -1,0 +1,366 @@
+{
+ "ticker": "PIDILITIND",
+ "generated_at": "2026-11-03T23:18:28",
+ "rules_version": 1,
+ "extract_version": 1,
+ "sources": {
+  "transcripts": [
+   {
+    "call_date": "2026-08-12",
+    "filed_at": "2026-08-12T18:11:52",
+    "url": "https://nsearchives.nseindia.com/corporate/Nisha_12082026181037_SEintimationEarningscallTranscriptQ1FY2027finaluploadsigned.pdf",
+    "nse_url": "https://nsearchives.nseindia.com/corporate/Nisha_12082026181037_SEintimationEarningscallTranscriptQ1FY2027finaluploadsigned.pdf",
+    "source": "nse_filing",
+    "pages": 22,
+    "sha256": "8881a3e1c03d3622574c0692f88683ed102d59ca3b5b314ada333bc8e82af244",
+    "status": "read",
+    "management_turns": 30,
+    "statements": 0
+   },
+   {
+    "call_date": "2026-05-15",
+    "filed_at": "2026-05-15T14:24:25",
+    "url": "https://nsearchives.nseindia.com/corporate/Nisha_15052026142328_SEintimationEarningscallTranscriptQ4FY2026finalsigned.pdf",
+    "nse_url": "https://nsearchives.nseindia.com/corporate/Nisha_15052026142328_SEintimationEarningscallTranscriptQ4FY2026finalsigned.pdf",
+    "source": "nse_filing",
+    "pages": 20,
+    "sha256": "84ed43486ca47f382f99f19456e9395347a787b0974842602c1d6de89c34efc6",
+    "status": "read",
+    "management_turns": 45,
+    "statements": 0
+   },
+   {
+    "call_date": "2026-02-11",
+    "filed_at": "2026-02-11T17:32:51",
+    "url": "https://nsearchives.nseindia.com/corporate/Nisha_11022026173121_SEintimationearningscalltranscriptfinalupload.pdf",
+    "nse_url": "https://nsearchives.nseindia.com/corporate/Nisha_11022026173121_SEintimationearningscalltranscriptfinalupload.pdf",
+    "source": "nse_filing",
+    "pages": 21,
+    "sha256": "8b0ea905be2767c407ae110be8644fef765eaf47c363559290ff3edd29ab87e4",
+    "status": "read",
+    "management_turns": 27,
+    "statements": 1
+   },
+   {
+    "call_date": "2025-11-06",
+    "filed_at": "2025-11-06T18:51:03",
+    "url": "https://nsearchives.nseindia.com/corporate/Nisha_06112025184945_SEIntimationTranscript.pdf",
+    "nse_url": "https://nsearchives.nseindia.com/corporate/Nisha_06112025184945_SEIntimationTranscript.pdf",
+    "source": "nse_filing",
+    "pages": 16,
+    "sha256": "236f3a0c846141220693a4a26e31c0a848f507fbb15bdfe3bd0cee64866e4d9b",
+    "status": "read",
+    "management_turns": 32,
+    "statements": 1
+   },
+   {
+    "call_date": "2025-08-14",
+    "filed_at": "2025-08-14T16:04:37",
+    "url": "https://nsearchives.nseindia.com/corporate/Nisha_14082025160355_SEIntimationTranscript.pdf",
+    "nse_url": "https://nsearchives.nseindia.com/corporate/Nisha_14082025160355_SEIntimationTranscript.pdf",
+    "source": "nse_filing",
+    "pages": 24,
+    "sha256": "d6104335ec5399931ffdd67a4a9d6a88b87ae86ae12c12da0e1065e83378bdd1",
+    "status": "read",
+    "management_turns": 32,
+    "statements": 1
+   }
+  ],
+  "xbrl": [
+   {
+    "quarter": "Q1 FY25",
+    "url": "https://nsearchives.nseindia.com/corporate/xbrl/INDAS_110651_1215601_07082024051509.xml"
+   },
+   {
+    "quarter": "Q2 FY25",
+    "url": "https://nsearchives.nseindia.com/corporate/xbrl/INDAS_113155_1286649_24102024102618.xml"
+   },
+   {
+    "quarter": "Q3 FY25",
+    "url": "https://nsearchives.nseindia.com/corporate/xbrl/INDAS_117518_1358926_23012025113009.xml"
+   },
+   {
+    "quarter": "Q4 FY25",
+    "url": "https://nsearchives.nseindia.com/corporate/xbrl/INTEGRATED_FILING_INDAS_1434376_08052025083823_WEB.xml"
+   },
+   {
+    "quarter": "Q1 FY26",
+    "url": "https://nsearchives.nseindia.com/corporate/xbrl/INTEGRATED_FILING_INDAS_1504200_06082025055143_WEB.xml"
+   },
+   {
+    "quarter": "Q2 FY26",
+    "url": "https://nsearchives.nseindia.com/corporate/xbrl/INTEGRATED_FILING_INDAS_1562080_30102025075559_WEB.xml"
+   },
+   {
+    "quarter": "Q3 FY26",
+    "url": "https://nsearchives.nseindia.com/corporate/xbrl/INTEGRATED_FILING_INDAS_1617545_03022026074552_WEB.xml"
+   },
+   {
+    "quarter": "Q4 FY26",
+    "url": "https://nsearchives.nseindia.com/corporate/xbrl/INTEGRATED_FILING_INDAS_1664657_07052026084742_WEB.xml"
+   },
+   {
+    "quarter": "Q1 FY27",
+    "url": "https://nsearchives.nseindia.com/corporate/xbrl/INTEGRATED_FILING_INDAS_1707701_04082026053435_WEB.xml"
+   },
+   {
+    "quarter": "Q2 FY27",
+    "url": "https://nsearchives.nseindia.com/corporate/xbrl/INTEGRATED_FILING_INDAS_1748241_28102026081451_WEB.xml"
+   }
+  ]
+ },
+ "failures": [],
+ "company": "Pidilite Industries Limited",
+ "financials": {
+  "basis": "consolidated",
+  "taxonomy": "indas",
+  "quarters": [
+   {
+    "quarter_end": "2024-06-30",
+    "label": "Q1 FY25",
+    "xbrl_url": "https://nsearchives.nseindia.com/corporate/xbrl/INDAS_110651_1215601_07082024051509.xml",
+    "values": {
+     "revenue": 33953500000.0,
+     "ebitda_op_proxy": 8127400000.0,
+     "pbt": 7704400000.0,
+     "pat": 5712700000.0,
+     "ebitda_margin": 23.936854816145612
+    },
+    "locators": {
+     "revenue": "RevenueFromOperations@OneD",
+     "pbt": "ProfitBeforeTax@OneD",
+     "pat": "ProfitLossForPeriod@OneD"
+    }
+   },
+   {
+    "quarter_end": "2024-09-30",
+    "label": "Q2 FY25",
+    "xbrl_url": "https://nsearchives.nseindia.com/corporate/xbrl/INDAS_113155_1286649_24102024102618.xml",
+    "values": {
+     "revenue": 32349100000.0,
+     "ebitda_op_proxy": 7688100000.0,
+     "pbt": 7263200000.0,
+     "pat": 5403000000.0,
+     "ebitda_margin": 23.76603985891416
+    },
+    "locators": {
+     "revenue": "RevenueFromOperations@OneD",
+     "pbt": "ProfitBeforeTax@OneD",
+     "pat": "ProfitLossForPeriod@OneD"
+    }
+   },
+   {
+    "quarter_end": "2024-12-31",
+    "label": "Q3 FY25",
+    "xbrl_url": "https://nsearchives.nseindia.com/corporate/xbrl/INDAS_117518_1358926_23012025113009.xml",
+    "values": {
+     "revenue": 33689100000.0,
+     "ebitda_op_proxy": 7983800000.0,
+     "pbt": 7522100000.0,
+     "pat": 5570800000.0,
+     "ebitda_margin": 23.698466269505566
+    },
+    "locators": {
+     "revenue": "RevenueFromOperations@OneD",
+     "pbt": "ProfitBeforeTax@OneD",
+     "pat": "ProfitLossForPeriod@OneD"
+    }
+   },
+   {
+    "quarter_end": "2025-03-31",
+    "label": "Q4 FY25",
+    "xbrl_url": "https://nsearchives.nseindia.com/corporate/xbrl/INTEGRATED_FILING_INDAS_1434376_08052025083823_WEB.xml",
+    "values": {
+     "revenue": 31411400000.0,
+     "ebitda_op_proxy": 6325800000.0,
+     "pbt": 5770100000.0,
+     "pat": 4275200000.0,
+     "ebitda_margin": 20.138548425094076
+    },
+    "locators": {
+     "revenue": "RevenueFromOperations@OneD",
+     "pbt": "ProfitBeforeTax@OneD",
+     "pat": "ProfitLossForPeriod@OneD"
+    }
+   },
+   {
+    "quarter_end": "2025-06-30",
+    "label": "Q1 FY26",
+    "xbrl_url": "https://nsearchives.nseindia.com/corporate/xbrl/INTEGRATED_FILING_INDAS_1504200_06082025055143_WEB.xml",
+    "values": {
+     "revenue": 37531000000.0,
+     "ebitda_op_proxy": 9409800000.0,
+     "pbt": 9162400000.0,
+     "pat": 6781300000.0,
+     "ebitda_margin": 25.07207375236471
+    },
+    "locators": {
+     "revenue": "RevenueFromOperations@OneD",
+     "pbt": "ProfitBeforeTax@OneD",
+     "pat": "ProfitLossForPeriod@OneD"
+    }
+   },
+   {
+    "quarter_end": "2025-09-30",
+    "label": "Q2 FY26",
+    "xbrl_url": "https://nsearchives.nseindia.com/corporate/xbrl/INTEGRATED_FILING_INDAS_1562080_30102025075559_WEB.xml",
+    "values": {
+     "revenue": 35544400000.0,
+     "ebitda_op_proxy": 8507300000.0,
+     "pbt": 7876600000.0,
+     "pat": 5846000000.0,
+     "ebitda_margin": 23.93429063368632
+    },
+    "locators": {
+     "revenue": "RevenueFromOperations@OneD",
+     "pbt": "ProfitBeforeTax@OneD",
+     "pat": "ProfitLossForPeriod@OneD"
+    }
+   },
+   {
+    "quarter_end": "2025-12-31",
+    "label": "Q3 FY26",
+    "xbrl_url": "https://nsearchives.nseindia.com/corporate/xbrl/INTEGRATED_FILING_INDAS_1617545_03022026074552_WEB.xml",
+    "values": {
+     "revenue": 37099100000.0,
+     "ebitda_op_proxy": 8944400000.0,
+     "pbt": 8399700000.0,
+     "pat": 6238400000.0,
+     "ebitda_margin": 24.109479744791653
+    },
+    "locators": {
+     "revenue": "RevenueFromOperations@OneD",
+     "pbt": "ProfitBeforeTax@OneD",
+     "pat": "ProfitLossForPeriod@OneD"
+    }
+   },
+   {
+    "quarter_end": "2026-03-31",
+    "label": "Q4 FY26",
+    "xbrl_url": "https://nsearchives.nseindia.com/corporate/xbrl/INTEGRATED_FILING_INDAS_1664657_07052026084742_WEB.xml",
+    "values": {
+     "revenue": 35833800000.0,
+     "ebitda_op_proxy": 8328500000.0,
+     "pbt": 7786700000.0,
+     "pat": 5841500000.0,
+     "ebitda_margin": 23.24202289458556
+    },
+    "locators": {
+     "revenue": "RevenueFromOperations@OneD",
+     "pbt": "ProfitBeforeTax@OneD",
+     "pat": "ProfitLossForPeriod@OneD"
+    }
+   },
+   {
+    "quarter_end": "2026-06-30",
+    "label": "Q1 FY27",
+    "xbrl_url": "https://nsearchives.nseindia.com/corporate/xbrl/INTEGRATED_FILING_INDAS_1707701_04082026053435_WEB.xml",
+    "values": {
+     "revenue": 45515500000.0,
+     "ebitda_op_proxy": 11938900000.0,
+     "pbt": 11896700000.0,
+     "pat": 8835100000.0,
+     "ebitda_margin": 26.230405026858982
+    },
+    "locators": {
+     "revenue": "RevenueFromOperations@OneD",
+     "pbt": "ProfitBeforeTax@OneD",
+     "pat": "ProfitLossForPeriod@OneD"
+    }
+   },
+   {
+    "quarter_end": "2026-09-30",
+    "label": "Q2 FY27",
+    "xbrl_url": "https://nsearchives.nseindia.com/corporate/xbrl/INTEGRATED_FILING_INDAS_1748241_28102026081451_WEB.xml",
+    "values": {
+     "revenue": 42975900000.0,
+     "ebitda_op_proxy": 8774800000.0,
+     "pbt": 8293100000.0,
+     "pat": 6264600000.0,
+     "ebitda_margin": 20.417955179530853
+    },
+    "locators": {
+     "revenue": "RevenueFromOperations@OneD",
+     "pbt": "ProfitBeforeTax@OneD",
+     "pat": "ProfitLossForPeriod@OneD"
+    }
+   }
+  ],
+  "failures": [],
+  "company": "Pidilite Industries Limited"
+ },
+ "guidance": [
+  {
+   "metric": "ebitda_margin",
+   "metric_label": "EBITDA margin",
+   "direction": "range",
+   "low": 20.0,
+   "high": 24.0,
+   "unit": "pct",
+   "period_type": "standing",
+   "period_fy": null,
+   "period_label": "standing band",
+   "quote": "Now the question is, and our desire rate to continue to maintain this growth because for us, the EBITDA corridor which we have shared is 20% to 24%.",
+   "page": 9,
+   "speaker": "Sudhanshu Vats",
+   "stated_on": "2026-02-11",
+   "source_url": "https://nsearchives.nseindia.com/corporate/Nisha_11022026173121_SEintimationearningscalltranscriptfinalupload.pdf",
+   "notes": [],
+   "target": "20\u201324%",
+   "revisions": [],
+   "reiterated_on": [
+    "2025-11-06"
+   ],
+   "verdict": {
+    "status": "delivered",
+    "value": 20.417955179530853,
+    "calc": "Operating EBITDA margin by quarter since the call: Q4 FY26 23.2%, Q1 FY27 26.2%, Q2 FY27 20.4% \u2014 2 of 3 within the band, 1 above it (FINN's EBITDA excludes other income)",
+    "tolerance_pp": 0.5,
+    "quarters": [
+     "2026-03-31",
+     "2026-06-30",
+     "2026-09-30"
+    ],
+    "reason": null
+   }
+  },
+  {
+   "metric": "volume_growth",
+   "metric_label": "Volume growth",
+   "direction": "at_least",
+   "low": 10,
+   "high": null,
+   "unit": "pct",
+   "period_type": "unstated",
+   "period_fy": null,
+   "period_label": "period not stated",
+   "quote": "This gives us a considerable amount of confidence that as we go forward, we should be able to maintain or better our double-digit underlying volume growth.",
+   "page": 9,
+   "speaker": "Sudhanshu Vats",
+   "stated_on": "2025-08-14",
+   "source_url": "https://nsearchives.nseindia.com/corporate/Nisha_14082025160355_SEIntimationTranscript.pdf",
+   "notes": [
+    "may refer to a segment, not the whole company"
+   ],
+   "target": "at least 10%",
+   "revisions": [],
+   "reiterated_on": [],
+   "verdict": {
+    "status": "not_comparable",
+    "reason": "Refers to a segment; FINN checks company-level filings only."
+   }
+  }
+ ],
+ "summary": {
+  "delivered": 1,
+  "partial": 0,
+  "missed": 0,
+  "pending": 0,
+  "not_comparable": 1,
+  "statements": 2,
+  "calls_read": 5,
+  "calls_found": 5
+ },
+ "status": "done",
+ "cache_key": "5e8a029f599ea96fdd3144fd"
+}

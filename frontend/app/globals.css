@@ -1,36 +1,42 @@
 @import "tailwindcss";
 
+/* FINN: a financial broadsheet. Warm paper, near-black ink, one oxblood accent.
+   Contrast: muted and faint text both clear 4.5:1 on --bg. */
 :root {
-  --bg: #f6f5f1;
-  --surface: #ffffff;
-  --surface-2: #efede7;
-  --ink: #16181d;
-  --muted: #6b6f78;
-  --faint: #9a9ea6;
-  --line: #e3e0d8;
-  --up: #0f7b4b;
-  --down: #c2362b;
-  --warn: #9a5b00;
-  --warn-bg: #fdf3e1;
-  --accent: #2b4fd8;
-  --top: #16181d;
+  --bg: #f5f2eb;
+  --surface: #fbfaf6;
+  --surface-2: #ebe6da;
+  --ink: #15130f;
+  --ink-2: #3a362f;
+  --muted: #5f5a50;
+  --faint: #6f695e;
+  --line: #d8d0c0;
+  --rule: #15130f;
+  --up: #0b6b3a;
+  --down: #b3261e;
+  --warn: #7f4a00;
+  --warn-bg: #f6e8cc;
+  --accent: #8c1d18;
+  --accent-bg: #f3e1dd;
 }
 
 @media (prefers-color-scheme: dark) {
-  :root {
-    --bg: #0e0f12;
-    --surface: #17191e;
-    --surface-2: #1f2228;
-    --ink: #eceae4;
-    --muted: #9a9ea8;
-    --faint: #6c7079;
-    --line: #2a2d34;
-    --up: #3fbf7f;
-    --down: #ff6b5e;
+  :root:not([data-theme="light"]) {
+    --bg: #12110e;
+    --surface: #1a1915;
+    --surface-2: #24221d;
+    --ink: #efe9dc;
+    --ink-2: #d6cfbf;
+    --muted: #b1a998;
+    --faint: #9d9584;
+    --line: #36332b;
+    --rule: #efe9dc;
+    --up: #4cc68a;
+    --down: #ff7b6e;
     --warn: #f0b45a;
-    --warn-bg: #2a2213;
-    --accent: #8ea6ff;
-    --top: #eceae4;
+    --warn-bg: #2e2412;
+    --accent: #f08a7e;
+    --accent-bg: #3a1d1a;
   }
 }
 
@@ -39,16 +45,20 @@
   --color-surface: var(--surface);
   --color-surface-2: var(--surface-2);
   --color-ink: var(--ink);
+  --color-ink-2: var(--ink-2);
   --color-muted: var(--muted);
   --color-faint: var(--faint);
   --color-line: var(--line);
+  --color-rule: var(--rule);
   --color-up: var(--up);
   --color-down: var(--down);
   --color-warn: var(--warn);
   --color-warn-bg: var(--warn-bg);
   --color-accent: var(--accent);
+  --color-accent-bg: var(--accent-bg);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+  --font-serif: var(--font-newsreader);
 }
 
 html,
@@ -65,4 +75,35 @@ body {
 .num {
   font-variant-numeric: tabular-nums;
   font-feature-settings: "tnum";
+}
+
+.serif {
+  font-family: var(--font-newsreader), Georgia, serif;
+}
+
+/* small caps kicker above headlines */
+.kicker {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+details > summary {
+  list-style: none;
+}
+details > summary::-webkit-details-marker {
+  display: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    transition: none !important;
+  }
 }

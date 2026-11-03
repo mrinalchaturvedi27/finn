@@ -289,6 +289,27 @@ def seed_companies(db):
     db.commit()
 
 
+DEMO_RESEARCH = Path(__file__).resolve().parent.parent / "data" / "demo" / "research"
+
+
+def load_research_fixtures(db) -> int:
+    """Research reports generated from real filings (python -m finn.research.run), bundled so the
+    offline demo briefing can show promised vs delivered. Stored as they were produced, with their
+    own generation date; nothing is edited."""
+    from .models import ResearchJob
+    n = 0
+    for p in sorted(DEMO_RESEARCH.glob("*.json")):
+        r = json.loads(p.read_text())
+        at = datetime.fromisoformat(r["generated_at"])
+        db.query(ResearchJob).filter(ResearchJob.ticker == r["ticker"]).delete()
+        db.add(ResearchJob(ticker=r["ticker"], state=r["status"], report=r, cache_key=r.get("cache_key"),
+                           doc_failures=r.get("failures", []), attempts=1, requested_via="demo-fixture",
+                           created_at=at, updated_at=at, finished_at=at))
+        n += 1
+    db.commit()
+    return n
+
+
 def _refuse_live_target(mode: str):
     """The historical snapshot is only ever written to local SQLite, never to the live database."""
     if mode == "snapshot" and not dbmod.DB_URL.startswith("sqlite"):
@@ -325,6 +346,8 @@ def main():
         rebuild_events(db, tickers, raw, a.mode)
         if not a.skip_prices:
             ingest_prices(db, tickers, a.mode)
+        if a.mode == "snapshot":
+            print(f"research fixtures loaded: {load_research_fixtures(db)}")
         for r in db.scalars(select(IngestRun).order_by(IngestRun.id.desc()).limit(3)):
             print(f"{r.source:<18} {r.status:<8} items={r.items:<5} through={r.data_through} errors={len(r.errors)}")
 

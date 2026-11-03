@@ -1,0 +1,878 @@
+{
+ "ticker": "ASTRAL",
+ "generated_at": "2026-11-03T23:18:36",
+ "rules_version": 1,
+ "extract_version": 1,
+ "sources": {
+  "transcripts": [
+   {
+    "call_date": "2026-08-12",
+    "filed_at": "2026-08-18T18:50:55",
+    "url": "https://www.astralltd.com/wp-content/uploads/2026/08/Equirus-Astral-Aug12-2026-1.pdf",
+    "nse_url": "https://nsearchives.nseindia.com/corporate/ASTRAL_18082026185046_Transcript.pdf",
+    "source": "company_site_via_filing",
+    "pages": 29,
+    "sha256": "19dd2c0dd3f116c6f9a9d2af39c96d278a8d2229ed5b7c86a6a10bb760c30e49",
+    "status": "read",
+    "management_turns": 70,
+    "statements": 8
+   },
+   {
+    "call_date": "2026-06-27",
+    "filed_at": "2026-07-01T15:09:06",
+    "url": "https://www.astralltd.com/wp-content/uploads/2026/07/Transcript-Investec-AstralL-June27-2026.pdf",
+    "nse_url": "https://nsearchives.nseindia.com/corporate/ASTRAL_01072026150850_Transcript.pdf",
+    "source": "company_site_via_filing",
+    "pages": 23,
+    "sha256": "822f04a6b1086dfa9323f2f900a1fed433671e6dd594a1ae9cf4858f841ac8db",
+    "status": "read",
+    "management_turns": 52,
+    "statements": 1
+   },
+   {
+    "call_date": "2026-02-05",
+    "filed_at": "2026-02-10T16:58:27",
+    "url": "https://www.astralltd.com/wp-content/uploads/2026/02/Investec-Astral-Feb05-2026.pdf",
+    "nse_url": "https://nsearchives.nseindia.com/corporate/ASTRAL_10022026165709_Transcript.pdf",
+    "source": "company_site_via_filing",
+    "pages": 17,
+    "sha256": "e63332e72d82ddc7e374098e19c5c4a166f0737b1a6906425f6cc04ecf70826b",
+    "status": "read",
+    "management_turns": 68,
+    "statements": 4
+   },
+   {
+    "call_date": "2025-11-06",
+    "filed_at": "2025-11-10T14:43:00",
+    "url": "https://www.astralltd.com/wp-content/uploads/2025/11/Transcript.pdf",
+    "nse_url": "https://nsearchives.nseindia.com/corporate/ASTRAL_10112025144237_Transcript.pdf",
+    "source": "company_site_via_filing",
+    "pages": 19,
+    "sha256": "85c8b0dc855ae846a945f578abcaf62c3f57124cdd430ea9e11236ea75ce5cf0",
+    "status": "read",
+    "management_turns": 74,
+    "statements": 6
+   },
+   {
+    "call_date": "2025-08-18",
+    "filed_at": "2025-08-18T15:24:34",
+    "url": "https://www.astralltd.com/wp-content/uploads/2025/08/Transcript-of-Earning-Call-held-on-12th-August-2025.pdf",
+    "nse_url": "https://nsearchives.nseindia.com/corporate/ASTRAL_18082025152416_Transcript_of_Earnings_Call_Q1FY2026.pdf",
+    "source": "company_site_via_filing",
+    "pages": 32,
+    "sha256": "a020d7d797796f91de73502ea6a259abde28312437119952bde842890b8619d1",
+    "status": "read",
+    "management_turns": 86,
+    "statements": 10
+   }
+  ],
+  "xbrl": [
+   {
+    "quarter": "Q4 FY24",
+    "url": "https://nsearchives.nseindia.com/corporate/xbrl/INDAS_106288_1128966_17052024083200.xml"
+   },
+   {
+    "quarter": "Q1 FY25",
+    "url": "https://nsearchives.nseindia.com/corporate/xbrl/INDAS_110832_1217256_08082024054903.xml"
+   },
+   {
+    "quarter": "Q2 FY25",
+    "url": "https://nsearchives.nseindia.com/corporate/xbrl/INDAS_114434_1300617_07112024084011.xml"
+   },
+   {
+    "quarter": "Q3 FY25",
+    "url": "https://nsearchives.nseindia.com/corporate/xbrl/INDAS_118211_1366565_30012025073415.xml"
+   },
+   {
+    "quarter": "Q4 FY25",
+    "url": "https://nsearchives.nseindia.com/corporate/xbrl/INTEGRATED_FILING_INDAS_1447036_22052025044741_WEB.xml"
+   },
+   {
+    "quarter": "Q1 FY26",
+    "url": "https://nsearchives.nseindia.com/corporate/xbrl/INTEGRATED_FILING_INDAS_1508710_11082025064254_WEB.xml"
+   },
+   {
+    "quarter": "Q2 FY26",
+    "url": "https://nsearchives.nseindia.com/corporate/xbrl/INTEGRATED_FILING_INDAS_1566191_05112025082105_WEB.xml"
+   },
+   {
+    "quarter": "Q3 FY26",
+    "url": "https://nsearchives.nseindia.com/corporate/xbrl/INTEGRATED_FILING_INDAS_1619564_05022026075421_WEB.xml"
+   },
+   {
+    "quarter": "Q4 FY26",
+    "url": "https://nsearchives.nseindia.com/corporate/xbrl/INTEGRATED_FILING_INDAS_1668969_18052026084804_WEB.xml"
+   },
+   {
+    "quarter": "Q1 FY27",
+    "url": "https://nsearchives.nseindia.com/corporate/xbrl/INTEGRATED_FILING_INDAS_1712963_12082026070826_WEB.xml"
+   }
+  ]
+ },
+ "failures": [],
+ "company": "Astral Limited",
+ "financials": {
+  "basis": "consolidated",
+  "taxonomy": "indas",
+  "quarters": [
+   {
+    "quarter_end": "2024-03-31",
+    "label": "Q4 FY24",
+    "xbrl_url": "https://nsearchives.nseindia.com/corporate/xbrl/INDAS_106288_1128966_17052024083200.xml",
+    "values": {
+     "revenue": 16251000000.0,
+     "ebitda_op_proxy": 2915000000.0,
+     "pbt": 2414000000.0,
+     "pat": 1813000000.0,
+     "ebitda_margin": 17.93735770106455
+    },
+    "locators": {
+     "revenue": "RevenueFromOperations@OneD",
+     "pbt": "ProfitBeforeTax@OneD",
+     "pat": "ProfitLossForPeriod@OneD"
+    }
+   },
+   {
+    "quarter_end": "2024-06-30",
+    "label": "Q1 FY25",
+    "xbrl_url": "https://nsearchives.nseindia.com/corporate/xbrl/INDAS_110832_1217256_08082024054903.xml",
+    "values": {
+     "revenue": 13836000000.0,
+     "ebitda_op_proxy": 2144000000.0,
+     "pbt": 1631000000.0,
+     "pat": 1195000000.0,
+     "ebitda_margin": 15.495808037004915
+    },
+    "locators": {
+     "revenue": "RevenueFromOperations@OneD",
+     "pbt": "ProfitBeforeTax@OneD",
+     "pat": "ProfitLossForPeriod@OneD"
+    }
+   },
+   {
+    "quarter_end": "2024-09-30",
+    "label": "Q2 FY25",
+    "xbrl_url": "https://nsearchives.nseindia.com/corporate/xbrl/INDAS_114434_1300617_07112024084011.xml",
+    "values": {
+     "revenue": 13704000000.0,
+     "ebitda_op_proxy": 2101000000.0,
+     "pbt": 1488000000.0,
+     "pat": 1087000000.0,
+     "ebitda_margin": 15.331290134267366
+    },
+    "locators": {
+     "revenue": "RevenueFromOperations@OneD",
+     "pbt": "ProfitBeforeTax@OneD",
+     "pat": "ProfitLossForPeriod@OneD"
+    }
+   },
+   {
+    "quarter_end": "2024-12-31",
+    "label": "Q3 FY25",
+    "xbrl_url": "https://nsearchives.nseindia.com/corporate/xbrl/INDAS_118211_1366565_30012025073415.xml",
+    "values": {
+     "revenue": 13970000000.0,
+     "ebitda_op_proxy": 2195000000.0,
+     "pbt": 1543000000.0,
+     "pat": 1126000000.0,
+     "ebitda_margin": 15.712240515390121
+    },
+    "locators": {
+     "revenue": "RevenueFromOperations@OneD",
+     "pbt": "ProfitBeforeTax@OneD",
+     "pat": "ProfitLossForPeriod@OneD"
+    }
+   },
+   {
+    "quarter_end": "2025-03-31",
+    "label": "Q4 FY25",
+    "xbrl_url": "https://nsearchives.nseindia.com/corporate/xbrl/INTEGRATED_FILING_INDAS_1447036_22052025044741_WEB.xml",
+    "values": {
+     "revenue": 16814000000.0,
+     "ebitda_op_proxy": 3019000000.0,
+     "pbt": 2363000000.0,
+     "pat": 1781000000.0,
+     "ebitda_margin": 17.955275365766624
+    },
+    "locators": {
+     "revenue": "RevenueFromOperations@OneD",
+     "pbt": "ProfitBeforeTax@OneD",
+     "pat": "ProfitLossForPeriod@OneD"
+    }
+   },
+   {
+    "quarter_end": "2025-06-30",
+    "label": "Q1 FY26",
+    "xbrl_url": "https://nsearchives.nseindia.com/corporate/xbrl/INTEGRATED_FILING_INDAS_1508710_11082025064254_WEB.xml",
+    "values": {
+     "revenue": 13612000000.0,
+     "ebitda_op_proxy": 1849000000.0,
+     "pbt": 1098000000.0,
+     "pat": 792000000.0,
+     "ebitda_margin": 13.583602703496913
+    },
+    "locators": {
+     "revenue": "RevenueFromOperations@OneD",
+     "pbt": "ProfitBeforeTax@OneD",
+     "pat": "ProfitLossForPeriod@OneD"
+    }
+   },
+   {
+    "quarter_end": "2025-09-30",
+    "label": "Q2 FY26",
+    "xbrl_url": "https://nsearchives.nseindia.com/corporate/xbrl/INTEGRATED_FILING_INDAS_1566191_05112025082105_WEB.xml",
+    "values": {
+     "revenue": 15774000000.0,
+     "ebitda_op_proxy": 2568000000.0,
+     "pbt": 1799000000.0,
+     "pat": 1348000000.0,
+     "ebitda_margin": 16.279954355268163
+    },
+    "locators": {
+     "revenue": "RevenueFromOperations@OneD",
+     "pbt": "ProfitBeforeTax@OneD",
+     "pat": "ProfitLossForPeriod@OneD"
+    }
+   },
+   {
+    "quarter_end": "2025-12-31",
+    "label": "Q3 FY26",
+    "xbrl_url": "https://nsearchives.nseindia.com/corporate/xbrl/INTEGRATED_FILING_INDAS_1619564_05022026075421_WEB.xml",
+    "values": {
+     "revenue": 15415000000.0,
+     "ebitda_op_proxy": 2373000000.0,
+     "pbt": 1443000000.0,
+     "pat": 1077000000.0,
+     "ebitda_margin": 15.394096659098281
+    },
+    "locators": {
+     "revenue": "RevenueFromOperations@OneD",
+     "pbt": "ProfitBeforeTax@OneD",
+     "pat": "ProfitLossForPeriod@OneD"
+    }
+   },
+   {
+    "quarter_end": "2026-03-31",
+    "label": "Q4 FY26",
+    "xbrl_url": "https://nsearchives.nseindia.com/corporate/xbrl/INTEGRATED_FILING_INDAS_1668969_18052026084804_WEB.xml",
+    "values": {
+     "revenue": 20885000000.0,
+     "ebitda_op_proxy": 3829000000.0,
+     "pbt": 2966000000.0,
+     "pat": 2130000000.0,
+     "ebitda_margin": 18.333732343787407
+    },
+    "locators": {
+     "revenue": "RevenueFromOperations@OneD",
+     "pbt": "ProfitBeforeTax@OneD",
+     "pat": "ProfitLossForPeriod@OneD"
+    }
+   },
+   {
+    "quarter_end": "2026-06-30",
+    "label": "Q1 FY27",
+    "xbrl_url": "https://nsearchives.nseindia.com/corporate/xbrl/INTEGRATED_FILING_INDAS_1712963_12082026070826_WEB.xml",
+    "values": {
+     "revenue": 15780000000.0,
+     "ebitda_op_proxy": 2312000000.0,
+     "pbt": 1628000000.0,
+     "pat": 1202000000.0,
+     "ebitda_margin": 14.651457541191382
+    },
+    "locators": {
+     "revenue": "RevenueFromOperations@OneD",
+     "pbt": "ProfitBeforeTax@OneD",
+     "pat": "ProfitLossForPeriod@OneD"
+    }
+   }
+  ],
+  "failures": [],
+  "company": "Astral Limited"
+ },
+ "guidance": [
+  {
+   "metric": "revenue_growth",
+   "metric_label": "Revenue growth",
+   "direction": "point",
+   "low": 20.0,
+   "high": 20.0,
+   "unit": "pct",
+   "period_type": "unstated",
+   "period_fy": null,
+   "period_label": "period not stated",
+   "quote": "That is why we are confidently saying that we will be able to deliver 20% kind of growth because now the senior person has also joined, having rich experience from the similar industry.",
+   "page": 9,
+   "speaker": "Hiranand Savlani",
+   "stated_on": "2025-08-18",
+   "source_url": "https://www.astralltd.com/wp-content/uploads/2025/08/Transcript-of-Earning-Call-held-on-12th-August-2025.pdf",
+   "notes": [
+    "may refer to a segment, not the whole company"
+   ],
+   "target": "~20%",
+   "revisions": [],
+   "reiterated_on": [],
+   "verdict": {
+    "status": "not_comparable",
+    "reason": "Refers to a segment; FINN checks company-level filings only."
+   }
+  },
+  {
+   "metric": "revenue_growth",
+   "metric_label": "Revenue growth",
+   "direction": "at_least",
+   "low": 20.0,
+   "high": null,
+   "unit": "pct",
+   "period_type": "Q",
+   "period_fy": null,
+   "period_label": "next quarter",
+   "quote": "And we are confident that in the coming quarter also by year end, we are targeting minimum 20% kind of growth minimum I am telling you it can be high also.",
+   "page": 24,
+   "speaker": "Hiranand Savlani",
+   "stated_on": "2025-08-18",
+   "source_url": "https://www.astralltd.com/wp-content/uploads/2025/08/Transcript-of-Earning-Call-held-on-12th-August-2025.pdf",
+   "notes": [
+    "may refer to a segment, not the whole company"
+   ],
+   "target": "at least 20%",
+   "revisions": [],
+   "reiterated_on": [],
+   "verdict": {
+    "status": "not_comparable",
+    "reason": "Refers to a segment; FINN checks company-level filings only."
+   }
+  },
+  {
+   "metric": "volume_growth",
+   "metric_label": "Volume growth",
+   "direction": "at_least",
+   "low": 10,
+   "high": null,
+   "unit": "pct",
+   "period_type": "long_horizon",
+   "period_fy": null,
+   "period_label": "multi-year",
+   "quote": "So, see, volume growth we are expecting minimum double digit in next five years that is what internally we are working.",
+   "page": 29,
+   "speaker": "Hiranand Savlani",
+   "stated_on": "2025-08-18",
+   "source_url": "https://www.astralltd.com/wp-content/uploads/2025/08/Transcript-of-Earning-Call-held-on-12th-August-2025.pdf",
+   "notes": [
+    "may refer to a segment, not the whole company"
+   ],
+   "target": "at least 10%",
+   "revisions": [],
+   "reiterated_on": [],
+   "verdict": {
+    "status": "not_comparable",
+    "reason": "Refers to a segment; FINN checks company-level filings only."
+   }
+  },
+  {
+   "metric": "revenue_growth",
+   "metric_label": "Revenue growth",
+   "direction": "point",
+   "low": 20.0,
+   "high": 20.0,
+   "unit": "pct",
+   "period_type": "FY",
+   "period_fy": 2026,
+   "period_label": "FY26",
+   "quote": "This year we have given a guidance of 20% growth for the full year and we are going to achieve it as per the guidance given by us.",
+   "page": 2,
+   "speaker": "Sandeep Engineer",
+   "stated_on": "2025-11-06",
+   "source_url": "https://www.astralltd.com/wp-content/uploads/2025/11/Transcript.pdf",
+   "notes": [
+    "may refer to a segment, not the whole company"
+   ],
+   "target": "~20%",
+   "revisions": [
+    {
+     "stated_on": "2025-08-18",
+     "target": "at least 10%",
+     "quote": "Now it looks like the volume has started picking up July onwards and we are confident of a double-digit growth this year as per our initial guidance.",
+     "page": 2,
+     "source_url": "https://www.astralltd.com/wp-content/uploads/2025/08/Transcript-of-Earning-Call-held-on-12th-August-2025.pdf"
+    },
+    {
+     "stated_on": "2025-08-18",
+     "target": "at least 20%",
+     "quote": "Bathware has contributed 27% revenue and similarly paint, first time after acquisition, has delivered a 20% kind of topline growth, and we are confident that in the coming time we are expecting the paint to deliver good number, at least 20% kind of top-line growth for the full year.",
+     "page": 4,
+     "source_url": "https://www.astralltd.com/wp-content/uploads/2025/08/Transcript-of-Earning-Call-held-on-12th-August-2025.pdf"
+    },
+    {
+     "stated_on": "2025-08-18",
+     "target": "25\u201327%",
+     "quote": "So, Bathware also our aim, and if we are not entering the different geography, then committing a 25% to 27% growth for the year is also not possible.",
+     "page": 22,
+     "source_url": "https://www.astralltd.com/wp-content/uploads/2025/08/Transcript-of-Earning-Call-held-on-12th-August-2025.pdf"
+    }
+   ],
+   "reiterated_on": [],
+   "verdict": {
+    "status": "not_comparable",
+    "reason": "Refers to a segment; FINN checks company-level filings only."
+   }
+  },
+  {
+   "metric": "revenue_growth",
+   "metric_label": "Revenue growth",
+   "direction": "at_least",
+   "low": 10,
+   "high": null,
+   "unit": "pct",
+   "period_type": "unstated",
+   "period_fy": null,
+   "period_label": "period not stated",
+   "quote": "We have put in a new CEO from India who has taken charge of the company and having very good experience of 25 years plus in this segment and we are positive that in coming time we will be back to our normal growth of double digit in revenue EBITDA.",
+   "page": 2,
+   "speaker": "Sandeep Engineer",
+   "stated_on": "2025-11-06",
+   "source_url": "https://www.astralltd.com/wp-content/uploads/2025/11/Transcript.pdf",
+   "notes": [
+    "may refer to a segment, not the whole company"
+   ],
+   "target": "at least 10%",
+   "revisions": [],
+   "reiterated_on": [],
+   "verdict": {
+    "status": "not_comparable",
+    "reason": "Refers to a segment; FINN checks company-level filings only."
+   }
+  },
+  {
+   "metric": "volume_growth",
+   "metric_label": "Volume growth",
+   "direction": "at_least",
+   "low": 10,
+   "high": null,
+   "unit": "pct",
+   "period_type": "unstated",
+   "period_fy": null,
+   "period_label": "period not stated",
+   "quote": "In spite of that we have delivered our number as per the guidance of the double digit growth in volume terms in H1.",
+   "page": 4,
+   "speaker": "Hiranand Savlani",
+   "stated_on": "2025-11-06",
+   "source_url": "https://www.astralltd.com/wp-content/uploads/2025/11/Transcript.pdf",
+   "notes": [],
+   "target": "at least 10%",
+   "revisions": [],
+   "reiterated_on": [],
+   "verdict": {
+    "status": "not_comparable",
+    "reason": "Volumes are not in the results filing."
+   }
+  },
+  {
+   "metric": "ebitda_margin",
+   "metric_label": "EBITDA margin",
+   "direction": "at_least",
+   "low": 10,
+   "high": null,
+   "unit": "pct",
+   "period_type": "FY",
+   "period_fy": 2027,
+   "period_label": "FY27",
+   "quote": "We are also slowly and gradually coming back in UK also which was the biggest worry for the investor community and now not only growth has started picking up but the margin has also improved and what Sandeep bhai said we are confident that we will come back to our original double digit kind of EBITDA margin in the next year.",
+   "page": 4,
+   "speaker": "Hiranand Savlani",
+   "stated_on": "2025-11-06",
+   "source_url": "https://www.astralltd.com/wp-content/uploads/2025/11/Transcript.pdf",
+   "notes": [
+    "may refer to a segment, not the whole company"
+   ],
+   "target": "at least 10%",
+   "revisions": [],
+   "reiterated_on": [],
+   "verdict": {
+    "status": "not_comparable",
+    "reason": "Refers to a segment; FINN checks company-level filings only."
+   }
+  },
+  {
+   "metric": "ebitda_margin",
+   "metric_label": "EBITDA margin",
+   "direction": "range",
+   "low": 12.0,
+   "high": 14.0,
+   "unit": "pct",
+   "period_type": "standing",
+   "period_fy": null,
+   "period_label": "standing band",
+   "quote": "We have given double digit guidance for volume and we are already 12%-13% in 9-month basis and EBITDA margin on polymer, we have given between 16%-18% range and Adhesive and Paint, we have given between 12%-14% margin.",
+   "page": 7,
+   "speaker": "Sandeep Engineer",
+   "stated_on": "2026-02-05",
+   "source_url": "https://www.astralltd.com/wp-content/uploads/2026/02/Investec-Astral-Feb05-2026.pdf",
+   "notes": [
+    "may refer to a segment, not the whole company"
+   ],
+   "target": "12\u201314%",
+   "revisions": [
+    {
+     "stated_on": "2025-08-18",
+     "target": "14\u201316%",
+     "quote": "Margins are within our guided limits of 14% to 16% in the adhesive business.",
+     "page": 2,
+     "source_url": "https://www.astralltd.com/wp-content/uploads/2025/08/Transcript-of-Earning-Call-held-on-12th-August-2025.pdf"
+    },
+    {
+     "stated_on": "2025-08-18",
+     "target": "16\u201318%",
+     "quote": "So, whatever margin for the piping business, we have guided 16% to 18%.",
+     "page": 15,
+     "source_url": "https://www.astralltd.com/wp-content/uploads/2025/08/Transcript-of-Earning-Call-held-on-12th-August-2025.pdf"
+    },
+    {
+     "stated_on": "2025-08-18",
+     "target": "~2%",
+     "quote": "As far as the demand is there in the market and we feel that we are able to get good growth by dropping 1% or 2% margin, I think we will be happy to do that thing.",
+     "page": 15,
+     "source_url": "https://www.astralltd.com/wp-content/uploads/2025/08/Transcript-of-Earning-Call-held-on-12th-August-2025.pdf"
+    },
+    {
+     "stated_on": "2025-11-06",
+     "target": "15\u201316%",
+     "quote": "I am very happy to share that in this quarter also we have delivered a very healthy 20% volume growth and 15% value growth and above the guided margin range of 15% to 16% EBITDA on a consolidated basis.",
+     "page": 4,
+     "source_url": "https://www.astralltd.com/wp-content/uploads/2025/11/Transcript.pdf"
+    },
+    {
+     "stated_on": "2025-11-06",
+     "target": "15\u201316%",
+     "quote": "So definitely it is going to help us in the margin improvement also, but as of today we have given the guidance of 15%-16%.",
+     "page": 6,
+     "source_url": "https://www.astralltd.com/wp-content/uploads/2025/11/Transcript.pdf"
+    }
+   ],
+   "reiterated_on": [],
+   "verdict": {
+    "status": "not_comparable",
+    "reason": "Refers to a segment; FINN checks company-level filings only."
+   }
+  },
+  {
+   "metric": "capex",
+   "metric_label": "Capex",
+   "direction": "point",
+   "low": 350.0,
+   "high": 350.0,
+   "unit": "crore",
+   "period_type": "FY",
+   "period_fy": 2026,
+   "period_label": "FY26",
+   "quote": "I think we have given the CAPEX guidance for full year around Rs. 350 crores.",
+   "page": 7,
+   "speaker": "Hiranand Savlani",
+   "stated_on": "2026-02-05",
+   "source_url": "https://www.astralltd.com/wp-content/uploads/2026/02/Investec-Astral-Feb05-2026.pdf",
+   "notes": [],
+   "target": "~350 cr",
+   "revisions": [
+    {
+     "stated_on": "2025-08-18",
+     "target": "~300 cr",
+     "quote": "So, like this year we have guided around Rs. 300 crores kind of CAPEX because Kanpur plant building is ready.",
+     "page": 8,
+     "source_url": "https://www.astralltd.com/wp-content/uploads/2025/08/Transcript-of-Earning-Call-held-on-12th-August-2025.pdf"
+    }
+   ],
+   "reiterated_on": [],
+   "verdict": {
+    "status": "not_comparable",
+    "reason": "Capex is in the half-yearly cash-flow statement, not the quarterly results FINN reads."
+   }
+  },
+  {
+   "metric": "revenue_growth",
+   "metric_label": "Revenue growth",
+   "direction": "at_least",
+   "low": 20.0,
+   "high": null,
+   "unit": "pct",
+   "period_type": "unstated",
+   "period_fy": null,
+   "period_label": "period not stated",
+   "quote": "And we are sure that this quarter will be equally good on our growth front and as we have guided, we should be around the number of 20% or a little above 20% in our growth in our Paint business.",
+   "page": 2,
+   "speaker": "Sandeep Engineer",
+   "stated_on": "2026-02-05",
+   "source_url": "https://www.astralltd.com/wp-content/uploads/2026/02/Investec-Astral-Feb05-2026.pdf",
+   "notes": [
+    "may refer to a segment, not the whole company"
+   ],
+   "target": "at least 20%",
+   "revisions": [],
+   "reiterated_on": [],
+   "verdict": {
+    "status": "not_comparable",
+    "reason": "Refers to a segment; FINN checks company-level filings only."
+   }
+  },
+  {
+   "metric": "revenue_growth",
+   "metric_label": "Revenue growth",
+   "direction": "point",
+   "low": 20.0,
+   "high": 20.0,
+   "unit": "pct",
+   "period_type": "unstated",
+   "period_fy": null,
+   "period_label": "period not stated",
+   "quote": "Paint business as communicated earlier, we are continuously on the path what we have guided of 20% plus growth.",
+   "page": 4,
+   "speaker": "Hiranand Savlani",
+   "stated_on": "2026-02-05",
+   "source_url": "https://www.astralltd.com/wp-content/uploads/2026/02/Investec-Astral-Feb05-2026.pdf",
+   "notes": [
+    "may refer to a segment, not the whole company"
+   ],
+   "target": "~20%",
+   "revisions": [],
+   "reiterated_on": [],
+   "verdict": {
+    "status": "not_comparable",
+    "reason": "Refers to a segment; FINN checks company-level filings only."
+   }
+  },
+  {
+   "metric": "capex",
+   "metric_label": "Capex",
+   "direction": "point",
+   "low": 10.0,
+   "high": 10.0,
+   "unit": "crore",
+   "period_type": "unstated",
+   "period_fy": null,
+   "period_label": "period not stated",
+   "quote": "And we are confident that the moment we will spend another INR8 crores to INR10 crores in the capex side because they are already having the facility but with this additional few reactor.",
+   "page": 21,
+   "speaker": "Hiranand Savlani",
+   "stated_on": "2026-06-27",
+   "source_url": "https://www.astralltd.com/wp-content/uploads/2026/07/Transcript-Investec-AstralL-June27-2026.pdf",
+   "notes": [
+    "may refer to a segment, not the whole company"
+   ],
+   "target": "~10 cr",
+   "revisions": [],
+   "reiterated_on": [],
+   "verdict": {
+    "status": "not_comparable",
+    "reason": "Refers to a segment; FINN checks company-level filings only."
+   }
+  },
+  {
+   "metric": "revenue_growth",
+   "metric_label": "Revenue growth",
+   "direction": "point",
+   "low": 12.9,
+   "high": 12.9,
+   "unit": "pct",
+   "period_type": "unstated",
+   "period_fy": null,
+   "period_label": "period not stated",
+   "quote": "We are happy to share that from the very first quarter, the newly acquired company not only is giving quick start of revenue, but also an excellent EBITDA of 12.9%, and we are expecting that to come to grow in coming times, and the vertical will be delivering good value, growth and excellent margins.",
+   "page": 2,
+   "speaker": "Sandeep Engineer",
+   "stated_on": "2026-08-12",
+   "source_url": "https://www.astralltd.com/wp-content/uploads/2026/08/Equirus-Astral-Aug12-2026-1.pdf",
+   "notes": [
+    "may refer to a segment, not the whole company"
+   ],
+   "target": "~12.9%",
+   "revisions": [],
+   "reiterated_on": [],
+   "verdict": {
+    "status": "not_comparable",
+    "reason": "Refers to a segment; FINN checks company-level filings only."
+   }
+  },
+  {
+   "metric": "revenue_growth",
+   "metric_label": "Revenue growth",
+   "direction": "range",
+   "low": 20.0,
+   "high": 25.0,
+   "unit": "pct",
+   "period_type": "FY",
+   "period_fy": 2027,
+   "period_label": "FY27",
+   "quote": "As we guided in last call that we will be closing full year with 20%, 25% kind of growth.",
+   "page": 5,
+   "speaker": "Hiranand Savlani",
+   "stated_on": "2026-08-12",
+   "source_url": "https://www.astralltd.com/wp-content/uploads/2026/08/Equirus-Astral-Aug12-2026-1.pdf",
+   "notes": [],
+   "target": "20\u201325%",
+   "revisions": [],
+   "reiterated_on": [],
+   "verdict": {
+    "status": "not_comparable",
+    "reason": "The same call gives different targets for this metric and period (20\u201325%, at least 10%); FINN can't tell which is company-level."
+   }
+  },
+  {
+   "metric": "revenue_growth",
+   "metric_label": "Revenue growth",
+   "direction": "at_least",
+   "low": 10,
+   "high": null,
+   "unit": "pct",
+   "period_type": "FY",
+   "period_fy": 2027,
+   "period_label": "FY27",
+   "quote": "So you can understand the kind of extraordinary growth we have achieved in the month of July and the first 12 days of the -- 11 days of the current month, which gives us the confidence that what we have given the guidance of double-digit growth, so we will be definitely going to achieve on a full year basis.",
+   "page": 5,
+   "speaker": "Hiranand Savlani",
+   "stated_on": "2026-08-12",
+   "source_url": "https://www.astralltd.com/wp-content/uploads/2026/08/Equirus-Astral-Aug12-2026-1.pdf",
+   "notes": [],
+   "target": "at least 10%",
+   "revisions": [],
+   "reiterated_on": [],
+   "verdict": {
+    "status": "not_comparable",
+    "reason": "The same call gives different targets for this metric and period (20\u201325%, at least 10%); FINN can't tell which is company-level."
+   }
+  },
+  {
+   "metric": "revenue_growth",
+   "metric_label": "Revenue growth",
+   "direction": "at_least",
+   "low": 10,
+   "high": null,
+   "unit": "pct",
+   "period_type": "unstated",
+   "period_fy": null,
+   "period_label": "period not stated",
+   "quote": "We have guided the double-digit growth in top line.",
+   "page": 5,
+   "speaker": "Hiranand Savlani",
+   "stated_on": "2026-08-12",
+   "source_url": "https://www.astralltd.com/wp-content/uploads/2026/08/Equirus-Astral-Aug12-2026-1.pdf",
+   "notes": [
+    "may refer to a segment, not the whole company"
+   ],
+   "target": "at least 10%",
+   "revisions": [],
+   "reiterated_on": [],
+   "verdict": {
+    "status": "not_comparable",
+    "reason": "Refers to a segment; FINN checks company-level filings only."
+   }
+  },
+  {
+   "metric": "volume_growth",
+   "metric_label": "Volume growth",
+   "direction": "range",
+   "low": 15.0,
+   "high": 20.0,
+   "unit": "pct",
+   "period_type": "FY",
+   "period_fy": 2027,
+   "period_label": "FY27",
+   "quote": "So I don't want to jump in at this stage and tell you that full year basis, we are going to deliver 15%, 20% volume or something.",
+   "page": 8,
+   "speaker": "Hiranand Savlani",
+   "stated_on": "2026-08-12",
+   "source_url": "https://www.astralltd.com/wp-content/uploads/2026/08/Equirus-Astral-Aug12-2026-1.pdf",
+   "notes": [],
+   "target": "15\u201320%",
+   "revisions": [],
+   "reiterated_on": [],
+   "verdict": {
+    "status": "not_comparable",
+    "reason": "Volumes are not in the results filing."
+   }
+  },
+  {
+   "metric": "volume_growth",
+   "metric_label": "Volume growth",
+   "direction": "range",
+   "low": 35.0,
+   "high": 40.0,
+   "unit": "pct",
+   "period_type": "unstated",
+   "period_fy": null,
+   "period_label": "period not stated",
+   "quote": "And the volume growth, I think, would be around 35% to 40%, I could put it.",
+   "page": 12,
+   "speaker": "Saumya Engineer",
+   "stated_on": "2026-08-12",
+   "source_url": "https://www.astralltd.com/wp-content/uploads/2026/08/Equirus-Astral-Aug12-2026-1.pdf",
+   "notes": [],
+   "target": "35\u201340%",
+   "revisions": [],
+   "reiterated_on": [],
+   "verdict": {
+    "status": "not_comparable",
+    "reason": "Volumes are not in the results filing."
+   }
+  },
+  {
+   "metric": "volume_growth",
+   "metric_label": "Volume growth",
+   "direction": "at_least",
+   "low": 10,
+   "high": null,
+   "unit": "pct",
+   "period_type": "unstated",
+   "period_fy": null,
+   "period_label": "period not stated",
+   "quote": "So we have given the guidance of minimum double-digit growth for volume.",
+   "page": 17,
+   "speaker": "Hiranand Savlani",
+   "stated_on": "2026-08-12",
+   "source_url": "https://www.astralltd.com/wp-content/uploads/2026/08/Equirus-Astral-Aug12-2026-1.pdf",
+   "notes": [],
+   "target": "at least 10%",
+   "revisions": [],
+   "reiterated_on": [],
+   "verdict": {
+    "status": "not_comparable",
+    "reason": "Volumes are not in the results filing."
+   }
+  },
+  {
+   "metric": "revenue_growth",
+   "metric_label": "Revenue growth",
+   "direction": "range",
+   "low": 20.0,
+   "high": 25.0,
+   "unit": "pct",
+   "period_type": "unstated",
+   "period_fy": null,
+   "period_label": "period not stated",
+   "quote": "Paint, we have given guidance of 20% to 25% kind of top line growth.",
+   "page": 17,
+   "speaker": "Hiranand Savlani",
+   "stated_on": "2026-08-12",
+   "source_url": "https://www.astralltd.com/wp-content/uploads/2026/08/Equirus-Astral-Aug12-2026-1.pdf",
+   "notes": [
+    "may refer to a segment, not the whole company"
+   ],
+   "target": "20\u201325%",
+   "revisions": [],
+   "reiterated_on": [],
+   "verdict": {
+    "status": "not_comparable",
+    "reason": "Refers to a segment; FINN checks company-level filings only."
+   }
+  }
+ ],
+ "summary": {
+  "delivered": 0,
+  "partial": 0,
+  "missed": 0,
+  "pending": 0,
+  "not_comparable": 20,
+  "statements": 20,
+  "calls_read": 5,
+  "calls_found": 5
+ },
+ "status": "done",
+ "cache_key": "3731f6abffaffdf5fc97a788"
+}

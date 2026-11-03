@@ -1,0 +1,257 @@
+{
+ "ticker": "HAL",
+ "generated_at": "2026-11-03T23:19:16",
+ "rules_version": 1,
+ "extract_version": 1,
+ "sources": {
+  "transcripts": [
+   {
+    "call_date": "2026-05-22",
+    "filed_at": "2026-05-22T11:23:29",
+    "url": "https://nsearchives.nseindia.com/corporate/HAL_22052026111701_Transcript_May15-2026-signed.pdf",
+    "nse_url": "https://nsearchives.nseindia.com/corporate/HAL_22052026111701_Transcript_May15-2026-signed.pdf",
+    "source": "nse_filing",
+    "pages": 19,
+    "sha256": "2c3db2ac47a2d4f2c8c8bd0e26b610963e3f52e549e5a1adbd8dfe2a3edb51e6",
+    "status": "read",
+    "management_turns": 54,
+    "statements": 0
+   }
+  ],
+  "xbrl": [
+   {
+    "quarter": "Q4 FY24",
+    "url": "https://nsearchives.nseindia.com/corporate/xbrl/INDAS_106086_1126748_16052024050821.xml"
+   },
+   {
+    "quarter": "Q1 FY25",
+    "url": "https://nsearchives.nseindia.com/corporate/xbrl/INDAS_112087_1225262_14082024024832.xml"
+   },
+   {
+    "quarter": "Q2 FY25",
+    "url": "https://nsearchives.nseindia.com/corporate/xbrl/INDAS_116005_1310978_14112024024700.xml"
+   },
+   {
+    "quarter": "Q3 FY25",
+    "url": "https://nsearchives.nseindia.com/corporate/xbrl/INDAS_119849_1379555_12022025033127.xml"
+   },
+   {
+    "quarter": "Q4 FY25",
+    "url": "https://nsearchives.nseindia.com/corporate/xbrl/INTEGRATED_FILING_INDAS_1438746_14052025061251_WEB.xml"
+   },
+   {
+    "quarter": "Q1 FY26",
+    "url": "https://nsearchives.nseindia.com/corporate/xbrl/INTEGRATED_FILING_INDAS_1509312_12082025022640_WEB.xml"
+   },
+   {
+    "quarter": "Q2 FY26",
+    "url": "https://nsearchives.nseindia.com/corporate/xbrl/INTEGRATED_FILING_INDAS_1572182_12112025042204_WEB.xml"
+   },
+   {
+    "quarter": "Q3 FY26",
+    "url": "https://nsearchives.nseindia.com/corporate/xbrl/INTEGRATED_FILING_INDAS_1623931_12022026025227_WEB.xml"
+   },
+   {
+    "quarter": "Q4 FY26",
+    "url": "https://nsearchives.nseindia.com/corporate/xbrl/INTEGRATED_FILING_INDAS_1667077_14052026050430_WEB.xml"
+   },
+   {
+    "quarter": "Q1 FY27",
+    "url": "https://nsearchives.nseindia.com/corporate/xbrl/INTEGRATED_FILING_INDAS_1712384_12082026021942_WEB.xml"
+   }
+  ]
+ },
+ "failures": [],
+ "company": "Hindustan Aeronautics Limited",
+ "financials": {
+  "basis": "consolidated",
+  "taxonomy": "indas",
+  "quarters": [
+   {
+    "quarter_end": "2024-03-31",
+    "label": "Q4 FY24",
+    "xbrl_url": "https://nsearchives.nseindia.com/corporate/xbrl/INDAS_106086_1126748_16052024050821.xml",
+    "values": {
+     "revenue": 147687500000.0,
+     "ebitda_op_proxy": 59012600000.0,
+     "pbt": 57831900000.0,
+     "pat": 43086800000.0,
+     "ebitda_margin": 39.95774862462971
+    },
+    "locators": {
+     "revenue": "RevenueFromOperations@OneD",
+     "pbt": "ProfitBeforeTax@OneD",
+     "pat": "ProfitLossForPeriod@OneD"
+    }
+   },
+   {
+    "quarter_end": "2024-06-30",
+    "label": "Q1 FY25",
+    "xbrl_url": "https://nsearchives.nseindia.com/corporate/xbrl/INDAS_112087_1225262_14082024024832.xml",
+    "values": {
+     "revenue": 43475000000.0,
+     "ebitda_op_proxy": 9907100000.0,
+     "pbt": 15776900000.0,
+     "pat": 14371400000.0,
+     "ebitda_margin": 22.788039102932718
+    },
+    "locators": {
+     "revenue": "RevenueFromOperations@OneD",
+     "pbt": "ProfitBeforeTax@OneD",
+     "pat": "ProfitLossForPeriod@OneD"
+    }
+   },
+   {
+    "quarter_end": "2024-09-30",
+    "label": "Q2 FY25",
+    "xbrl_url": "https://nsearchives.nseindia.com/corporate/xbrl/INDAS_116005_1310978_14112024024700.xml",
+    "values": {
+     "revenue": 59762900000.0,
+     "ebitda_op_proxy": 16399600000.0,
+     "pbt": 20106700000.0,
+     "pat": 15104900000.0,
+     "ebitda_margin": 27.441104765665656
+    },
+    "locators": {
+     "revenue": "RevenueFromOperations@OneD",
+     "pbt": "ProfitBeforeTax@OneD",
+     "pat": "ProfitLossForPeriod@OneD"
+    }
+   },
+   {
+    "quarter_end": "2024-12-31",
+    "label": "Q3 FY25",
+    "xbrl_url": "https://nsearchives.nseindia.com/corporate/xbrl/INDAS_119849_1379555_12022025033127.xml",
+    "values": {
+     "revenue": 69573100000.0,
+     "ebitda_op_proxy": 16825100000.0,
+     "pbt": 20367500000.0,
+     "pat": 14397900000.0,
+     "ebitda_margin": 24.183340975175753
+    },
+    "locators": {
+     "revenue": "RevenueFromOperations@OneD",
+     "pbt": "ProfitBeforeTax@OneD",
+     "pat": "ProfitLossForPeriod@OneD"
+    }
+   },
+   {
+    "quarter_end": "2025-03-31",
+    "label": "Q4 FY25",
+    "xbrl_url": "https://nsearchives.nseindia.com/corporate/xbrl/INTEGRATED_FILING_INDAS_1438746_14052025061251_WEB.xml",
+    "values": {
+     "revenue": 136998500000.0,
+     "ebitda_op_proxy": 52949000000.0,
+     "pbt": 52015000000.0,
+     "pat": 39766300000.0,
+     "ebitda_margin": 38.649328277316904
+    },
+    "locators": {
+     "revenue": "RevenueFromOperations@OneD",
+     "pbt": "ProfitBeforeTax@OneD",
+     "pat": "ProfitLossForPeriod@OneD"
+    }
+   },
+   {
+    "quarter_end": "2025-06-30",
+    "label": "Q1 FY26",
+    "xbrl_url": "https://nsearchives.nseindia.com/corporate/xbrl/INTEGRATED_FILING_INDAS_1509312_12082025022640_WEB.xml",
+    "values": {
+     "revenue": 48190100000.0,
+     "ebitda_op_proxy": 12824000000.0,
+     "pbt": 18440300000.0,
+     "pat": 13837700000.0,
+     "ebitda_margin": 26.61127492991299
+    },
+    "locators": {
+     "revenue": "RevenueFromOperations@OneD",
+     "pbt": "ProfitBeforeTax@OneD",
+     "pat": "ProfitLossForPeriod@OneD"
+    }
+   },
+   {
+    "quarter_end": "2025-09-30",
+    "label": "Q2 FY26",
+    "xbrl_url": "https://nsearchives.nseindia.com/corporate/xbrl/INTEGRATED_FILING_INDAS_1572182_12112025042204_WEB.xml",
+    "values": {
+     "revenue": 66286100000.0,
+     "ebitda_op_proxy": 15578900000.0,
+     "pbt": 22196400000.0,
+     "pat": 16690500000.0,
+     "ebitda_margin": 23.50251410174984
+    },
+    "locators": {
+     "revenue": "RevenueFromOperations@OneD",
+     "pbt": "ProfitBeforeTax@OneD",
+     "pat": "ProfitLossForPeriod@OneD"
+    }
+   },
+   {
+    "quarter_end": "2025-12-31",
+    "label": "Q3 FY26",
+    "xbrl_url": "https://nsearchives.nseindia.com/corporate/xbrl/INTEGRATED_FILING_INDAS_1623931_12022026025227_WEB.xml",
+    "values": {
+     "revenue": 76988000000.0,
+     "ebitda_op_proxy": 18709700000.0,
+     "pbt": 24740300000.0,
+     "pat": 18666600000.0,
+     "ebitda_margin": 24.302099028420013
+    },
+    "locators": {
+     "revenue": "RevenueFromOperations@OneD",
+     "pbt": "ProfitBeforeTax@OneD",
+     "pat": "ProfitLossForPeriod@OneD"
+    }
+   },
+   {
+    "quarter_end": "2026-03-31",
+    "label": "Q4 FY26",
+    "xbrl_url": "https://nsearchives.nseindia.com/corporate/xbrl/INTEGRATED_FILING_INDAS_1667077_14052026050430_WEB.xml",
+    "values": {
+     "revenue": 139424000000.0,
+     "ebitda_op_proxy": 50585700000.0,
+     "pbt": 55706100000.0,
+     "pat": 41960400000.0,
+     "ebitda_margin": 36.28191703006656
+    },
+    "locators": {
+     "revenue": "RevenueFromOperations@OneD",
+     "pbt": "ProfitBeforeTax@OneD",
+     "pat": "ProfitLossForPeriod@OneD"
+    }
+   },
+   {
+    "quarter_end": "2026-06-30",
+    "label": "Q1 FY27",
+    "xbrl_url": "https://nsearchives.nseindia.com/corporate/xbrl/INTEGRATED_FILING_INDAS_1712384_12082026021942_WEB.xml",
+    "values": {
+     "revenue": 55151700000.0,
+     "ebitda_op_proxy": 15267700000.0,
+     "pbt": 21227200000.0,
+     "pat": 15896600000.0,
+     "ebitda_margin": 27.683099523677416
+    },
+    "locators": {
+     "revenue": "RevenueFromOperations@OneD",
+     "pbt": "ProfitBeforeTax@OneD",
+     "pat": "ProfitLossForPeriod@OneD"
+    }
+   }
+  ],
+  "failures": [],
+  "company": "Hindustan Aeronautics Limited"
+ },
+ "guidance": [],
+ "summary": {
+  "delivered": 0,
+  "partial": 0,
+  "missed": 0,
+  "pending": 0,
+  "not_comparable": 0,
+  "statements": 0,
+  "calls_read": 1,
+  "calls_found": 1
+ },
+ "status": "done",
+ "cache_key": "5eb6f00267fe098828fe6e6b"
+}

@@ -3,14 +3,16 @@
 import { use, useState } from "react";
 import { BackLink, LoadStatus, SectionLabel } from "@/components/ui";
 import { NotCheckable, PromiseCard, Sources, SummaryStrip, Trajectory } from "@/components/research";
-import { ApiError, post, type ResearchResponse } from "@/lib/api";
-import { istDate, monthYear } from "@/lib/format";
+import { ApiError, post, type ResearchResponse, withView } from "@/lib/api";
+import { istDate, monthYear, shortName } from "@/lib/format";
+import { useMode } from "@/lib/mode";
 import { useApi } from "@/lib/useApi";
 
 export default function ReportPage({ params }: { params: Promise<{ ticker: string }> }) {
   const { ticker } = use(params);
   const t = decodeURIComponent(ticker).toUpperCase();
-  const { data, state, err, retry } = useApi<ResearchResponse>(`/api/research/${encodeURIComponent(t)}`);
+  const { mode, href } = useMode();
+  const { data, state, err, retry } = useApi<ResearchResponse>(withView(`/api/research/${encodeURIComponent(t)}`, mode));
   const notResearched = state === "not_found";
   const r = data?.report;
   const items = r?.guidance ?? [];
@@ -19,21 +21,16 @@ export default function ReportPage({ params }: { params: Promise<{ ticker: strin
   const calls = r?.sources.transcripts.filter((s) => s.status === "read") ?? [];
 
   return (
-    <main className="mx-auto max-w-[560px] px-4 pb-24 pt-5">
-      <BackLink />
-      <div className="mt-4 flex items-center gap-2 text-[12px] text-muted">
-        <span className="font-semibold text-ink">{t}</span>
-        {r?.company && (
-          <>
-            <span>·</span>
-            <span className="truncate">{r.company}</span>
-          </>
-        )}
+    <main className="mx-auto max-w-[760px] px-4 pb-24 pt-3 sm:px-6">
+      <BackLink href={href("/research")} label="Research" />
+      <div className="mt-3 flex items-center gap-2 text-[11px]">
+        <span className="kicker text-accent">Promised vs delivered</span>
+        <span className="kicker text-ink">{t}</span>
       </div>
-      <h1 className="mt-1 text-[21px] font-semibold leading-tight tracking-tight">Promised vs delivered</h1>
+      <h1 className="serif mt-1 text-[28px] font-semibold leading-tight tracking-tight sm:text-[32px]">{r?.company ? shortName(r.company) : t}</h1>
 
-      {state !== "not_found" && <LoadStatus state={state} err={err} onRetry={retry} what="this report" />}
-      {(notResearched || (data && !r)) && <NotYet t={t} data={data} onQueued={retry} />}
+      {!data && state !== "not_found" && <LoadStatus state={state} err={err} onRetry={retry} what="this report" />}
+      {(notResearched || (data && !r)) && <NotYet t={t} data={data} onQueued={retry} demo={mode === "demo"} />}
 
       {r && (
         <>
@@ -49,15 +46,15 @@ export default function ReportPage({ params }: { params: Promise<{ ticker: strin
             </div>
           )}
 
-          <SectionLabel>What they said, what happened</SectionLabel>
+          <SectionLabel id="guidance" right={`${checkable.length} checkable`}>What they said, what happened</SectionLabel>
           {checkable.length ? (
-            <ul className="divide-y divide-line overflow-hidden rounded-2xl border border-line bg-surface">
+            <ul>
               {checkable.map((g, i) => (
                 <PromiseCard key={i} g={g} />
               ))}
             </ul>
           ) : (
-            <p className="rounded-2xl border border-line bg-surface p-4 text-[13px] leading-snug text-muted">
+            <p className="text-[13.5px] leading-snug text-muted">
               {items.length
                 ? "Management’s numeric statements on these calls can’t be checked against company-level results (see below)."
                 : `No explicit numeric guidance on revenue, margins, profit, volumes or capex in ${calls.length} call${calls.length === 1 ? "" : "s"}: management spoke in qualitative terms.`}
@@ -77,19 +74,26 @@ export default function ReportPage({ params }: { params: Promise<{ ticker: strin
   );
 }
 
-function NotYet({ t, data, onQueued }: { t: string; data: ResearchResponse | null; onQueued: () => void }) {
+function NotYet({ t, data, onQueued, demo }: { t: string; data: ResearchResponse | null; onQueued: () => void; demo: boolean }) {
   const [msg, setMsg] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
+  if (demo) {
+    return (
+      <p className="mt-4 border-l-2 border-line pl-3 text-[13.5px] leading-snug text-muted">
+        {t} isn’t in the demo set. Switch to Live (top of the briefing) to queue research on any NSE company.
+      </p>
+    );
+  }
   if (data?.pending) {
     return (
-      <p className="mt-4 rounded-2xl border border-line bg-surface p-4 text-[13px] leading-snug text-muted">
+      <p className="mt-4 border-l-2 border-line pl-3 text-[13.5px] leading-snug text-muted">
         Queued {istDate(data.pending.requested_at, true)}. FINN reads {t}’s filings on the worker’s next run (hourly, best effort);
         this page fills in then.
       </p>
     );
   }
   return (
-    <div className="mt-4 rounded-2xl border border-line bg-surface p-4 text-[13px] leading-snug text-muted">
+    <div className="mt-4 border-l-2 border-line pl-3 text-[13.5px] leading-snug text-muted">
       {data?.failed ? (
         <>
           <p className="text-down">The last attempt could not build a report:</p>
@@ -116,7 +120,7 @@ function NotYet({ t, data, onQueued }: { t: string; data: ResearchResponse | nul
             setBusy(false);
           }
         }}
-        className="mt-3 rounded-xl bg-ink px-4 py-2 text-[13px] font-medium text-bg disabled:opacity-50"
+        className="mt-3 min-h-[44px] bg-ink px-4 text-[13.5px] font-semibold text-bg disabled:opacity-50"
       >
         Research {t}
       </button>

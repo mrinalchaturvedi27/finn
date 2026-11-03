@@ -25,14 +25,14 @@ while the free backend wakes up).
   calculation, the quote and the page it came from.
 
   **Limits, stated plainly.** Extraction is rule-based, not model-based. Across the 11 companies
-  I tested, only **three** guidance statements could be checked against company-level results:
+  I tested, only **two** guidance statements could be checked against company-level results:
   - Pidilite's 20–24% EBITDA corridor: delivered.
   - Dixon's double-digit FY26 growth: delivered.
-  - Astral's double-digit FY27 growth: pending.
 
-  Astral's is a run-rate indication from one quarter, not a delivered annual target. Everything
-  else management said is listed with the reason it can't be checked (mostly segment-level
-  guidance). Wider guidance coverage is future work.
+  Astral's FY27 growth guidance had been pending, as a run-rate indication. It's now marked not
+  checkable, because the same call gave two different targets for it (20–25% and double-digit)
+  and FINN doesn't pick one. Everything else management said is listed with the reason it can't
+  be checked (mostly segment-level guidance). Wider guidance coverage is future work.
 
 ## Key decisions and trade-offs
 - **Primary filings for every number.** XBRL is the source of truth; screener.in was only used to
@@ -59,7 +59,7 @@ while the free backend wakes up).
 - Web push notifications (alerts are in-app), an ask bar, per-stock overrides, in-app cost display.
 
 ## Where I'd take it next
-- Broader guidance coverage. Today only three comparisons were checkable. The next steps are a
+- Broader guidance coverage. Today only two comparisons were checkable. The next steps are a
   model pass over transcripts for recall (a cheap model to extract, with the same rule-based
   verdicts) and segment-level checks against XBRL segment reporting.
 - Capex promises checked against the half-yearly cash-flow statement.

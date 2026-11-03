@@ -42,6 +42,12 @@ export function istDate(iso: string | null | undefined, withTime = false): strin
   return withTime ? `${date}, ${istTime(iso)}` : date;
 }
 
+/** Day, month and year: for promises and calls, where a missing year misleads. */
+export function fullDate(iso: string | null | undefined): string {
+  if (!iso) return "—";
+  return asIst(iso).toLocaleDateString("en-IN", { ...IST, day: "numeric", month: "short", year: "numeric" });
+}
+
 export function monthYear(iso: string | null | undefined): string {
   if (!iso) return "—";
   return asIst(iso).toLocaleDateString("en-IN", { month: "short", year: "numeric", timeZone: "Asia/Kolkata" });
@@ -53,6 +59,19 @@ export function ago(iso: string, now: string): string {
   const h = Math.round(mins / 60);
   if (h < 48) return `${h}h`;
   return `${Math.round(h / 24)}d`;
+}
+
+/** "Reliance Industries Limited" -> "Reliance Industries" for headlines. */
+export function shortName(name: string | null | undefined, fallback = ""): string {
+  return (name ?? fallback).replace(/\s+(Limited|Ltd\.?)$/i, "").replace(/\s+\(India\)$/, "");
+}
+
+/** Rupees as a crore figure without the unit (the unit is in the column label). */
+export function croreNum(v: number | null | undefined): string {
+  if (v == null) return "—";
+  const cr = v / 1e7;
+  const digits = Math.abs(cr) >= 1000 ? 0 : Math.abs(cr) >= 100 ? 1 : 2;
+  return cr.toLocaleString("en-IN", { maximumFractionDigits: digits, minimumFractionDigits: digits });
 }
 
 export const CATEGORY_LABEL: Record<string, string> = {

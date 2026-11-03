@@ -48,6 +48,25 @@ def _public_reason(e: Exception) -> str:
     return str(e) if isinstance(e, SchemaBehind) else type(e).__name__
 
 
+_seed_engine = None
+SeedSession = sessionmaker(expire_on_commit=False)
+
+
+def seed_session():
+    """The bundled historical snapshot (the demo briefing), whatever FINN_DB_URL points at."""
+    global _seed_engine
+    if DB_URL == _normalise(SEED_URL):
+        return Session()
+    if _seed_engine is None:
+        _seed_engine = _engine(SEED_URL)
+        SeedSession.configure(bind=_seed_engine)
+    return SeedSession()
+
+
+def session_for(view: str):
+    return seed_session() if view == "demo" else Session()
+
+
 def redacted_url(url: str | None = None) -> str:
     """Safe to log: drops credentials and query parameters."""
     u = url or DB_URL

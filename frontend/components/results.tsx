@@ -3,7 +3,7 @@
 import { useState } from "react";
 import type { Check, MetricRow, ResultsCard } from "@/lib/api";
 import { crore, istDate } from "@/lib/format";
-import { Delta, SectionLabel } from "./ui";
+import { Delta } from "./ui";
 
 const TAG_LABEL: Record<string, string> = {
   ProfitBeforeExceptionalItemsAndTax: "Profit before exceptional items & tax",
@@ -39,57 +39,86 @@ export function ResultsView({ card }: { card: ResultsCard }) {
   const prev = card.periods.prev_q;
   const yoy = card.periods.yoy_q;
   const pdfUrl = card.pdf && !card.pdf.rejected ? card.pdf.url : null;
+  const fmtLabel = card.taxonomy === "banking" ? "bank format" : card.taxonomy === "nbfc" ? "NBFC format" : null;
 
   return (
-    <section className="mt-5">
-      <p className="text-[12px] leading-snug text-muted">
-        {card.basis} · {(cur?.audited ?? "").replace("Un-Audited", "Unaudited")} · filed {istDate(cur?.filed, true)} · ₹ crore
-        {card.taxonomy === "banking" && " · bank format"}
-        {card.taxonomy === "nbfc" && " · NBFC format"}
-      </p>
-
-      <div className="mt-3 overflow-hidden rounded-2xl border border-line bg-surface">
-        <div className="grid grid-cols-[1fr_auto_auto_auto] items-end gap-x-3 border-b border-line px-4 pb-2 pt-3 text-[10.5px] uppercase tracking-wide text-faint">
-          <span />
-          <span className="w-[76px] text-right">{card.label}</span>
-          <span className="w-[56px] text-right">vs {prev?.label?.split(" ")[0] ?? "QoQ"}</span>
-          <span className="w-[56px] text-right">vs {yoy?.label ?? "YoY"}</span>
-        </div>
-        {ordered(card.metrics).map((m) => (
-          <MetricLine key={m.id} m={m} open={open === m.id} onToggle={() => setOpen(open === m.id ? null : m.id)}
-            pdfUrl={pdfUrl} card={card} />
-        ))}
+    <section className="mt-6">
+      <div className="flex flex-wrap items-baseline justify-between gap-x-3 border-b border-rule pb-1.5">
+        <h2 className="serif text-[17px] font-semibold">Results at a glance</h2>
+        <p className="text-[11.5px] text-faint">
+          ₹ crore · {card.basis} · {(cur?.audited ?? "").replace("Un-Audited", "unaudited").toLowerCase()}
+          {fmtLabel && ` · ${fmtLabel}`}
+        </p>
       </div>
-      <p className="mt-2 px-1 text-[11px] leading-snug text-faint">
-        * Calculated by FINN, not company-reported. Tap any row for its source and definition.
+      <table className="num w-full text-right">
+        <caption className="sr-only">
+          {card.label} against {prev?.label} and {yoy?.label}; tap a row for its source and definition
+        </caption>
+        <thead>
+          <tr className="text-[11px] text-faint">
+            <th scope="col" className="py-2 text-left font-medium" />
+            <th scope="col" className="py-2 pl-2 font-semibold text-ink">{card.label}</th>
+            <th scope="col" className="py-2 pl-2 font-medium">{prev?.label ?? "Prev Q"}</th>
+            <th scope="col" className="py-2 pl-2 font-medium">{yoy?.label ?? "Year ago"}</th>
+          </tr>
+        </thead>
+        {ordered(card.metrics).map((m) => (
+          <MetricLine key={m.id} m={m} open={open === m.id} onToggle={() => setOpen(open === m.id ? null : m.id)} pdfUrl={pdfUrl} card={card} />
+        ))}
+      </table>
+      <p className="mt-2 text-[11.5px] leading-snug text-faint">
+        Changes under each comparison are this quarter against that period. ✓ = found on the printed statement in the right
+        column; calc. = calculated by FINN, not reported. Tap a row for its source.
       </p>
-
       <Evidence card={card} pdfUrl={pdfUrl} />
     </section>
   );
+}
+
+function Mark({ m }: { m: MetricRow }) {
+  const c = m.corroboration;
+  if (m.verification_status === "unavailable") return <span className="ml-1 text-[11px] font-semibold text-warn" title="Unavailable">!</span>;
+  if (c?.status === "definition_differs")
+    return <span className="ml-1.5 rounded-sm bg-warn-bg px-1 text-[10.5px] font-semibold text-warn">def ≠ print</span>;
+  if (m.calculation_kind === "calculated") return <span className="ml-1.5 text-[10.5px] text-faint">calc.</span>;
+  if (c?.status === "aligned") return <span className="ml-1.5 text-[10.5px] text-up" title={`On p.${c.page} of the results PDF`}>✓ p.{c.page}</span>;
+  return null;
 }
 
 function MetricLine({ m, open, onToggle, pdfUrl, card }: {
   m: MetricRow; open: boolean; onToggle: () => void; pdfUrl: string | null; card: ResultsCard;
 }) {
   const sub = m.value_kind === "margin_pct";
-  const label = m.label.replace(" (calculated)", "*").replace("Operating EBITDA margin", "  margin*");
+  const label = m.label.replace(" (calculated)", "").replace("Operating EBITDA margin", "EBITDA margin");
+  const inv = COST_LIKE.has(m.id);
   return (
-    <div className="border-b border-line last:border-b-0">
-      <button onClick={onToggle} className="grid w-full grid-cols-[1fr_auto_auto_auto] items-baseline gap-x-3 px-4 py-2.5 text-left active:bg-surface-2">
-        <span className={`text-[13.5px] ${sub ? "pl-3 text-muted" : "font-medium"}`}>
-          {label}
-          {m.verification_status === "unavailable" && <span className="ml-1 text-warn">!</span>}
-          {m.corroboration?.status === "definition_differs" && (
-            <span className="ml-1.5 rounded bg-warn-bg px-1 text-[10.5px] font-medium text-warn">def ≠ print</span>
-          )}
-        </span>
-        <span className={`num w-[76px] text-right text-[14px] ${sub ? "text-muted" : "font-semibold"}`}>{fmt(m, m.current)}</span>
-        <Delta c={m.prev_q_change} invert={COST_LIKE.has(m.id)} className="w-[56px] text-right text-[13px]" />
-        <Delta c={m.yoy_q_change} invert={COST_LIKE.has(m.id)} className="w-[56px] text-right text-[13px]" />
-      </button>
-      {open && <MetricEvidence m={m} pdfUrl={pdfUrl} card={card} />}
-    </div>
+    <tbody className="border-t border-line">
+      <tr onClick={onToggle} className="cursor-pointer align-top hover:bg-surface-2">
+        <th scope="row" className="py-2.5 pr-1 text-left font-normal">
+          <button onClick={(e) => { e.stopPropagation(); onToggle(); }} aria-expanded={open}
+            className={`text-left text-[13.5px] leading-snug ${sub ? "pl-3 text-muted" : "font-semibold"}`}>
+            {label}
+            <Mark m={m} />
+          </button>
+        </th>
+        <td className={`py-2.5 pl-2 ${sub ? "text-[13px] text-muted" : "serif text-[16px] font-semibold"}`}>{fmt(m, m.current)}</td>
+        <td className="py-2.5 pl-2 text-[12.5px] text-muted">
+          {fmt(m, m.prev_q)}
+          <div><Delta c={m.prev_q_change} invert={inv} className="text-[11.5px] font-semibold" /></div>
+        </td>
+        <td className="py-2.5 pl-2 text-[12.5px] text-muted">
+          {fmt(m, m.yoy_q)}
+          <div><Delta c={m.yoy_q_change} invert={inv} className="text-[11.5px] font-semibold" /></div>
+        </td>
+      </tr>
+      {open && (
+        <tr>
+          <td colSpan={4} className="p-0 text-left">
+            <MetricEvidence m={m} pdfUrl={pdfUrl} card={card} />
+          </td>
+        </tr>
+      )}
+    </tbody>
   );
 }
 
@@ -102,12 +131,7 @@ function MetricEvidence({ m, pdfUrl, card }: { m: MetricRow; pdfUrl: string | nu
     ) : null;
 
   return (
-    <div className="space-y-2 bg-surface-2 px-4 py-3 text-[12.5px] leading-snug text-muted">
-      <div className="num grid grid-cols-3 gap-2 text-[12px]">
-        <div><div className="text-faint">{card.label}</div>{fmt(m, m.current)}</div>
-        <div><div className="text-faint">{card.periods.prev_q?.label ?? "Prev Q"}</div>{fmt(m, m.prev_q)}</div>
-        <div><div className="text-faint">{card.periods.yoy_q?.label ?? "Year-ago Q"}</div>{fmt(m, m.yoy_q)}</div>
-      </div>
+    <div className="space-y-2 border-l-2 border-accent bg-surface-2 px-3 py-3 text-[12.5px] leading-snug text-muted">
 
       {m.unavailable_reason && <p className="text-warn">Unavailable: {m.unavailable_reason}</p>}
 
@@ -198,10 +222,22 @@ function Evidence({ card, pdfUrl }: { card: ResultsCard; pdfUrl: string | null }
   const located = card.metrics.filter((m) => m.calculation_kind === "reported" && m.current != null);
   const n = located.filter((m) => m.corroboration?.status === "aligned").length;
   const defDiff = located.filter((m) => m.corroboration?.status === "definition_differs").length;
+  const allXbrl = (["current", "prev_q", "yoy_q"] as const).every((k) => card.periods[k]?.checks?.every((c) => c.ok) ?? false);
   return (
-    <>
-      <SectionLabel>Evidence</SectionLabel>
-      <div className="space-y-3 rounded-2xl border border-line bg-surface p-4 text-[12.5px] leading-snug text-muted">
+    <details className="group mt-5 border-y border-line">
+      <summary className="flex min-h-[44px] cursor-pointer items-center justify-between gap-3 py-2 text-[13px]">
+        <span>
+          <span className="font-semibold">How these numbers were checked</span>
+          <span className="block text-[12px] text-muted">
+            {allXbrl ? "Company, basis and period confirmed in all three XBRL filings" : "XBRL checks: see details"}
+            {card.pdf && !card.pdf.rejected ? ` · ${n}/${located.length} reported values found on the printed statement` : " · no confirmed results PDF"}
+            {defDiff ? ` · ${defDiff} definition difference` : ""}
+            {card.pdf?.statement_page_repairs?.length ? " · OCR repairs disclosed" : ""}
+          </span>
+        </span>
+        <span className="text-faint group-open:rotate-90" aria-hidden>›</span>
+      </summary>
+      <div className="space-y-3 pb-4 text-[12.5px] leading-snug text-muted">
         <div>
           <div className="font-medium text-ink">XBRL results filings (primary, machine-readable)</div>
           {(["current", "prev_q", "yoy_q"] as const).map((k) => {
@@ -209,7 +245,7 @@ function Evidence({ card, pdfUrl }: { card: ResultsCard; pdfUrl: string | null }
             if (!p) return <div key={k} className="text-warn">{k}: no filing found</div>;
             return (
               <div key={k} className="mt-1.5">
-                <a href={p.xbrl_url} target="_blank" rel="noreferrer" className="text-accent">{p.label}</a>
+                <a href={p.xbrl_url} target="_blank" rel="noreferrer" className="font-medium text-accent underline underline-offset-2">{p.label} XBRL ↗</a>
                 <span className="text-faint"> · filed {istDate(p.filed)}{p.revisions_superseded ? ` · supersedes ${p.revisions_superseded} earlier version` : ""}</span>
                 <CheckList checks={p.checks} />
               </div>
@@ -247,6 +283,6 @@ function Evidence({ card, pdfUrl }: { card: ResultsCard; pdfUrl: string | null }
           </div>
         )}
       </div>
-    </>
+    </details>
   );
 }

@@ -1,0 +1,378 @@
+{
+ "ticker": "SUNPHARMA",
+ "generated_at": "2026-11-03T23:19:36",
+ "rules_version": 1,
+ "extract_version": 1,
+ "sources": {
+  "transcripts": [
+   {
+    "call_date": "2026-08-06",
+    "filed_at": "2026-08-06T16:58:44",
+    "url": "https://nsearchives.nseindia.com/corporate/SUNPHARMA456_06082026165829_IntimationSE20260806EarningsCallTranscriptQ1FY27_Signed.pdf",
+    "nse_url": "https://nsearchives.nseindia.com/corporate/SUNPHARMA456_06082026165829_IntimationSE20260806EarningsCallTranscriptQ1FY27_Signed.pdf",
+    "source": "nse_filing",
+    "pages": 21,
+    "sha256": "544bd00a279d2f4733113d34caa33f9f986da040d9a4a56714bf11665cbf1c80",
+    "status": "read",
+    "management_turns": 85,
+    "statements": 0
+   },
+   {
+    "call_date": "2026-05-29",
+    "filed_at": "2026-05-29T19:59:33",
+    "url": "https://nsearchives.nseindia.com/corporate/SUNSEC_29052026195722_SEintimationTranscript.pdf",
+    "nse_url": "https://nsearchives.nseindia.com/corporate/SUNSEC_29052026195722_SEintimationTranscript.pdf",
+    "source": "nse_filing",
+    "pages": 18,
+    "sha256": "b3532e292070b8b66d920a05b2350f10bcaf1846c1237742dba1c9ecbdd6fc83",
+    "status": "read",
+    "management_turns": 72,
+    "statements": 2
+   },
+   {
+    "call_date": "2026-05-05",
+    "filed_at": "2026-05-05T23:16:53",
+    "url": "https://nsearchives.nseindia.com/corporate/SUNPHARMA456_05052026231639_IntimationSE20260505OrganonAcquisitionTranscript_Signed.pdf",
+    "nse_url": "https://nsearchives.nseindia.com/corporate/SUNPHARMA456_05052026231639_IntimationSE20260505OrganonAcquisitionTranscript_Signed.pdf",
+    "source": "nse_filing",
+    "pages": 25,
+    "sha256": "9c7745430f26627d30bec4da8a1872081e68497237183704f8de2dbef7f4e58a",
+    "status": "read",
+    "management_turns": 71,
+    "statements": 1
+   },
+   {
+    "call_date": "2026-02-04",
+    "filed_at": "2026-02-04T19:44:15",
+    "url": "https://nsearchives.nseindia.com/corporate/SUNPHARMA456_04022026194259_IntimationSE20260204EarningsCallTranscriptQ3FY26_Signed.pdf",
+    "nse_url": "https://nsearchives.nseindia.com/corporate/SUNPHARMA456_04022026194259_IntimationSE20260204EarningsCallTranscriptQ3FY26_Signed.pdf",
+    "source": "nse_filing",
+    "pages": 22,
+    "sha256": "f013b125403a51ce09fd295ea56fdab8b5d4d8afab9b44622389f3b5ac76f6c5",
+    "status": "read",
+    "management_turns": 87,
+    "statements": 0
+   },
+   {
+    "call_date": "2025-11-11",
+    "filed_at": "2025-11-11T15:56:40",
+    "url": "https://nsearchives.nseindia.com/corporate/SUNPHARMA456_11112025155629_IntimationSE20251111EarningsCallTranscriptQ2FY26_Signed.pdf",
+    "nse_url": "https://nsearchives.nseindia.com/corporate/SUNPHARMA456_11112025155629_IntimationSE20251111EarningsCallTranscriptQ2FY26_Signed.pdf",
+    "source": "nse_filing",
+    "pages": 18,
+    "sha256": "f174da21ed7a5cd004ae4811e5624c3ad991fba94b57ab2df42935d93e609858",
+    "status": "read",
+    "management_turns": 94,
+    "statements": 0
+   }
+  ],
+  "xbrl": [
+   {
+    "quarter": "Q1 FY25",
+    "url": "https://nsearchives.nseindia.com/corporate/xbrl/INDAS_110223_1210926_02082024062300.xml"
+   },
+   {
+    "quarter": "Q2 FY25",
+    "url": "https://nsearchives.nseindia.com/corporate/xbrl/INDAS_113712_1291536_28102024081314.xml"
+   },
+   {
+    "quarter": "Q3 FY25",
+    "url": "https://nsearchives.nseindia.com/corporate/xbrl/INDAS_118371_1367891_31012025073304.xml"
+   },
+   {
+    "quarter": "Q4 FY25",
+    "url": "https://nsearchives.nseindia.com/corporate/xbrl/INTEGRATED_FILING_INDAS_1447743_22052025080124_WEB.xml"
+   },
+   {
+    "quarter": "Q1 FY26",
+    "url": "https://nsearchives.nseindia.com/corporate/xbrl/INTEGRATED_FILING_INDAS_1499462_31072025064338_WEB.xml"
+   },
+   {
+    "quarter": "Q2 FY26",
+    "url": "https://nsearchives.nseindia.com/corporate/xbrl/INTEGRATED_FILING_INDAS_1566095_05112025070548_WEB.xml"
+   },
+   {
+    "quarter": "Q3 FY26",
+    "url": "https://nsearchives.nseindia.com/corporate/xbrl/INTEGRATED_FILING_INDAS_1615658_31012026050621_WEB.xml"
+   },
+   {
+    "quarter": "Q4 FY26",
+    "url": "https://nsearchives.nseindia.com/corporate/xbrl/INTEGRATED_FILING_INDAS_1671527_22052026063920_WEB.xml"
+   },
+   {
+    "quarter": "Q1 FY27",
+    "url": "https://nsearchives.nseindia.com/corporate/xbrl/INTEGRATED_FILING_INDAS_1706221_31072026062408_WEB.xml"
+   },
+   {
+    "quarter": "Q2 FY27",
+    "url": "https://nsearchives.nseindia.com/corporate/xbrl/INTEGRATED_FILING_INDAS_1750394_30102026073426_WEB.xml"
+   }
+  ]
+ },
+ "failures": [],
+ "company": "Sun Pharmaceutical Industries Limited",
+ "financials": {
+  "basis": "consolidated",
+  "taxonomy": "indas",
+  "quarters": [
+   {
+    "quarter_end": "2024-06-30",
+    "label": "Q1 FY25",
+    "xbrl_url": "https://nsearchives.nseindia.com/corporate/xbrl/INDAS_110223_1210926_02082024062300.xml",
+    "values": {
+     "revenue": 126527500000.0,
+     "ebitda_op_proxy": 36076200000.0,
+     "pbt": 34235000000.0,
+     "pat": 28605100000.0,
+     "ebitda_margin": 28.51253680030033
+    },
+    "locators": {
+     "revenue": "RevenueFromOperations@OneD",
+     "pbt": "ProfitBeforeTax@OneD",
+     "pat": "ProfitLossForPeriod@OneD"
+    }
+   },
+   {
+    "quarter_end": "2024-09-30",
+    "label": "Q2 FY25",
+    "xbrl_url": "https://nsearchives.nseindia.com/corporate/xbrl/INDAS_113712_1291536_28102024081314.xml",
+    "values": {
+     "revenue": 132913900000.0,
+     "ebitda_op_proxy": 39389600000.0,
+     "pbt": 35978800000.0,
+     "pat": 30373300000.0,
+     "ebitda_margin": 29.635425640207686
+    },
+    "locators": {
+     "revenue": "RevenueFromOperations@OneD",
+     "pbt": "ProfitBeforeTax@OneD",
+     "pat": "ProfitLossForPeriod@OneD"
+    }
+   },
+   {
+    "quarter_end": "2024-12-31",
+    "label": "Q3 FY25",
+    "xbrl_url": "https://nsearchives.nseindia.com/corporate/xbrl/INDAS_118371_1367891_31012025073304.xml",
+    "values": {
+     "revenue": 136754600000.0,
+     "ebitda_op_proxy": 40090200000.0,
+     "pbt": 34764000000.0,
+     "pat": 29129800000.0,
+     "ebitda_margin": 29.315430705804413
+    },
+    "locators": {
+     "revenue": "RevenueFromOperations@OneD",
+     "pbt": "ProfitBeforeTax@OneD",
+     "pat": "ProfitLossForPeriod@OneD"
+    }
+   },
+   {
+    "quarter_end": "2025-03-31",
+    "label": "Q4 FY25",
+    "xbrl_url": "https://nsearchives.nseindia.com/corporate/xbrl/INTEGRATED_FILING_INDAS_1447743_22052025080124_WEB.xml",
+    "values": {
+     "revenue": 129588400000.0,
+     "ebitda_op_proxy": 37160900000.0,
+     "pbt": 32543500000.0,
+     "pat": 21539300000.0,
+     "ebitda_margin": 28.676100638637408
+    },
+    "locators": {
+     "revenue": "RevenueFromOperations@OneD",
+     "pbt": "ProfitBeforeTax@OneD",
+     "pat": "ProfitLossForPeriod@OneD"
+    }
+   },
+   {
+    "quarter_end": "2025-06-30",
+    "label": "Q1 FY26",
+    "xbrl_url": "https://nsearchives.nseindia.com/corporate/xbrl/INTEGRATED_FILING_INDAS_1499462_31072025064338_WEB.xml",
+    "values": {
+     "revenue": 138514000000.0,
+     "ebitda_op_proxy": 43016600000.0,
+     "pbt": 31727700000.0,
+     "pat": 22928700000.0,
+     "ebitda_margin": 31.055777755317155
+    },
+    "locators": {
+     "revenue": "RevenueFromOperations@OneD",
+     "pbt": "ProfitBeforeTax@OneD",
+     "pat": "ProfitLossForPeriod@OneD"
+    }
+   },
+   {
+    "quarter_end": "2025-09-30",
+    "label": "Q2 FY26",
+    "xbrl_url": "https://nsearchives.nseindia.com/corporate/xbrl/INTEGRATED_FILING_INDAS_1566095_05112025070548_WEB.xml",
+    "values": {
+     "revenue": 144783100000.0,
+     "ebitda_op_proxy": 45270500000.0,
+     "pbt": 41676100000.0,
+     "pat": 31249500000.0,
+     "ebitda_margin": 31.26780680894386
+    },
+    "locators": {
+     "revenue": "RevenueFromOperations@OneD",
+     "pbt": "ProfitBeforeTax@OneD",
+     "pat": "ProfitLossForPeriod@OneD"
+    }
+   },
+   {
+    "quarter_end": "2025-12-31",
+    "label": "Q3 FY26",
+    "xbrl_url": "https://nsearchives.nseindia.com/corporate/xbrl/INTEGRATED_FILING_INDAS_1615658_31012026050621_WEB.xml",
+    "values": {
+     "revenue": 155205400000.0,
+     "ebitda_op_proxy": 49484900000.0,
+     "pbt": 42271600000.0,
+     "pat": 33811700000.0,
+     "ebitda_margin": 31.883491167188772
+    },
+    "locators": {
+     "revenue": "RevenueFromOperations@OneD",
+     "pbt": "ProfitBeforeTax@OneD",
+     "pat": "ProfitLossForPeriod@OneD"
+    }
+   },
+   {
+    "quarter_end": "2026-03-31",
+    "label": "Q4 FY26",
+    "xbrl_url": "https://nsearchives.nseindia.com/corporate/xbrl/INTEGRATED_FILING_INDAS_1671527_22052026063920_WEB.xml",
+    "values": {
+     "revenue": 146117900000.0,
+     "ebitda_op_proxy": 39542000000.0,
+     "pbt": 35513400000.0,
+     "pat": 27096600000.0,
+     "ebitda_margin": 27.061708387541838
+    },
+    "locators": {
+     "revenue": "RevenueFromOperations@OneD",
+     "pbt": "ProfitBeforeTax@OneD",
+     "pat": "ProfitLossForPeriod@OneD"
+    }
+   },
+   {
+    "quarter_end": "2026-06-30",
+    "label": "Q1 FY27",
+    "xbrl_url": "https://nsearchives.nseindia.com/corporate/xbrl/INTEGRATED_FILING_INDAS_1706221_31072026062408_WEB.xml",
+    "values": {
+     "revenue": 152998800000.0,
+     "ebitda_op_proxy": 44176700000.0,
+     "pbt": 40988100000.0,
+     "pat": 29012300000.0,
+     "ebitda_margin": 28.873886592574582
+    },
+    "locators": {
+     "revenue": "RevenueFromOperations@OneD",
+     "pbt": "ProfitBeforeTax@OneD",
+     "pat": "ProfitLossForPeriod@OneD"
+    }
+   },
+   {
+    "quarter_end": "2026-09-30",
+    "label": "Q2 FY27",
+    "xbrl_url": "https://nsearchives.nseindia.com/corporate/xbrl/INTEGRATED_FILING_INDAS_1750394_30102026073426_WEB.xml",
+    "values": {
+     "revenue": 161987100000.0,
+     "ebitda_op_proxy": 47438900000.0,
+     "pbt": 31593700000.0,
+     "pat": 19950700000.0,
+     "ebitda_margin": 29.285603606706957
+    },
+    "locators": {
+     "revenue": "RevenueFromOperations@OneD",
+     "pbt": "ProfitBeforeTax@OneD",
+     "pat": "ProfitLossForPeriod@OneD"
+    }
+   }
+  ],
+  "failures": [],
+  "company": "Sun Pharmaceutical Industries Limited"
+ },
+ "guidance": [
+  {
+   "metric": "revenue_growth",
+   "metric_label": "Revenue growth",
+   "direction": "point",
+   "low": 27.0,
+   "high": 27.0,
+   "unit": "pct",
+   "period_type": "unstated",
+   "period_fy": null,
+   "period_label": "period not stated",
+   "quote": "As all of you know we are focusing on innovation today, Sun Pharma's 20% of the sales comes from innovation, but with the addition of both Organon and Sun, the total revenue would be 27% of a combined business.",
+   "page": 5,
+   "speaker": "Corporate Office",
+   "stated_on": "2026-05-05",
+   "source_url": "https://nsearchives.nseindia.com/corporate/SUNPHARMA456_05052026231639_IntimationSE20260505OrganonAcquisitionTranscript_Signed.pdf",
+   "notes": [],
+   "target": "~27%",
+   "revisions": [],
+   "reiterated_on": [],
+   "verdict": {
+    "status": "not_comparable",
+    "reason": "No target period stated, so there is nothing definite to check it against."
+   }
+  },
+  {
+   "metric": "revenue_growth",
+   "metric_label": "Revenue growth",
+   "direction": "range",
+   "low": 7,
+   "high": 10,
+   "unit": "pct",
+   "period_type": "FY",
+   "period_fy": 2027,
+   "period_label": "FY27",
+   "quote": "On the guidance, we expect high single-digit consolidated top line growth for FY27 based on our current understanding of the regulatory and macro environment.",
+   "page": 6,
+   "speaker": "Dilip Shanghvi",
+   "stated_on": "2026-05-29",
+   "source_url": "https://nsearchives.nseindia.com/corporate/SUNSEC_29052026195722_SEintimationTranscript.pdf",
+   "notes": [],
+   "target": "7\u201310%",
+   "revisions": [],
+   "reiterated_on": [],
+   "verdict": {
+    "status": "not_comparable",
+    "reason": "The same call gives different targets for this metric and period (6\u20137%, 7\u201310%); FINN can't tell which is company-level."
+   }
+  },
+  {
+   "metric": "revenue_growth",
+   "metric_label": "Revenue growth",
+   "direction": "range",
+   "low": 6.0,
+   "high": 7.0,
+   "unit": "pct",
+   "period_type": "FY",
+   "period_fy": 2027,
+   "period_label": "FY27",
+   "quote": "We expect our FY27 R&D spend to be 6% to 7% of the sales for the next year.",
+   "page": 6,
+   "speaker": "Dilip Shanghvi",
+   "stated_on": "2026-05-29",
+   "source_url": "https://nsearchives.nseindia.com/corporate/SUNSEC_29052026195722_SEintimationTranscript.pdf",
+   "notes": [],
+   "target": "6\u20137%",
+   "revisions": [],
+   "reiterated_on": [],
+   "verdict": {
+    "status": "not_comparable",
+    "reason": "The same call gives different targets for this metric and period (6\u20137%, 7\u201310%); FINN can't tell which is company-level."
+   }
+  }
+ ],
+ "summary": {
+  "delivered": 0,
+  "partial": 0,
+  "missed": 0,
+  "pending": 0,
+  "not_comparable": 3,
+  "statements": 3,
+  "calls_read": 5,
+  "calls_found": 5
+ },
+ "status": "done",
+ "cache_key": "38f9158863574fb61a9bfddb"
+}

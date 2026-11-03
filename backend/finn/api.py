@@ -82,9 +82,15 @@ def _as_of(db, fresh) -> tuple[datetime, str]:
     return (datetime.fromisoformat(t) if t else px.now_ist()), mode
 
 
+VIEW = Query("live", pattern="^(live|demo)$")
+# The demo briefing is a real day from the recorded snapshot; relative times are anchored to it.
+DEMO_AS_OF = datetime.fromisoformat(os.environ.get("FINN_DEMO_AS_OF", "2026-10-30T20:00:00"))
+DEMO_LABEL = "Demo briefing — recorded NSE filings and prices, shown as of 30 Oct 2026, 20:00 IST"
+
+
 @app.get("/api/meta")
-def meta():
-    with Session() as db:
+def meta(view: str = VIEW):
+    with dbmod.session_for(view) as db:
         fresh = _freshness(db)
         as_of, mode = _as_of(db, fresh)
         n = db.scalar(select(Company).where(Company.in_portfolio).limit(1))
@@ -118,10 +124,12 @@ def _headline(card) -> list[dict]:
 
 
 @app.get("/api/brief")
-def brief(window: str = Query("24h", pattern="^(24h|3d|7d|30d)$")):
-    with Session() as db:
+def brief(window: str = Query("24h", pattern="^(24h|3d|7d|30d)$"), view: str = VIEW):
+    with dbmod.session_for(view) as db:
         fresh = _freshness(db)
         as_of, mode = _as_of(db, fresh)
+        if view == "demo":
+            as_of, mode = DEMO_AS_OF, "demo"
         since = as_of - WINDOWS[window]
         events = db.scalars(select(Event).where(Event.occurred_at >= since, Event.occurred_at <= as_of)
                             .order_by(Event.materiality.desc(), Event.occurred_at.desc(), Event.id)).all()
@@ -139,8 +147,32 @@ def brief(window: str = Query("24h", pattern="^(24h|3d|7d|30d)$")):
         return {"as_of": as_of.isoformat(), "mode": mode, "window": window, "since": since.isoformat(),
                 "freshness": fresh, "tiers": out, "movers": movers, "settings": st,
                 "alerts": _alerts(db, 20), "alerts_since": live_since.value["at"] if live_since else None,
-                "data_source": dbmod.SOURCE,  # live | seed | seed_fallback (live database unusable)
+                "data_source": "seed" if view == "demo" else dbmod.SOURCE,  # live | seed | seed_fallback
+                "view": view,
+                "reference": ({"as_of": DEMO_AS_OF.isoformat(), "label": DEMO_LABEL,
+                               "captured_at": _manifest_captured_at()} if view == "demo" else None),
+                "spotlight": _spotlight(db),
                 "totals": {"events": len(events), "filings": sum(counts.values())}}
+
+
+def _spotlight(db) -> dict | None:
+    """The strongest checkable promised-vs-delivered item available (final verdicts before run-rates)."""
+    from .models import ResearchJob
+    rank = {"delivered": 0, "missed": 0, "partial": 1, "pending": 2}
+    best = None
+    for j in db.scalars(select(ResearchJob).where(ResearchJob.state.in_(["done", "partial"]))
+                        .order_by(ResearchJob.finished_at.desc())):
+        for g in (j.report or {}).get("guidance", []):
+            st = g["verdict"]["status"]
+            if st in rank and (best is None or rank[st] < best[0]):
+                best = (rank[st], j, g)
+    if not best:
+        return None
+    _, j, g = best
+    return {"ticker": j.ticker, "company": (j.report or {}).get("company"), "generated_at": (j.report or {}).get("generated_at"),
+            "summary": (j.report or {}).get("summary"),
+            "item": {k: g[k] for k in ("metric_label", "period_label", "target", "quote", "page", "speaker", "stated_on",
+                                       "source_url", "verdict")}}
 
 
 def _alerts(db, limit: int) -> list[dict]:
@@ -176,13 +208,19 @@ def _movers(db, st, as_of) -> dict:
 
 
 @app.get("/api/events/{event_id}")
-def event_detail(event_id: int):
-    with Session() as db:
+def event_detail(event_id: int, view: str = VIEW):
+    with dbmod.session_for(view) as db:
         e = db.get(Event, event_id)
         if not e:
             raise HTTPException(404, "event not found")
         co = db.get(Company, e.ticker)
         filings = db.scalars(select(Filing).where(Filing.event_id == e.id).order_by(Filing.filed_at, Filing.id)).all()
+        later = 0
+        if view == "demo":  # the demo is shown as of its reference date: nothing filed after it
+            if e.occurred_at > DEMO_AS_OF:
+                raise HTTPException(404, "not in the demo briefing")
+            later = sum(f.filed_at > DEMO_AS_OF for f in filings)
+            filings = [f for f in filings if f.filed_at <= DEMO_AS_OF]
         dups = db.scalars(select(Filing).where(Filing.duplicate_of.in_([f.id for f in filings]))).all() if filings else []
         return {
             **_event_out(e, co, len(filings)),
@@ -192,8 +230,20 @@ def event_detail(event_id: int):
                          "category_source": f.category_source, "is_primary": f.id == e.primary_filing_id}
                         for f in filings],
             "duplicates_hidden": len(dups),
+            "later_filings_hidden": later,
             "results": (e.detail or {}).get("results"),
+            "research": _research_brief(db, e.ticker),
         }
+
+
+def _research_brief(db, ticker: str) -> dict | None:
+    """For the event page's "Dig in" link: is there a report, and what does it say in one line?"""
+    from .models import ResearchJob
+    j = db.scalar(select(ResearchJob).where(ResearchJob.ticker == ticker, ResearchJob.state.in_(["done", "partial"]))
+                  .order_by(ResearchJob.finished_at.desc()).limit(1))
+    if not j:
+        return None
+    return {"ticker": ticker, "summary": (j.report or {}).get("summary"), "generated_at": (j.report or {}).get("generated_at")}
 
 
 class SettingsIn(BaseModel):
@@ -256,10 +306,10 @@ def _research_row(j) -> dict:
 
 
 @app.get("/api/research")
-def research_index():
+def research_index(view: str = VIEW):
     from .models import ResearchJob
     from .research.jobs import demo_tickers
-    with Session() as db:
+    with dbmod.session_for(view) as db:
         done, open_jobs = {}, []
         for j in db.scalars(select(ResearchJob).order_by(ResearchJob.id.desc())):
             if j.state in ("queued", "running"):
@@ -267,15 +317,15 @@ def research_index():
             elif j.state in ("done", "partial") and j.ticker not in done:
                 done[j.ticker] = _research_row(j)
         return {"reports": sorted(done.values(), key=lambda r: r["ticker"]), "queue": open_jobs,
-                "demo": demo_tickers(), "can_request": dbmod.SOURCE == "live",
+                "demo": demo_tickers(), "can_request": dbmod.SOURCE == "live" and view == "live",
                 "schedule": SCHEDULE_NOTE if dbmod.SOURCE == "live" else None}
 
 
 @app.get("/api/research/{ticker}")
-def research_report(ticker: str):
+def research_report(ticker: str, view: str = VIEW):
     from .models import ResearchJob
     t = ticker.upper()
-    with Session() as db:
+    with dbmod.session_for(view) as db:
         last = db.scalar(select(ResearchJob).where(ResearchJob.ticker == t, ResearchJob.state.in_(["done", "partial"]))
                          .order_by(ResearchJob.finished_at.desc()).limit(1))
         pending = db.scalar(select(ResearchJob).where(ResearchJob.ticker == t, ResearchJob.state.in_(["queued", "running"]))
@@ -288,7 +338,7 @@ def research_report(ticker: str):
                 "pending": _research_row(pending) if pending else None,
                 "failed": {**_research_row(failed), "failures": (failed.report or {}).get("failures", [])}
                 if failed and (not last or failed.id > last.id) else None,
-                "can_request": dbmod.SOURCE == "live"}
+                "can_request": dbmod.SOURCE == "live" and view == "live"}
 
 
 @app.post("/api/research/{ticker}")

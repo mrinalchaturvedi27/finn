@@ -799,3 +799,35 @@ def test_transcript_discovery_keeps_nse_standard_call_subject():
                                                   "20th May, 2026")]
     got = find(N(), "X", date(2026, 11, 3))
     assert [g["call_date"] for g in got] == ["2026-08-03"]  # the call kept, the analyst day dropped
+
+
+def test_demo_view_is_anchored_and_connected(tmp_path):
+    """view=demo serves the bundled snapshot as of its labelled reference date, with real research."""
+    import json
+    import os
+    import subprocess
+    import sys
+    from pathlib import Path
+    backend = Path(__file__).resolve().parents[1]
+    code = ("import json; from fastapi.testclient import TestClient; from finn.api import app\n"
+            "with TestClient(app) as c:\n"
+            "  b = c.get('/api/brief?window=3d&view=demo').json()\n"
+            "  top = b['tiers']['top']\n"
+            "  dixon = next(e for e in top if e['ticker'] == 'DIXON')\n"
+            "  ev = c.get(f\"/api/events/{dixon['id']}?view=demo\").json()\n"
+            "  late = max(f['filed_at'] for f in ev['filings'])\n"
+            "  print(json.dumps({'as_of': b['as_of'], 'view': b['view'], 'ref': b['reference'] is not None,\n"
+            "    'latest': max(e['occurred_at'] for t in b['tiers'].values() for e in t), 'tickers': [e['ticker'] for e in top],\n"
+            "    'session': b['movers']['session'], 'spot': b['spotlight']['item']['verdict']['status'],\n"
+            "    'dixon_research': ev['research'] is not None, 'req': c.get('/api/research?view=demo').json()['can_request'],\n"
+            "    'late': late, 'hidden': ev['later_filings_hidden']}))")
+    r = subprocess.run([sys.executable, "-c", code], cwd=backend, env={**os.environ, "FINN_DB_URL": ""},
+                       capture_output=True, text=True, timeout=120)
+    assert r.returncode == 0, r.stderr[-2000:]
+    d = json.loads(r.stdout.strip().splitlines()[-1])
+    assert d["as_of"] == "2026-10-30T20:00:00" and d["view"] == "demo" and d["ref"]
+    assert d["latest"] <= d["as_of"]  # nothing from after the reference date
+    assert {"DIXON", "RELIANCE", "SUNPHARMA", "TRENT"} <= set(d["tickers"])
+    assert d["session"] == "2026-10-30"  # price alerts evaluated for the reference date's session
+    assert d["spot"] == "delivered" and d["dixon_research"] and d["req"] is False
+    assert d["late"] <= "2026-10-30T20:00:00" and d["hidden"] == 1  # the 31 Oct newspaper notice is held back
