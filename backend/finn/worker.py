@@ -40,7 +40,12 @@ def single_worker():
     Postgres: session advisory lock (released if the runner dies). SQLite: a lock file."""
     if dbmod.engine.dialect.name == "postgresql":
         with dbmod.engine.connect() as c:
+            # if this runner dies (job killed), the server closes the idle session and frees the lock;
+            # longer than the 15 min job timeout so a live run never loses it
+            c.execute(text("set idle_session_timeout = '20min'"))
             got = c.execute(text("select pg_try_advisory_lock(:k)"), {"k": LOCK_KEY}).scalar()
+            if not got and take_over_stale_lock(c):
+                got = c.execute(text("select pg_try_advisory_lock(:k)"), {"k": LOCK_KEY}).scalar()
             try:
                 yield bool(got)
             finally:
@@ -60,6 +65,20 @@ def single_worker():
                 yield True
             finally:
                 fcntl.flock(f, fcntl.LOCK_UN)
+
+
+def take_over_stale_lock(c, idle_minutes: int = 30) -> bool:
+    """End sessions that hold the worker lock but have been idle longer than any run can take
+    (a killed runner whose connection the server still thinks is open)."""
+    pids = c.execute(text(
+        "select a.pid from pg_locks l join pg_stat_activity a on a.pid = l.pid "
+        "where l.locktype = 'advisory' and l.objid = :k and l.granted and a.pid <> pg_backend_pid() "
+        "and a.state = 'idle' and a.state_change < now() - make_interval(mins => :m)"),
+        {"k": LOCK_KEY, "m": idle_minutes}).scalars().all()
+    for pid in pids:
+        c.execute(text("select pg_terminate_backend(:p)"), {"p": pid})
+        print(f"ended stale worker session {pid} (idle > {idle_minutes} min)", flush=True)
+    return bool(pids)
 
 
 def close_abandoned(db, now: datetime) -> int:
