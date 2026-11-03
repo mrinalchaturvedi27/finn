@@ -16,7 +16,7 @@ services:
       - key: FINN_DB_URL
         sync: false
       - key: FINN_SCHEDULE_NOTE
-        value: "worker scheduled hourly via GitHub Actions (best effort: runs can be delayed or skipped)"
+        value: "updated by manual worker runs on GitHub Actions (hourly schedule not yet verified)"
       - key: FINN_READ_ONLY
         value: "1"    # PUT /api/settings refused; CORS alone doesn't stop direct calls
       # Runs probe/source_probe.py inside the running container at startup (free plan has no shell

@@ -45,7 +45,11 @@ def single_worker():
             c.execute(text("set idle_session_timeout = '20min'"))
             got = c.execute(text("select pg_try_advisory_lock(:k)"), {"k": LOCK_KEY}).scalar()
             if not got and take_over_stale_lock(c):
-                got = c.execute(text("select pg_try_advisory_lock(:k)"), {"k": LOCK_KEY}).scalar()
+                for _ in range(10):  # termination is a signal: the old session takes a moment to exit
+                    time.sleep(1)
+                    got = c.execute(text("select pg_try_advisory_lock(:k)"), {"k": LOCK_KEY}).scalar()
+                    if got:
+                        break
             try:
                 yield bool(got)
             finally:
@@ -68,11 +72,15 @@ def single_worker():
 
 
 def take_over_stale_lock(c, idle_minutes: int = 30) -> bool:
-    """End sessions that hold the worker lock but have been idle longer than any run can take
-    (a killed runner whose connection the server still thinks is open)."""
+    """End sessions that hold FINN's worker lock but have been idle longer than any run can take
+    (a killed runner whose connection the server still thinks is open). Only that exact lock
+    matches: advisory, single bigint key LOCK_KEY (classid 0, objsubid 1), this database, this
+    user, granted, idle past the threshold. No other session can be selected."""
     pids = c.execute(text(
         "select a.pid from pg_locks l join pg_stat_activity a on a.pid = l.pid "
-        "where l.locktype = 'advisory' and l.objid = :k and l.granted and a.pid <> pg_backend_pid() "
+        "where l.locktype = 'advisory' and l.classid = 0 and l.objid = :k and l.objsubid = 1 and l.granted "
+        "and l.database = (select oid from pg_database where datname = current_database()) "
+        "and a.usename = current_user and a.pid <> pg_backend_pid() "
         "and a.state = 'idle' and a.state_change < now() - make_interval(mins => :m)"),
         {"k": LOCK_KEY, "m": idle_minutes}).scalars().all()
     for pid in pids:
