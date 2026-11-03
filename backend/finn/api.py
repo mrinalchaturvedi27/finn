@@ -15,7 +15,7 @@ from . import startup_probe
 from .classify import tier
 from .db import Session, init_db
 from .ingest import DEFAULT_SETTINGS
-from .models import Company, Event, Filing, IngestRun, MetricObs, PriceBar, Setting
+from .models import Alert, Company, Event, Filing, IngestRun, MetricObs, PriceBar, Setting
 
 # Deployed demo stays read-only (FINN_READ_ONLY=1): CORS only restrains browsers, not direct calls.
 READ_ONLY = os.environ.get("FINN_READ_ONLY") == "1"
@@ -29,6 +29,9 @@ app.add_middleware(CORSMiddleware, allow_origins=os.environ.get("FINN_CORS", "*"
 CADENCE = {"nse_announcements": "every 15 min in market hours, hourly otherwise",
            "prices": "once per session, 90 min after the 15:30 close",
            "results_xbrl": "when a results filing is detected"}
+# A source is overdue when its last check is older than twice its longest scheduled interval.
+OVERDUE_AFTER = {"nse_announcements": timedelta(hours=2), "prices": timedelta(hours=26 + 72),
+                 "results_xbrl": timedelta(hours=2)}
 WINDOWS = {"24h": timedelta(hours=24), "3d": timedelta(days=3), "7d": timedelta(days=7), "30d": timedelta(days=30)}
 
 
@@ -58,6 +61,8 @@ def _freshness(db) -> dict:
             "data_through": last_ok.data_through.isoformat() if last_ok and last_ok.data_through else None,
             "mode": last_ok.mode if last_ok else None,
             "errors": (last_any.errors or [])[:5] if last_any else [],
+            "overdue": bool(last_any and last_any.mode == "live" and last_any.finished_at
+                            and px.now_ist() - last_any.finished_at > OVERDUE_AFTER[src]),
         }
     return out
 
@@ -113,7 +118,7 @@ def brief(window: str = Query("24h", pattern="^(24h|3d|7d|30d)$")):
         as_of, mode = _as_of(db, fresh)
         since = as_of - WINDOWS[window]
         events = db.scalars(select(Event).where(Event.occurred_at >= since, Event.occurred_at <= as_of)
-                            .order_by(Event.materiality.desc(), Event.occurred_at.desc())).all()
+                            .order_by(Event.materiality.desc(), Event.occurred_at.desc(), Event.id)).all()
         cos = {c.ticker: c for c in db.scalars(select(Company)).all()}
         counts = {}
         for f in db.scalars(select(Filing).where(Filing.filed_at >= since, Filing.filed_at <= as_of)).all():
@@ -124,16 +129,37 @@ def brief(window: str = Query("24h", pattern="^(24h|3d|7d|30d)$")):
             out[ev["tier"]].append(ev)
         st = _settings(db)
         movers = _movers(db, st, as_of)
+        live_since = db.get(Setting, "live_since")
         return {"as_of": as_of.isoformat(), "mode": mode, "window": window, "since": since.isoformat(),
                 "freshness": fresh, "tiers": out, "movers": movers, "settings": st,
+                "alerts": _alerts(db, 20), "alerts_since": live_since.value["at"] if live_since else None,
                 "totals": {"events": len(events), "filings": sum(counts.values())}}
+
+
+def _alerts(db, limit: int) -> list[dict]:
+    """In-app alerts, newest first. Read state is kept per viewer in the browser."""
+    out = []
+    for a in db.scalars(select(Alert).order_by(Alert.id.desc()).limit(limit)):
+        d = a.detail or {}
+        out.append({"id": a.id, "ticker": a.ticker, "kind": a.kind, "event_id": a.event_id,
+                    "session": a.session.isoformat() if a.session else None,
+                    "observed": a.observed, "threshold": a.threshold, "title": d.get("title"),
+                    "category": d.get("category"), "change_pct": d.get("change_pct"),
+                    "created_at": a.created_at.isoformat() if a.created_at else None})
+    return out
+
+
+@app.get("/api/alerts")
+def alerts(limit: int = Query(50, ge=1, le=200)):
+    with Session() as db:
+        return _alerts(db, limit)
 
 
 def _movers(db, st, as_of) -> dict:
     bars = {}
     for b in db.scalars(select(PriceBar)).all():
         bars.setdefault(b.ticker, []).append({"session": b.session, "close": b.close, "volume": b.volume})
-    tickers = [c.ticker for c in db.scalars(select(Company).where(Company.in_portfolio)).all()]
+    tickers = [c.ticker for c in db.scalars(select(Company).where(Company.in_portfolio).order_by(Company.ticker))]
     session = px.expected_session(bars, as_of, st["eod_buffer_min"])
     rows = [px.evaluate(t, bars.get(t, []), session, st["volume_multiple"], st["price_pct"]) for t in tickers]
     return {"session": session.isoformat() if session else None,
@@ -149,7 +175,7 @@ def event_detail(event_id: int):
         if not e:
             raise HTTPException(404, "event not found")
         co = db.get(Company, e.ticker)
-        filings = db.scalars(select(Filing).where(Filing.event_id == e.id).order_by(Filing.filed_at)).all()
+        filings = db.scalars(select(Filing).where(Filing.event_id == e.id).order_by(Filing.filed_at, Filing.id)).all()
         dups = db.scalars(select(Filing).where(Filing.duplicate_of.in_([f.id for f in filings]))).all() if filings else []
         return {
             **_event_out(e, co, len(filings)),
@@ -192,7 +218,7 @@ def put_settings(body: SettingsIn):
 def health():
     """Liveness plus a fingerprint of the seeded data, to check it survives restarts and redeploys."""
     with Session() as db:
-        events = db.scalars(select(Event.group_key).order_by(Event.group_key)).all()
+        events = sorted(db.scalars(select(Event.group_key)))  # Python sort: DB collations differ
         obs = db.scalars(select(MetricObs.value).order_by(MetricObs.id)).all()
         n_obs = len(obs)
     digest = hashlib.sha256(json.dumps([events, obs], default=str).encode()).hexdigest()[:16]

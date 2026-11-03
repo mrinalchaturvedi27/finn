@@ -1,0 +1,26 @@
+# Candidate ingestion host check: run the source probe on a GitHub-hosted runner.
+# Manual only. The report is uploaded as an artifact and printed to the log.
+name: source-probe
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install -r backend/requirements.txt
+      - name: Probe
+        run: |
+          curl -s https://ipinfo.io/json | python -c "import sys,json;d=json.load(sys.stdin);print('egress', d.get('org'), d.get('country'), d.get('region'))" || true
+          python probe/source_probe.py --out probe/report-gha.json
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: probe-report-gha
+          path: probe/report-gha.json

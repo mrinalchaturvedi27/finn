@@ -190,6 +190,23 @@ def probe_results_xbrl(ticker):
         return {**out, "valid": False, "reason": f"xbrl fetch/parse: {e!r}"}
 
 
+def probe_archive():
+    """Direct archive fetches (no NSE session) of filings confirmed by hand: is the file host
+    reachable even where the API host is blocked?"""
+    fx = json.loads((Path(__file__).resolve().parent / "results_confirmed.json").read_text())
+    out = []
+    for f in fx["filings"][:3]:
+        try:
+            with requests.get(f["pdf"], timeout=30, stream=True, headers={"User-Agent": UA}) as r:
+                head = next(r.iter_content(1024), b"")
+            ok = r.status_code == 200 and head[:4] == b"%PDF"
+            out.append(rec("nse_archive", f["ticker"], status=r.status_code, valid=ok,
+                           content_length=r.headers.get("content-length"), reason=None if ok else "not a PDF body"))
+        except Exception as e:
+            out.append(rec("nse_archive", f["ticker"], status=None, valid=False, reason=repr(e)))
+    return out
+
+
 def probe_prices(tickers):
     out = []
     try:
@@ -224,6 +241,7 @@ def main():
     R = report["records"]
 
     R.extend(probe_prices(all_tickers))
+    R.extend(probe_archive())
 
     try:
         s, home = nse_session()

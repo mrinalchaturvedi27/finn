@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { FreshnessLine, LoadStatus, Pill, SectionLabel, SnapshotBanner, Spark, Delta } from "@/components/ui";
+import { Alerts } from "@/components/alerts";
 import { type Brief, type BriefEvent, type Mover } from "@/lib/api";
 import { useApi } from "@/lib/useApi";
 import { CATEGORY_LABEL, ago, istDate } from "@/lib/format";
@@ -70,6 +71,7 @@ export default function BriefPage() {
       {data && (
         <>
           <FreshnessLine f={data.freshness} stale={data.movers.stale.length} />
+          <Alerts alerts={data.alerts ?? []} asOf={data.as_of} session={data.movers.session} />
           <Movers data={data} />
 
           <SectionLabel right={data.tiers.top.length ? `${data.tiers.top.length}` : undefined}>What matters</SectionLabel>

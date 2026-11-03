@@ -12,6 +12,7 @@ export type Freshness = Record<
     data_through: string | null;
     mode: string | null;
     errors: { ticker?: string; error?: string }[];
+    overdue?: boolean;
   }
 >;
 
@@ -55,7 +56,23 @@ export type Brief = {
   tiers: { top: BriefEvent[]; look: BriefEvent[]; routine: BriefEvent[] };
   movers: { session: string | null; triggered: Mover[]; quiet: Mover[]; stale: Mover[] };
   settings: Settings;
+  alerts?: AlertItem[];
+  alerts_since?: string | null;
   totals: { events: number; filings: number };
+};
+
+export type AlertItem = {
+  id: number;
+  ticker: string;
+  kind: "announcement" | "price" | "volume";
+  event_id: number | null;
+  session: string | null;
+  observed: number | null;
+  threshold: number | null;
+  title: string | null;
+  category: string | null;
+  change_pct: number | null;
+  created_at: string | null;
 };
 
 export type Settings = {

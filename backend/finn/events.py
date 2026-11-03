@@ -109,6 +109,16 @@ def build_events(filings: list[dict]) -> list[dict]:
                     f["c"].reasons = ["results:results_outcome (same-day board outcome)"]
                     groups[rk].append(f)
                     break
+    # A corrigendum / revised filing joins the event of the filing it amends.
+    where = {f["id"]: k for k, v in groups.items() for f in v}
+    for key in list(groups):
+        for f in list(groups[key]):
+            target = where.get(f.get("revision_of"))
+            if target and target != key:
+                groups[key].remove(f)
+                f["c"].reasons = [*f["c"].reasons, "revision of an earlier filing"]
+                f["c"].materiality = min(f["c"].materiality, groups[target][0]["c"].materiality)
+                groups[target].append(f)
     groups = {k: v for k, v in groups.items() if v}
 
     events = []
@@ -125,5 +135,6 @@ def build_events(filings: list[dict]) -> list[dict]:
             "read_state": "unread" if all(m["c"].read_state == "unread" for m in members) else "read",
             "summary": primary["c"].summary, "primary_filing_id": primary["id"],
             "member_ids": [m["id"] for m in members], "subkind": primary["c"].subkind,
+            "revised": any(m.get("revision_of") for m in members),
         })
     return events

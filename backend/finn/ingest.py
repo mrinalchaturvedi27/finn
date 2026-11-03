@@ -1,6 +1,7 @@
 """Ingestion runner. Every run is logged to ingest_run for freshness display.
 
     python -m finn.ingest snapshot --days 30     # seed a labelled historical snapshot
+    python -m finn.worker                        # live: scheduled, incremental (see finn.worker)
 """
 import argparse
 import json
@@ -10,6 +11,7 @@ from pathlib import Path
 
 from sqlalchemy import select
 
+from . import live
 from . import prices as px
 from . import snapshot
 from .versions import cache_key
@@ -25,6 +27,11 @@ DEFAULT_SETTINGS = {
     "alert_categories": ["results", "M&A", "management_change", "fund_raise", "litigation",
                          "credit_rating", "pledging"],
 }
+
+
+def _settings_or_default(db) -> dict:
+    s = db.get(Setting, "alerts")
+    return {**DEFAULT_SETTINGS, **(s.value if s else {})}
 
 
 def load_portfolio() -> list[dict]:
@@ -44,14 +51,17 @@ def _finish(db, run, status, items, errors, data_through):
     db.commit()
 
 
-def ingest_announcements(db, nse: NSE, tickers: list[str], days: int, mode: str) -> dict[str, list[dict]]:
+def ingest_announcements(db, nse: NSE, tickers: list[str], days: int, mode: str,
+                         windows: dict | None = None) -> dict[str, list[dict]]:
+    """windows: {ticker: (start, end, is_backfill)} for incremental live runs; else the last `days`."""
     run = _run(db, "nse_announcements", mode)
     end = px.now_ist().date()
     start = end - timedelta(days=days)
     raw, errors, n = {}, [], 0
     for t in tickers:
+        t_start, t_end = (windows[t][0], windows[t][1]) if windows else (start, end)
         try:
-            rows = nse.announcements(t, start, end)
+            rows = nse.announcements(t, t_start, t_end)
         except SourceError as e:
             errors.append({"ticker": t, "error": str(e)})
             continue
@@ -76,6 +86,7 @@ def ingest_announcements(db, nse: NSE, tickers: list[str], days: int, mode: str)
             db.flush()
             seen.setdefault(dk, f.id)
             n += 1
+        live.link_revisions(db, t)
     db.commit()
     latest = db.scalar(select(Filing.filed_at).order_by(Filing.filed_at.desc()).limit(1))
     _finish(db, run, "ok" if not errors else ("partial" if raw else "failed"), n, errors, latest)
@@ -87,9 +98,9 @@ def rebuild_events(db, tickers: list[str], raw: dict[str, list[dict]], mode: str
     nse = NSE()
     errors, n_cards = [], 0
     for t in tickers:
-        filings = db.scalars(select(Filing).where(Filing.ticker == t)).all()
+        filings = db.scalars(select(Filing).where(Filing.ticker == t).order_by(Filing.filed_at, Filing.id)).all()
         dicts = [{"id": f.id, "ticker": t, "filed_at": f.filed_at, "subject": f.subject, "text": f.text,
-                  "duplicate_of": f.duplicate_of} for f in filings]
+                  "duplicate_of": f.duplicate_of, "revision_of": f.revision_of} for f in filings]
         by_id = {f.id: f for f in filings}
         for ev in build_events(dicts):
             e = db.scalar(select(Event).where(Event.group_key == ev["group_key"])) or Event(group_key=ev["group_key"])
@@ -103,12 +114,22 @@ def rebuild_events(db, tickers: list[str], raw: dict[str, list[dict]], mode: str
                 f.event_id = e.id
                 cls = next(d["c"] for d in dicts if d["id"] == fid)
                 f.category, f.category_source = cls.category, cls.source
-            if ev["category"] == "results" and ev["subkind"] != "results_intimation" and not (e.detail or {}).get("metrics"):
+            why = (live.card_due(e, len(ev["member_ids"]), px.now_ist())
+                   if ev["category"] == "results" and ev["subkind"] in ("results_outcome", "results_press") else None)
+            if why:
                 from datetime import date
                 qe = date.fromisoformat(ev["group_key"].rsplit("|", 1)[-1])
                 co = db.get(Company, t)
-                card = build_results_card(nse, t, co.name if co else None, qe, raw.get(t, []))
-                e.detail = {"results": card}
+                ann = raw.get(t, [])
+                if mode == "live":  # an incremental window may not reach back to the PDF's filing day
+                    try:
+                        ann = nse.announcements(t, e.occurred_at.date() - timedelta(days=3), px.now_ist().date())
+                    except SourceError as ex:
+                        errors.append({"ticker": t, "error": f"announcements for card: {ex}"})
+                card = build_results_card(nse, t, co.name if co else None, qe, ann)
+                e.detail = {**(e.detail or {}), "results": card,
+                            "results_attempt": {"at": px.now_ist().isoformat(), "why": why,
+                                                "n_members": len(ev["member_ids"])}}
                 if card.get("taxonomy") and co:
                     co.reporting_format = {"indas": "industrial", "banking": "bank", "nbfc": "nbfc"}[card["taxonomy"]]
                 if card["status"] == "failed":
@@ -121,6 +142,8 @@ def rebuild_events(db, tickers: list[str], raw: dict[str, list[dict]], mode: str
                     pat = m.get("pat", {})
                     if pat.get("yoy_q_change", {}).get("state") == "ok":
                         e.summary = _results_line(card)
+        db.flush()
+        live.drop_orphan_events(db, t)
         db.commit()
     _finish(db, run, "ok" if not errors else "partial", n_cards, errors, px.now_ist())
 
@@ -154,6 +177,9 @@ def persist_observations(db, ticker: str, card: dict, related_filing_id: int | N
                     period_end=qe, basis=basis, revision=f"supersedes {period['revisions_superseded']}")
         ck = cache_key(period["sha256"])
         db.query(MetricObs).filter(MetricObs.cache_key == ck).delete()
+        # the card always uses the latest XBRL revision, so other versions of this period are superseded
+        db.query(MetricObs).filter(MetricObs.ticker == ticker, MetricObs.period_end == qe, MetricObs.basis == basis,
+                                   MetricObs.period_type == "Q", MetricObs.cache_key != ck).delete()
         for row in card["metrics"]:
             value = row["current"] if k == "current" else row.get(k)
             m = defs[row["id"]]
