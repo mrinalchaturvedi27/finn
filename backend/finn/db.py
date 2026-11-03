@@ -23,11 +23,10 @@ def _normalise(url: str) -> str:
 def _engine(url: str):
     kw = {"pool_pre_ping": True}
     if _normalise(url).startswith("postgresql"):
-        # small pool: free hosted plans allow ~15 connections shared by the API and the worker
-        kw.update(connect_args={"connect_timeout": 10}, pool_size=3, max_overflow=2, pool_recycle=1800)
         # Leave room within Aiven's 15-connection limit for the API, worker,
         # migrations, and a short overlap during deployments.
-        kw.update(pool_size=2, max_overflow=1, pool_timeout=10)
+        kw.update(connect_args={"connect_timeout": 10}, pool_size=2, max_overflow=1, pool_timeout=10,
+                  pool_recycle=1800)
     return create_engine(_normalise(url), future=True, **kw)
 
 
