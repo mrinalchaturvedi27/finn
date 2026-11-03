@@ -80,8 +80,14 @@ export function BackLink() {
 }
 
 export function LoadStatus({ state, err, onRetry, what }: {
-  state: "loading" | "waking" | "ready" | "error"; err: string | null; onRetry: () => void; what: string;
+  state: "loading" | "waking" | "ready" | "error" | "not_found"; err: string | null; onRetry: () => void; what: string;
 }) {
+  if (state === "not_found")
+    return (
+      <p role="alert" className="mt-6 rounded-xl border border-line bg-surface p-3 text-[13px] text-muted">
+        Couldn’t find {what}. It may not be in this snapshot.
+      </p>
+    );
   if (state === "waking")
     return (
       <p role="status" className="mt-6 rounded-xl border border-line bg-surface p-3 text-[13px] text-muted">

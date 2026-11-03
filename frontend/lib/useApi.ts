@@ -1,9 +1,9 @@
 "use client";
 
 import { useCallback, useEffect, useState } from "react";
-import { getWaking } from "./api";
+import { ApiError, getWaking } from "./api";
 
-export type LoadState = "loading" | "waking" | "ready" | "error";
+export type LoadState = "loading" | "waking" | "ready" | "error" | "not_found";
 
 /** GET with cold-start handling. Keeps the previous data while a new path loads. */
 export function useApi<T>(path: string) {
@@ -24,7 +24,7 @@ export function useApi<T>(path: string) {
       .catch((e) => {
         if (ctl.signal.aborted) return;
         setErr(e instanceof Error ? e.message : String(e));
-        setState("error");
+        setState(e instanceof ApiError && e.status === 404 ? "not_found" : "error");
       });
     return () => ctl.abort();
   }, [path, nonce]);
