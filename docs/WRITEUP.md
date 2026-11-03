@@ -1,6 +1,6 @@
 # FINN — covering note (draft)
 
-**What it is.** A mobile-first brief for a 18-stock NSE portfolio that tells you what changed and
+**What it is.** A mobile-first brief for an 18-stock NSE portfolio that tells you what changed and
 what to look at first, plus an on-demand "promised vs delivered" check on any NSE company.
 
 **Try it on a phone:** https://finn-eta-hazel.vercel.app (the first load can take about a minute
