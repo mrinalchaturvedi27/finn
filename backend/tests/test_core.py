@@ -382,7 +382,12 @@ def test_worker_schedule(tmp_path):
     tue_10 = datetime(2026, 11, 3, 10, 0)
     assert market_hours(tue_10) and not market_hours(datetime(2026, 11, 3, 16, 0))
     assert not market_hours(datetime(2026, 11, 7, 10, 0))  # Saturday
-    assert set(due(db, tue_10)) == {"announcements", "prices", "xbrl_recheck"}
+    assert set(due(db, tue_10)) == {"announcements", "prices", "xbrl_recheck", "research"}  # demo reports missing
+    from finn.models import ResearchJob
+    assert db.query(ResearchJob).count() == 0  # deciding what is due never queues anything
+    for t in ("HAL", "CDSL", "ASTRAL", "PIDILITIND", "KAYNES"):
+        db.add(ResearchJob(ticker=t, state="done", finished_at=datetime(2026, 11, 3, 9, 0), attempts=1, doc_failures=[]))
+    db.commit()
 
     def run(source, started, through=None, errors=()):
         db.add(IngestRun(source=source, mode="live", started_at=started, finished_at=started, status="ok",
@@ -483,7 +488,7 @@ def test_migrations_are_explicit_and_idempotent(tmp_path):
     assert migrate.current(eng) is None
     with pytest.raises(RuntimeError):
         migrate.require_latest(eng)
-    assert migrate.upgrade(eng) == [1] and migrate.upgrade(eng) == []
+    assert migrate.upgrade(eng) == list(range(1, migrate.LATEST + 1)) and migrate.upgrade(eng) == []
     assert migrate.current(eng) == migrate.LATEST
     migrate.require_latest(eng)
 
@@ -542,6 +547,8 @@ def test_truncated_archive_download_is_retried_and_never_cached(tmp_path, monkey
     assert incomplete(whole, str(len(whole))) is None
     assert incomplete(whole[:3000], str(len(whole))) == f"3000 of {len(whole)} bytes"
     assert incomplete(whole[:3000], None) == "PDF has no end-of-file marker"
+    # gzip on the wire: Content-Length is the compressed size, so it is not compared
+    assert incomplete(b"<xbrl>" + b"y" * 9000 + b"</xbrl>", "1200", "gzip") is None
     monkeypatch.setattr(nse_mod, "CACHE_DIR", tmp_path)
     responses = [whole[:3000], whole]
     n = NSE.__new__(NSE)
@@ -552,3 +559,154 @@ def test_truncated_archive_download_is_retried_and_never_cached(tmp_path, monkey
     with pytest.raises(SourceError, match="incomplete download"):
         n.fetch_bytes("https://x/b.pdf")
     assert len(list(tmp_path.iterdir())) == 1  # only the complete file was cached
+
+
+# ---------- research: guidance extraction ----------
+
+@pytest.mark.parametrize("sentence,want", [
+    ("We have always called out that we are very comfortable to operate within an EBITDA corridor of 20% to 24%.",
+     ("ebitda_margin", "range", 20, 24, "period not stated")),
+    ("As we guided in last call that we will be closing full year with 20%, 25% kind of growth.",
+     ("revenue_growth", "range", 20, 25, "FY27")),
+    ("So we have given the guidance of minimum double-digit growth for volume.",
+     ("volume_growth", "at_least", 10, None, "period not stated")),
+    ("And the volume growth, I think, would be around 35% to 40%, I could put it.",
+     ("volume_growth", "range", 35, 40, "period not stated")),
+    ("I think we have given the CAPEX guidance for full year around Rs. 350 crores.",
+     ("capex", "point", 350, 350, "FY27")),
+    ("We expect revenue growth in the high single digits for FY27.", ("revenue_growth", "range", 7, 10, "FY27")),
+])
+def test_guidance_statements(sentence, want):
+    from finn.research.guidance import _statement
+    st = _statement(sentence, date(2026, 8, 12))
+    assert st and (st["metric"], st["direction"], st["low"], st["high"], st["period_label"]) == want
+
+
+@pytest.mark.parametrize("sentence", [
+    "This year, it is INR326 crores, so registering a growth of 24.8%.",            # a result
+    "In the current quarter, our revenue grew by 15.3% in value terms.",             # a result
+    "Is there a way you give some outlook on growth of 10% next year?",              # a question
+    "It is going to be a sizable improvement, maybe more than 100% improvement into the EBITDA this year.",
+])
+def test_non_guidance_is_dropped(sentence):
+    from finn.research.guidance import _statement
+    st = _statement(sentence, date(2026, 8, 12))
+    assert st is None or st["metric"] != "ebitda_margin" and "registering" not in sentence and "grew" not in sentence
+
+
+def _series(rows):
+    """rows: {quarter_end: (revenue_cr, ebitda_cr)}"""
+    qs = []
+    for qe, (rev, ebitda) in sorted(rows.items()):
+        qs.append({"quarter_end": qe, "label": qe, "values": {"revenue": rev * 1e7, "ebitda_op_proxy": ebitda * 1e7,
+                                                              "ebitda_margin": ebitda / rev * 100, "pat": None}})
+    return {"quarters": qs, "taxonomy": "indas", "basis": "consolidated"}
+
+
+def _stmt(**kw):
+    base = {"metric": "revenue_growth", "metric_label": "Revenue growth", "direction": "range", "low": 15, "high": 18,
+            "unit": "pct", "period_type": "FY", "period_fy": 2027, "period_label": "FY27", "quote": "q", "page": 3,
+            "speaker": "CFO", "stated_on": "2026-05-15", "source_url": "u", "notes": []}
+    return {**base, **kw}
+
+
+def test_scorecard_fy_growth_pending_then_final():
+    from finn.research.scorecard import build
+    s = _series({"2025-06-30": (100, 20), "2025-09-30": (100, 20), "2025-12-31": (100, 20), "2026-03-31": (100, 20),
+                 "2026-06-30": (116, 22), "2026-09-30": (117, 22)})
+    v = build([_stmt()], s, date(2026, 11, 3))[0]["verdict"]
+    assert v["status"] == "pending" and v["tracking"] == "on track" and round(v["value"], 1) == 16.5
+    s["quarters"] += _series({"2026-12-31": (110, 20), "2027-03-31": (110, 20)})["quarters"]
+    v = build([_stmt()], s, date(2027, 6, 1))[0]["verdict"]
+    assert v["status"] == "missed" and round(v["value"], 2) == 13.25  # 15-18% guided, more than 1pp short
+
+
+def test_scorecard_tolerance_supersession_and_gaps():
+    from finn.research.scorecard import build
+    s = _series({"2025-06-30": (100, 20), "2026-06-30": (114.5, 20)})
+    early = _stmt(stated_on="2026-02-01", low=18, high=20)
+    late = _stmt(stated_on="2026-08-01", low=15, high=18)
+    items = build([early, late], s, date(2026, 11, 3))
+    assert len(items) == 1 and items[0]["revisions"][0]["target"] == "18–20%"  # revised down, trail kept
+    assert items[0]["verdict"]["tracking"] == "slightly behind"  # 14.5% is within 1pp of 15%
+    # a finished year with missing quarters is a data gap, not "pending"
+    gap = build([_stmt(period_fy=2026, period_label="FY26")], _series({"2025-03-31": (90, 18), "2026-03-31": (100, 20)}),
+                date(2026, 11, 3))[0]["verdict"]
+    assert gap["status"] == "not_comparable" and "1 of its 4 quarters" in gap["reason"]
+
+
+def test_scorecard_standing_band_and_abstentions():
+    from finn.research.scorecard import build
+    s = _series({"2026-03-31": (100, 23), "2026-06-30": (100, 26), "2026-09-30": (100, 19)})
+    band = _stmt(metric="ebitda_margin", metric_label="EBITDA margin", low=20, high=24, period_type="standing",
+                 period_fy=None, period_label="standing band", stated_on="2026-02-11")
+    v = build([band], s, date(2026, 11, 3))[0]["verdict"]
+    assert v["status"] == "partial" and "1 of 3 within the band, 1 above it" in v["calc"]
+    for kw, why in [({"metric": "volume_growth"}, "Volumes"), ({"notes": ["may refer to a segment, not the whole company"]}, "segment"),
+                    ({"period_type": "unstated", "period_fy": None}, "No target period")]:
+        assert why in build([_stmt(**kw)], s, date(2026, 11, 3))[0]["verdict"]["reason"]
+
+
+def test_migration_v2_upgrades_an_existing_v1_database(tmp_path):
+    from sqlalchemy import create_engine, inspect, text
+    from finn import migrate
+    eng = create_engine(f"sqlite:///{tmp_path / 'v1.db'}")
+    with eng.begin() as c:  # the v1 shape: research_job without the v2 columns
+        c.execute(text("create table research_job (id integer primary key, ticker varchar(32), state varchar(16), "
+                       "cache_key varchar(128), doc_failures json, attempts integer, created_at timestamp, "
+                       "updated_at timestamp)"))
+        c.execute(text("create table filing (id integer primary key)"))
+        c.execute(text("create table schema_version (version integer primary key, applied_at varchar(32) not null)"))
+        c.execute(text("insert into schema_version values (1, 'x')"))
+    assert migrate.current(eng) == 1 and migrate.upgrade(eng) == [2]
+    cols = {c["name"] for c in inspect(eng).get_columns("research_job")}
+    assert {"report", "finished_at", "requested_via"} <= cols
+
+
+def test_research_queue_rules_and_job_run(tmp_path):
+    from finn.models import ResearchJob
+    from finn.research import jobs
+    db = _live_db(tmp_path)
+    now = datetime(2026, 11, 3, 12, 0)
+    assert jobs.enqueue(db, "drop table;", "app", now) == (None, "not an NSE symbol")
+    j, why = jobs.enqueue(db, "titan", "app", now)
+    assert why == "queued" and j.ticker == "TITAN"
+    assert jobs.enqueue(db, "TITAN", "app", now)[1] == "already queued"
+    for i in range(jobs.MAX_QUEUED - 1):
+        jobs.enqueue(db, f"T{i}", "app", now)
+    assert jobs.enqueue(db, "ONEMORE", "app", now) == (None, "queue full")
+    # queued requests come before demo refreshes, PER_TICK at a time
+    assert [t.ticker for t in jobs.targets(db, now)][0] == "TITAN"
+    done = jobs.run(db, j, None, now, research_fn=lambda t, d, n, log: {"ticker": t, "status": "done", "cache_key": "k",
+                                                                         "summary": {"delivered": 1}, "failures": []})
+    assert done.state == "done" and done.report["summary"] == {"delivered": 1} and done.finished_at == now
+    def boom(*a, **k):
+        raise RuntimeError("NSE down")
+    j2, _ = jobs.enqueue(db, "TITAN", "app", now)
+    assert jobs.run(db, j2, None, now, research_fn=boom).state == "failed"
+    assert "NSE down" in j2.report["failures"][0]["error"]
+
+
+def test_research_api_refuses_requests_on_the_seed_and_serves_reports(tmp_path):
+    import json
+    import os
+    import subprocess
+    import sys
+    from pathlib import Path
+    code = ("import json; from fastapi.testclient import TestClient; from finn.api import app\n"
+            "with TestClient(app) as c:\n"
+            "  out = {'post': c.post('/api/research/TITAN').status_code, 'index': c.get('/api/research').json(),\n"
+            "         'missing': c.get('/api/research/NOPE').status_code}\n"
+            "  print(json.dumps(out))")
+    backend = Path(__file__).resolve().parents[1]
+    run = lambda env: json.loads(subprocess.run([sys.executable, "-c", code], cwd=backend, env={**os.environ, **env},
+                                                capture_output=True, text=True, timeout=60).stdout.strip().splitlines()[-1])
+    seed = run({"FINN_DB_URL": ""})
+    assert seed["post"] == 503 and seed["index"]["can_request"] is False and seed["missing"] == 404
+    url = f"sqlite:///{tmp_path / 'live.db'}"
+    from sqlalchemy import create_engine
+    from finn import migrate
+    migrate.upgrade(create_engine(url))
+    live = run({"FINN_DB_URL": url, "FINN_READ_ONLY": "1"})
+    assert live["post"] == 200 and live["index"]["can_request"] is True
+    assert [q["ticker"] for q in live["index"]["queue"]] == ["TITAN"]

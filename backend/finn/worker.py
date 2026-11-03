@@ -104,6 +104,9 @@ def due(db, now: datetime) -> list[str]:
     x = _last(db, "results_xbrl_recheck")
     if x is None or x.started_at.date() < now.date():
         out.append("xbrl_recheck")
+    from .research import jobs as rjobs
+    if rjobs.needed(db, now):
+        out.append("research")
     return out
 
 
@@ -213,6 +216,12 @@ def _tick(now: datetime) -> list[str]:
             if "xbrl_recheck" in jobs:
                 with stage("xbrl revision check"):
                     recheck_xbrl(db, nse, now)
+            if "research" in jobs:
+                from .research import jobs as rjobs
+                with stage("research"):
+                    for job in rjobs.targets(db, now):
+                        done = rjobs.run(db, job, nse, now)
+                        print(f"  research {done.ticker}: {done.state}", flush=True)
             with stage("alerts"):
                 st = _settings_or_default(db)
                 live.record_announcement_alerts(db, st)

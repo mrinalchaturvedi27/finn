@@ -45,6 +45,16 @@ def normalise(text: str) -> str:
     return NUM_TOKEN.sub(_ocr_digits, text)
 
 
+def normalise_keep_case(text: str) -> str:
+    """Like normalise() but keeps case and line breaks (speaker labels in transcripts start lines)."""
+    text = unicodedata.normalize("NFKC", text)
+    text = _undouble(text)
+    for a, b in LIGATURES.items():
+        text = text.replace(a, b)
+    text = re.sub(r"(\w)-[ \t]*\n[ \t]*(\w)", r"\1\2", text)
+    return re.sub(r"[ \t]+", " ", text).strip()
+
+
 def _ocr_digits(m: re.Match) -> str:
     """OCR'd filings read zeros as the letter o ("9o575.33"); fix only inside numeric tokens."""
     return m.group(0).replace("o", "0")

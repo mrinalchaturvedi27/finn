@@ -24,8 +24,9 @@ SNAPSHOT_MANIFEST = Path(__file__).resolve().parents[1] / "data" / "snapshot" / 
 BOOTED_AT = datetime.now().isoformat(timespec="seconds")
 
 app = FastAPI(title="FINN")
+# Read-only still allows POST /api/research/{ticker}: it only queues a research job (validated, capped).
 app.add_middleware(CORSMiddleware, allow_origins=os.environ.get("FINN_CORS", "*").split(","),
-                   allow_methods=["GET"] if READ_ONLY else ["GET", "PUT"], allow_headers=["*"])
+                   allow_methods=["GET", "POST"] if READ_ONLY else ["GET", "POST", "PUT"], allow_headers=["*"])
 
 # Describes the real schedule of the deployment (set where the worker is scheduled); not a promise.
 SCHEDULE_NOTE = os.environ.get("FINN_SCHEDULE_NOTE", "not scheduled (historical snapshot)")
@@ -242,6 +243,64 @@ def _manifest_captured_at():
         return json.loads(SNAPSHOT_MANIFEST.read_text()).get("captured_at")
     except (OSError, ValueError):
         return None
+
+
+# ---------- research (pull) ----------
+
+def _research_row(j) -> dict:
+    r = j.report or {}
+    return {"ticker": j.ticker, "company": r.get("company"), "state": j.state,
+            "finished_at": j.finished_at.isoformat() if j.finished_at else None,
+            "requested_at": j.created_at.isoformat() if j.created_at else None,
+            "summary": r.get("summary"), "requested_via": j.requested_via}
+
+
+@app.get("/api/research")
+def research_index():
+    from .models import ResearchJob
+    from .research.jobs import demo_tickers
+    with Session() as db:
+        done, open_jobs = {}, []
+        for j in db.scalars(select(ResearchJob).order_by(ResearchJob.id.desc())):
+            if j.state in ("queued", "running"):
+                open_jobs.append(_research_row(j))
+            elif j.state in ("done", "partial") and j.ticker not in done:
+                done[j.ticker] = _research_row(j)
+        return {"reports": sorted(done.values(), key=lambda r: r["ticker"]), "queue": open_jobs,
+                "demo": demo_tickers(), "can_request": dbmod.SOURCE == "live",
+                "schedule": SCHEDULE_NOTE if dbmod.SOURCE == "live" else None}
+
+
+@app.get("/api/research/{ticker}")
+def research_report(ticker: str):
+    from .models import ResearchJob
+    t = ticker.upper()
+    with Session() as db:
+        last = db.scalar(select(ResearchJob).where(ResearchJob.ticker == t, ResearchJob.state.in_(["done", "partial"]))
+                         .order_by(ResearchJob.finished_at.desc()).limit(1))
+        pending = db.scalar(select(ResearchJob).where(ResearchJob.ticker == t, ResearchJob.state.in_(["queued", "running"]))
+                            .limit(1))
+        failed = db.scalar(select(ResearchJob).where(ResearchJob.ticker == t, ResearchJob.state == "failed")
+                           .order_by(ResearchJob.id.desc()).limit(1))
+        if not (last or pending or failed):
+            raise HTTPException(404, "not researched yet")
+        return {"ticker": t, "report": last.report if last else None,
+                "pending": _research_row(pending) if pending else None,
+                "failed": {**_research_row(failed), "failures": (failed.report or {}).get("failures", [])}
+                if failed and (not last or failed.id > last.id) else None,
+                "can_request": dbmod.SOURCE == "live"}
+
+
+@app.post("/api/research/{ticker}")
+def research_request(ticker: str):
+    from .research.jobs import enqueue
+    if dbmod.SOURCE != "live":
+        raise HTTPException(503, "Research requests need the live database; this deployment is showing the snapshot.")
+    with Session() as db:
+        job, why = enqueue(db, ticker, "app", px.now_ist())
+        if job is None:
+            raise HTTPException(400 if why == "not an NSE symbol" else 429, why)
+        return {**_research_row(job), "message": why, "schedule": SCHEDULE_NOTE}
 
 
 @app.get("/api/probe-report")

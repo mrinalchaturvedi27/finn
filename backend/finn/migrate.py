@@ -20,7 +20,20 @@ def _v1_baseline(conn):
     Base.metadata.create_all(conn)
 
 
-MIGRATIONS = {1: _v1_baseline}
+def _add_columns(conn, table: str, cols: dict):
+    have = {c["name"] for c in inspect(conn).get_columns(table)}
+    for name, ddl in cols.items():
+        if name not in have:  # a fresh database already has it from the baseline
+            conn.execute(text(f"alter table {table} add column {name} {ddl}"))
+
+
+def _v2_research_reports(conn):
+    """Research results are stored with their job."""
+    _add_columns(conn, "research_job", {"finished_at": "timestamp", "requested_via": "varchar(16)",
+                                        "report": "json"})
+
+
+MIGRATIONS = {1: _v1_baseline, 2: _v2_research_reports}
 LATEST = max(MIGRATIONS)
 
 

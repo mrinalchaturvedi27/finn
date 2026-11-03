@@ -24,9 +24,12 @@ class SourceError(Exception):
     pass
 
 
-def incomplete(body: bytes, content_length: str | None) -> str | None:
-    """Why a downloaded body is not the whole file, or None. Truncated files are never cached."""
-    if content_length and content_length.isdigit() and len(body) != int(content_length):
+def incomplete(body: bytes, content_length: str | None, content_encoding: str | None = None) -> str | None:
+    """Why a downloaded body is not the whole file, or None. Truncated files are never cached.
+    Content-Length counts the bytes on the wire, so it is only comparable when the body was not
+    compressed (requests decompresses gzip/deflate transparently)."""
+    if (content_length and content_length.isdigit() and not content_encoding
+            and len(body) != int(content_length)):
         return f"{len(body)} of {content_length} bytes"
     if body.startswith(b"%PDF") and b"%%EOF" not in body[-2048:]:
         return "PDF has no end-of-file marker"
@@ -115,7 +118,7 @@ class NSE:
             why = None
             for _ in range(3):  # archives occasionally end a 200 response early
                 r = self._get(url, timeout=60)
-                why = incomplete(r.content, r.headers.get("content-length"))
+                why = incomplete(r.content, r.headers.get("content-length"), r.headers.get("content-encoding"))
                 if not why:
                     body = r.content
                     break
