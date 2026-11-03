@@ -342,8 +342,10 @@ def test_card_rebuild_policy():
     failed = {"results": {"status": "failed"}, "results_attempt": {"at": "2026-11-03T11:00:00", "n_members": 1}}
     assert live.card_due(SimpleNamespace(detail=failed, occurred_at=now), 1, now) is None  # tried 1h ago
     assert live.card_due(SimpleNamespace(detail=failed, occurred_at=now), 1, datetime(2026, 11, 3, 13, 30))
-    old = datetime(2026, 10, 1)
-    assert live.card_due(SimpleNamespace(detail=failed, occurred_at=old), 1, now) is None  # gave up
+    old = datetime(2026, 10, 1)  # weeks old: still retried (a failure may have been FINN's own bug)
+    assert live.card_due(SimpleNamespace(detail=failed, occurred_at=old), 1, datetime(2026, 11, 3, 13, 30))
+    spent = {"results": {"status": "failed"}, "results_attempt": {"at": "2026-11-03T08:00:00", "n_members": 1, "count": 6}}
+    assert live.card_due(SimpleNamespace(detail=spent, occurred_at=now), 1, now) is None  # gave up after 6 attempts
 
 
 def test_xbrl_revision_detected_from_index():

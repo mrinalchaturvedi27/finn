@@ -154,6 +154,7 @@ def rebuild_events(db, tickers: list[str], raw: dict[str, list[dict]], mode: str
                 card = build_results_card(nse, t, co.name if co else None, qe, ann)
                 e.detail = {**(e.detail or {}), "results": card,
                             "results_attempt": {"at": px.now_ist().isoformat(), "why": why,
+                                                "count": ((e.detail or {}).get("results_attempt") or {}).get("count", 0) + 1,
                                                 "n_members": len(ev["member_ids"])}}
                 if card.get("taxonomy") and co:
                     co.reporting_format = {"indas": "industrial", "banking": "bank", "nbfc": "nbfc"}[card["taxonomy"]]

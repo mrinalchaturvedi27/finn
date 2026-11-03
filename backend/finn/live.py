@@ -16,7 +16,7 @@ from .models import Alert, Company, Event, Filing, PriceBar, Setting
 BACKFILL_DAYS = 30
 OVERLAP = timedelta(days=2)  # re-read the tail so late-indexed filings are not missed
 CARD_RETRY = timedelta(hours=2)  # XBRL often lands hours after the outcome PDF
-CARD_RETRY_FOR = timedelta(days=10)
+CARD_MAX_ATTEMPTS = 6  # failed/partial cards are retried every CARD_RETRY up to this many attempts
 XBRL_RECHECK_FOR = timedelta(days=45)
 
 REVISION_RX = re.compile(r"\b(corrigendum|addendum|erratum|errata|rectification|revised|revision)\b", re.I)
@@ -121,7 +121,9 @@ def card_due(e: Event, n_members: int, now: datetime) -> str | None:
         return "no card yet"
     if att.get("n_members", n_members) < n_members:
         return "new filings joined the event"
-    if card.get("status") in ("failed", "partial") and now - e.occurred_at < CARD_RETRY_FOR:
+    # Retry by attempt count, not by the event's age: XBRL can land hours late, and a failure can
+    # also be FINN's own (a fixed bug) on an event weeks old.
+    if card.get("status") in ("failed", "partial") and att.get("count", 1) < CARD_MAX_ATTEMPTS:
         last = datetime.fromisoformat(att["at"]) if att.get("at") else None
         if last is None or now - last >= CARD_RETRY:
             return f"retry {card.get('status')} card"
