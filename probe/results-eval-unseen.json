@@ -1,0 +1,716 @@
+[
+ {
+  "ticker": "KAYNES",
+  "quarter_end": "2026-06-30",
+  "label": "Q1 FY27",
+  "status": "ok",
+  "problems": [],
+  "periods": {
+   "current": {
+    "quarter_end": "2026-06-30",
+    "label": "Q1 FY27",
+    "xbrl_url": "https://nsearchives.nseindia.com/corporate/xbrl/INTEGRATED_FILING_INDAS_1710119_07082026070207_WEB.xml",
+    "filed": "07-Aug-2026 19:02:07",
+    "revisions_superseded": 0,
+    "audited": "Un-Audited",
+    "sha256": "fd563a7552c3914fc207530508faad786ff061452c7d1af2368c15d99835c100",
+    "checks": [
+     {
+      "check": "company",
+      "ok": true,
+      "detail": "filing symbol=KAYNES"
+     },
+     {
+      "check": "basis",
+      "ok": true,
+      "detail": "filing says consolidated"
+     },
+     {
+      "check": "period",
+      "ok": true,
+      "detail": "3-month context 2026-04-01..2026-06-30 found"
+     }
+    ],
+    "rounding": "Millions",
+    "taxonomy": "indas"
+   },
+   "prev_q": {
+    "quarter_end": "2026-03-31",
+    "label": "Q4 FY26",
+    "xbrl_url": "https://nsearchives.nseindia.com/corporate/xbrl/INTEGRATED_FILING_INDAS_1721794_05092026055416_WEB.xml",
+    "filed": null,
+    "revisions_superseded": 2,
+    "audited": "Audited",
+    "sha256": "7fbf7e9851301b3abad4124b917469d216ecce33636296754965426474d64b31",
+    "checks": [
+     {
+      "check": "company",
+      "ok": true,
+      "detail": "filing symbol=KAYNES"
+     },
+     {
+      "check": "basis",
+      "ok": true,
+      "detail": "filing says consolidated"
+     },
+     {
+      "check": "period",
+      "ok": true,
+      "detail": "3-month context 2026-01-01..2026-03-31 found"
+     }
+    ],
+    "rounding": "Millions",
+    "taxonomy": "indas"
+   },
+   "yoy_q": {
+    "quarter_end": "2025-06-30",
+    "label": "Q1 FY26",
+    "xbrl_url": "https://nsearchives.nseindia.com/corporate/xbrl/INTEGRATED_FILING_INDAS_1498497_30072025074123_WEB.xml",
+    "filed": "30-Jul-2025 19:41:24",
+    "revisions_superseded": 0,
+    "audited": "Un-Audited",
+    "sha256": "2bdae24cb2e6ebd0be454c2e6bb4f7f5f29ada9e2d2e7f5b5d017da20c31b75c",
+    "checks": [
+     {
+      "check": "company",
+      "ok": true,
+      "detail": "filing symbol=KAYNES"
+     },
+     {
+      "check": "basis",
+      "ok": true,
+      "detail": "filing says consolidated"
+     },
+     {
+      "check": "period",
+      "ok": true,
+      "detail": "3-month context 2025-04-01..2025-06-30 found"
+     }
+    ],
+    "rounding": "Millions",
+    "taxonomy": "indas"
+   }
+  },
+  "metrics": [
+   {
+    "id": "revenue",
+    "label": "Revenue",
+    "value_kind": "absolute",
+    "calculation_kind": "reported",
+    "formula": null,
+    "note": null,
+    "def_version": 1,
+    "current": 9460170000.0,
+    "locator": "RevenueFromOperations@OneD",
+    "inputs": {},
+    "unavailable_reason": null,
+    "prev_q": 12426380000.0,
+    "prev_q_change": {
+     "value": -23.870266320521342,
+     "state": "ok",
+     "unit": "%"
+    },
+    "yoy_q": 6734660000.0,
+    "yoy_q_change": {
+     "value": 40.469897515242046,
+     "state": "ok",
+     "unit": "%"
+    },
+    "verification_status": "primary_verified",
+    "definition": {
+     "xbrl_concept": "RevenueFromOperations",
+     "status": "matches_print",
+     "comparable_with": "xbrl:RevenueFromOperations"
+    },
+    "pdf_page": 10,
+    "pdf_match": "9,460.17",
+    "corroboration": {
+     "status": "aligned",
+     "page": 10,
+     "match": "9,460.17",
+     "next_tokens": [
+      "1242638",
+      "6,734.66",
+      "36,263.54"
+     ],
+     "aligned": {
+      "by": "yoy_q",
+      "column_offset": 2
+     },
+     "raw": "9,460.17"
+    }
+   },
+   {
+    "id": "ebitda_op_proxy",
+    "label": "Operating EBITDA (calculated)",
+    "value_kind": "absolute",
+    "calculation_kind": "calculated",
+    "formula": "Profit before exceptional items & tax + Finance costs + Depreciation & amortisation \u2212 Other income",
+    "note": "Not company-reported. Excludes other income and exceptional items; definitions vary by company.",
+    "def_version": 1,
+    "current": 1475690000.0,
+    "locator": null,
+    "inputs": {
+     "ProfitBeforeExceptionalItemsAndTax": 878760000.0,
+     "FinanceCosts": 371360000.0,
+     "DepreciationDepletionAndAmortisationExpense": 369880000.0,
+     "OtherIncome": 144310000.0
+    },
+    "unavailable_reason": null,
+    "prev_q": 1936970000.0,
+    "prev_q_change": {
+     "value": -23.814514422009633,
+     "state": "ok",
+     "unit": "%"
+    },
+    "yoy_q": 1130390000.0,
+    "yoy_q_change": {
+     "value": 30.546979361105457,
+     "state": "ok",
+     "unit": "%"
+    },
+    "verification_status": "primary_verified",
+    "definition": {
+     "xbrl_concept": null,
+     "status": "unchecked",
+     "comparable_with": "finn:ebitda_op_proxy@v1"
+    },
+    "pdf_page": null,
+    "input_pages": {
+     "ProfitBeforeExceptionalItemsAndTax": 10,
+     "FinanceCosts": null,
+     "DepreciationDepletionAndAmortisationExpense": 10,
+     "OtherIncome": null
+    },
+    "input_alignment": {
+     "ProfitBeforeExceptionalItemsAndTax": {
+      "by": "yoy_q",
+      "column_offset": 2
+     },
+     "FinanceCosts": null,
+     "DepreciationDepletionAndAmortisationExpense": {
+      "by": "yoy_q",
+      "column_offset": 2
+     },
+     "OtherIncome": null
+    }
+   },
+   {
+    "id": "pbt",
+    "label": "PBT",
+    "value_kind": "absolute",
+    "calculation_kind": "reported",
+    "formula": null,
+    "note": null,
+    "def_version": 1,
+    "current": 878760000.0,
+    "locator": "ProfitBeforeTax@OneD",
+    "inputs": {},
+    "unavailable_reason": null,
+    "prev_q": 1402330000.0,
+    "prev_q_change": {
+     "value": -37.33571983769869,
+     "state": "ok",
+     "unit": "%"
+    },
+    "yoy_q": 960870000.0,
+    "yoy_q_change": {
+     "value": -8.545380748696493,
+     "state": "ok",
+     "unit": "%"
+    },
+    "verification_status": "primary_verified",
+    "definition": {
+     "xbrl_concept": "ProfitBeforeTax",
+     "status": "matches_print",
+     "comparable_with": "xbrl:ProfitBeforeTax"
+    },
+    "pdf_page": 10,
+    "pdf_match": "878.76",
+    "corroboration": {
+     "status": "aligned",
+     "page": 10,
+     "match": "878.76",
+     "next_tokens": [
+      "1,402.33",
+      "960.87",
+      "5,043.14"
+     ],
+     "aligned": {
+      "by": "prev_q",
+      "column_offset": 1
+     },
+     "raw": "878.76"
+    }
+   },
+   {
+    "id": "pat",
+    "label": "PAT",
+    "value_kind": "absolute",
+    "calculation_kind": "reported",
+    "formula": null,
+    "note": "Consolidated PAT includes non-controlling interests where applicable.",
+    "def_version": 1,
+    "current": 564260000.0,
+    "locator": "ProfitLossForPeriod@OneD",
+    "inputs": {},
+    "unavailable_reason": null,
+    "prev_q": 912230000.0,
+    "prev_q_change": {
+     "value": -38.14498536553281,
+     "state": "ok",
+     "unit": "%"
+    },
+    "yoy_q": 746120000.0,
+    "yoy_q_change": {
+     "value": -24.374095319787703,
+     "state": "ok",
+     "unit": "%"
+    },
+    "verification_status": "primary_verified",
+    "definition": {
+     "xbrl_concept": "ProfitLossForPeriod",
+     "status": "unchecked",
+     "comparable_with": "xbrl:ProfitLossForPeriod"
+    },
+    "pdf_page": null,
+    "corroboration": {
+     "status": "not_located"
+    }
+   },
+   {
+    "id": "ebitda_margin",
+    "label": "Operating EBITDA margin",
+    "value_kind": "margin_pct",
+    "calculation_kind": "calculated",
+    "formula": "Operating EBITDA (calculated) \u00f7 Revenue",
+    "note": null,
+    "def_version": 1,
+    "current": 15.598979722351714,
+    "locator": null,
+    "inputs": {
+     "ebitda_op_proxy": 1475690000.0,
+     "revenue": 9460170000.0
+    },
+    "unavailable_reason": null,
+    "prev_q": 15.587564519996974,
+    "prev_q_change": {
+     "value": 0.011415202354740472,
+     "state": "ok",
+     "unit": "pp"
+    },
+    "yoy_q": 16.784663219821045,
+    "yoy_q_change": {
+     "value": -1.1856834974693307,
+     "state": "ok",
+     "unit": "pp"
+    },
+    "verification_status": "primary_verified",
+    "definition": {
+     "xbrl_concept": null,
+     "status": "unchecked",
+     "comparable_with": "finn:ebitda_margin@v1"
+    },
+    "pdf_page": null,
+    "input_pages": {},
+    "input_alignment": {}
+   }
+  ],
+  "pdf": {
+   "url": "https://nsearchives.nseindia.com/corporate/KAYNESTECH_07082026184230_Outcomesigned.pdf",
+   "subject": "Outcome of Board Meeting",
+   "filed": "07-Aug-2026 18:43:27",
+   "seq_id": "106732027",
+   "sha256": "1f0799ddabe57b865758e947419aec04d704c6e40120e3f90916d89cc9020eb8",
+   "n_pages": 15,
+   "checks": [
+    {
+     "check": "company",
+     "ok": true,
+     "detail": "tokens ['kaynes', 'technology']"
+    },
+    {
+     "check": "period_end",
+     "ok": true,
+     "detail": "2026-06-30"
+    },
+    {
+     "check": "basis",
+     "ok": true,
+     "detail": "consolidated"
+    },
+    {
+     "check": "table_header",
+     "ok": true,
+     "detail": "quarter/three months ended"
+    }
+   ],
+   "text_pages": 15,
+   "statement_page_repairs": []
+  },
+  "basis": "Consolidated",
+  "taxonomy": "indas",
+  "rounding": "Millions",
+  "statement_page": 10
+ },
+ {
+  "ticker": "TITAN",
+  "quarter_end": "2026-06-30",
+  "label": "Q1 FY27",
+  "status": "ok",
+  "problems": [],
+  "periods": {
+   "current": {
+    "quarter_end": "2026-06-30",
+    "label": "Q1 FY27",
+    "xbrl_url": "https://nsearchives.nseindia.com/corporate/xbrl/INTEGRATED_FILING_INDAS_1710081_07082026064307_WEB.xml",
+    "filed": "07-Aug-2026 18:43:07",
+    "revisions_superseded": 0,
+    "audited": "Un-Audited",
+    "sha256": "a1d9eb5bdded074ba0c780fc92b58a3661ba7e3410b758588a5f4bb677801a85",
+    "checks": [
+     {
+      "check": "company",
+      "ok": true,
+      "detail": "filing symbol=TITAN"
+     },
+     {
+      "check": "basis",
+      "ok": true,
+      "detail": "filing says consolidated"
+     },
+     {
+      "check": "period",
+      "ok": true,
+      "detail": "3-month context 2026-04-01..2026-06-30 found"
+     }
+    ],
+    "rounding": "Crores",
+    "taxonomy": "indas"
+   },
+   "prev_q": {
+    "quarter_end": "2026-03-31",
+    "label": "Q4 FY26",
+    "xbrl_url": "https://nsearchives.nseindia.com/corporate/xbrl/INTEGRATED_FILING_INDAS_1665068_08052026074730_WEB.xml",
+    "filed": "08-May-2026 19:47:24",
+    "revisions_superseded": 0,
+    "audited": "Audited",
+    "sha256": "d8e7cb35d8f6e96fc2eed5a4eba0be4d5dd3d76e2c4f77d7c6a39e326e018c2e",
+    "checks": [
+     {
+      "check": "company",
+      "ok": true,
+      "detail": "filing symbol=TITAN"
+     },
+     {
+      "check": "basis",
+      "ok": true,
+      "detail": "filing says consolidated"
+     },
+     {
+      "check": "period",
+      "ok": true,
+      "detail": "3-month context 2026-01-01..2026-03-31 found"
+     }
+    ],
+    "rounding": "Crores",
+    "taxonomy": "indas"
+   },
+   "yoy_q": {
+    "quarter_end": "2025-06-30",
+    "label": "Q1 FY26",
+    "xbrl_url": "https://nsearchives.nseindia.com/corporate/xbrl/INTEGRATED_FILING_INDAS_1506412_08082025123555_WEB.xml",
+    "filed": "08-Aug-2025 12:35:55",
+    "revisions_superseded": 0,
+    "audited": "Un-Audited",
+    "sha256": "804518cb2e0ff6011db2aa91df6847d6045fca5bcec996ea918c334a878524ba",
+    "checks": [
+     {
+      "check": "company",
+      "ok": true,
+      "detail": "filing symbol=TITAN"
+     },
+     {
+      "check": "basis",
+      "ok": true,
+      "detail": "filing says consolidated"
+     },
+     {
+      "check": "period",
+      "ok": true,
+      "detail": "3-month context 2025-04-01..2025-06-30 found"
+     }
+    ],
+    "rounding": "Crores",
+    "taxonomy": "indas"
+   }
+  },
+  "metrics": [
+   {
+    "id": "revenue",
+    "label": "Revenue",
+    "value_kind": "absolute",
+    "calculation_kind": "reported",
+    "formula": null,
+    "note": null,
+    "def_version": 1,
+    "current": 213560000000.0,
+    "locator": "RevenueFromOperations@OneD",
+    "inputs": {},
+    "unavailable_reason": null,
+    "prev_q": 269200000000.0,
+    "prev_q_change": {
+     "value": -20.66864784546805,
+     "state": "ok",
+     "unit": "%"
+    },
+    "yoy_q": 165230000000.0,
+    "yoy_q_change": {
+     "value": 29.250136173818316,
+     "state": "ok",
+     "unit": "%"
+    },
+    "verification_status": "primary_verified",
+    "definition": {
+     "xbrl_concept": "RevenueFromOperations",
+     "status": "unchecked",
+     "comparable_with": "xbrl:RevenueFromOperations"
+    },
+    "pdf_page": null,
+    "corroboration": {
+     "status": "not_located"
+    }
+   },
+   {
+    "id": "ebitda_op_proxy",
+    "label": "Operating EBITDA (calculated)",
+    "value_kind": "absolute",
+    "calculation_kind": "calculated",
+    "formula": "Profit before exceptional items & tax + Finance costs + Depreciation & amortisation \u2212 Other income",
+    "note": "Not company-reported. Excludes other income and exceptional items; definitions vary by company.",
+    "def_version": 1,
+    "current": 28900000000.0,
+    "locator": null,
+    "inputs": {
+     "ProfitBeforeExceptionalItemsAndTax": 24270000000.0,
+     "FinanceCosts": 3530000000.0,
+     "DepreciationDepletionAndAmortisationExpense": 2560000000.0,
+     "OtherIncome": 1460000000.0
+    },
+    "unavailable_reason": null,
+    "prev_q": 19370000000.0,
+    "prev_q_change": {
+     "value": 49.199793495095506,
+     "state": "ok",
+     "unit": "%"
+    },
+    "yoy_q": 18300000000.0,
+    "yoy_q_change": {
+     "value": 57.92349726775956,
+     "state": "ok",
+     "unit": "%"
+    },
+    "verification_status": "primary_verified",
+    "definition": {
+     "xbrl_concept": null,
+     "status": "unchecked",
+     "comparable_with": "finn:ebitda_op_proxy@v1"
+    },
+    "pdf_page": null,
+    "input_pages": {
+     "ProfitBeforeExceptionalItemsAndTax": 9,
+     "FinanceCosts": 9,
+     "DepreciationDepletionAndAmortisationExpense": 9,
+     "OtherIncome": 9
+    },
+    "input_alignment": {
+     "ProfitBeforeExceptionalItemsAndTax": {
+      "by": "prev_q",
+      "column_offset": 1
+     },
+     "FinanceCosts": {
+      "by": "prev_q",
+      "column_offset": 1
+     },
+     "DepreciationDepletionAndAmortisationExpense": {
+      "by": "prev_q",
+      "column_offset": 1
+     },
+     "OtherIncome": {
+      "by": "prev_q",
+      "column_offset": 1
+     }
+    }
+   },
+   {
+    "id": "pbt",
+    "label": "PBT",
+    "value_kind": "absolute",
+    "calculation_kind": "reported",
+    "formula": null,
+    "note": "As tagged in the filing: before share of associates/JVs (\u20b92.00 cr this quarter). The printed 'profit before tax' line may include it.",
+    "def_version": 1,
+    "current": 24270000000.0,
+    "locator": "ProfitBeforeTax@OneD",
+    "inputs": {},
+    "unavailable_reason": null,
+    "prev_q": 15760000000.0,
+    "prev_q_change": {
+     "value": 53.99746192893401,
+     "state": "ok",
+     "unit": "%"
+    },
+    "yoy_q": 14800000000.0,
+    "yoy_q_change": {
+     "value": 63.986486486486484,
+     "state": "ok",
+     "unit": "%"
+    },
+    "verification_status": "primary_verified",
+    "definition": {
+     "xbrl_concept": "ProfitBeforeTax",
+     "status": "matches_print",
+     "comparable_with": "xbrl:ProfitBeforeTax"
+    },
+    "pdf_page": 9,
+    "pdf_match": "2,427",
+    "corroboration": {
+     "status": "aligned",
+     "page": 9,
+     "match": "2,427",
+     "next_tokens": [
+      "1,525",
+      "1,480",
+      "6,901"
+     ],
+     "aligned": {
+      "by": "yoy_q",
+      "column_offset": 2
+     },
+     "raw": "2,427"
+    }
+   },
+   {
+    "id": "pat",
+    "label": "PAT",
+    "value_kind": "absolute",
+    "calculation_kind": "reported",
+    "formula": null,
+    "note": "Consolidated PAT includes non-controlling interests where applicable.",
+    "def_version": 1,
+    "current": 17770000000.0,
+    "locator": "ProfitLossForPeriod@OneD",
+    "inputs": {},
+    "unavailable_reason": null,
+    "prev_q": 11790000000.0,
+    "prev_q_change": {
+     "value": 50.72094995759117,
+     "state": "ok",
+     "unit": "%"
+    },
+    "yoy_q": 10910000000.0,
+    "yoy_q_change": {
+     "value": 62.87809349220899,
+     "state": "ok",
+     "unit": "%"
+    },
+    "verification_status": "primary_verified",
+    "definition": {
+     "xbrl_concept": "ProfitLossForPeriod",
+     "status": "matches_print",
+     "comparable_with": "xbrl:ProfitLossForPeriod"
+    },
+    "pdf_page": 9,
+    "pdf_match": "1,777",
+    "corroboration": {
+     "status": "aligned",
+     "page": 9,
+     "match": "1,777",
+     "next_tokens": [
+      "1,179",
+      "1,091",
+      "5,073"
+     ],
+     "aligned": {
+      "by": "prev_q",
+      "column_offset": 1
+     },
+     "raw": "1,777"
+    }
+   },
+   {
+    "id": "ebitda_margin",
+    "label": "Operating EBITDA margin",
+    "value_kind": "margin_pct",
+    "calculation_kind": "calculated",
+    "formula": "Operating EBITDA (calculated) \u00f7 Revenue",
+    "note": null,
+    "def_version": 1,
+    "current": 13.53249672223263,
+    "locator": null,
+    "inputs": {
+     "ebitda_op_proxy": 28900000000.0,
+     "revenue": 213560000000.0
+    },
+    "unavailable_reason": null,
+    "prev_q": 7.195393759286775,
+    "prev_q_change": {
+     "value": 6.337102962945854,
+     "state": "ok",
+     "unit": "pp"
+    },
+    "yoy_q": 11.075470556194396,
+    "yoy_q_change": {
+     "value": 2.457026166038233,
+     "state": "ok",
+     "unit": "pp"
+    },
+    "verification_status": "primary_verified",
+    "definition": {
+     "xbrl_concept": null,
+     "status": "unchecked",
+     "comparable_with": "finn:ebitda_margin@v1"
+    },
+    "pdf_page": null,
+    "input_pages": {},
+    "input_alignment": {}
+   }
+  ],
+  "pdf": {
+   "url": "https://nsearchives.nseindia.com/corporate/TITAN_07082026160159_SEresultQ127.pdf",
+   "subject": "Outcome of Board Meeting",
+   "filed": "07-Aug-2026 16:04:29",
+   "seq_id": "106731256",
+   "sha256": "6644d1b4400fb02be6176fc0b5283657a73d662f616297f5675f641d9177f01c",
+   "n_pages": 20,
+   "checks": [
+    {
+     "check": "company",
+     "ok": true,
+     "detail": "tokens ['titan', 'company']"
+    },
+    {
+     "check": "period_end",
+     "ok": true,
+     "detail": "2026-06-30"
+    },
+    {
+     "check": "basis",
+     "ok": true,
+     "detail": "consolidated"
+    },
+    {
+     "check": "table_header",
+     "ok": true,
+     "detail": "quarter/three months ended"
+    }
+   ],
+   "text_pages": 20,
+   "statement_page_repairs": []
+  },
+  "basis": "Consolidated",
+  "taxonomy": "indas",
+  "rounding": "Crores",
+  "statement_page": 9
+ }
+]

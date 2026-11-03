@@ -1,0 +1,177 @@
+{
+  "_about": "Manually confirmed Q2 FY27 (quarter ended 2026-09-30) results filings. Each entry was checked by reading the statement page text: correct company, consolidated basis, 30-Sep-2026 quarter column, and the value sits in the current-quarter column of the named row. Values are in the filing's printed units. Confirmed 2026-11-03. Column alignment: the next printed column must equal the comparison period value from its own XBRL filing (\"aligned_by\").",
+  "filings": [
+    {
+      "ticker": "INFY",
+      "taxonomy": "indas",
+      "printed_units": "crores",
+      "pdf": "https://nsearchives.nseindia.com/corporate/Infosys_23102026160704_BM_Outcome_Oct232026_1.pdf",
+      "statement_page": 162,
+      "pdf_pages": 195,
+      "rows": {
+        "revenue": [
+          "revenue from operations",
+          "49,244"
+        ],
+        "pbt": [
+          "profit before tax",
+          "11,063"
+        ],
+        "pat": [
+          "profit for the period",
+          "7,838"
+        ]
+      },
+      "notes": "195-page outcome file; Ind AS consolidated statement is on p.162 (earlier pages hold IFRS/standalone). Prints current then year-ago quarter (no previous-quarter column), so alignment is confirmed by the year-ago value.",
+      "aligned_by": "yoy_q"
+    },
+    {
+      "ticker": "HDFCBANK",
+      "taxonomy": "banking",
+      "printed_units": "crores",
+      "pdf": "https://nsearchives.nseindia.com/corporate/HDFCBANK_17102026135520_OutcomeofBMResults_17oct2026.pdf",
+      "statement_page": 9,
+      "pdf_pages": 24,
+      "rows": {
+        "ppop": [
+          "operating profit before provisions and contingencies",
+          "32871.54"
+        ],
+        "provisions": [
+          "provisions (other than tax) and contingencies",
+          "4209.00"
+        ],
+        "pat": [
+          "net profit for the period",
+          "20700.03"
+        ]
+      },
+      "known_mismatch": {
+        "pbt": {
+          "status": "definition_differs",
+          "xbrl_concept": "ProfitLossFromOrdinaryActivitiesBeforeTax",
+          "printed_value": "28662.54"
+        }
+      },
+      "notes": "OCR text layer reads zero as letter o; repaired inside numeric tokens.",
+      "aligned_by": "prev_q"
+    },
+    {
+      "ticker": "BAJFINANCE",
+      "taxonomy": "nbfc",
+      "printed_units": "crores",
+      "pdf": "https://nsearchives.nseindia.com/corporate/BAJFINANCE_19102026172017_BMOutcome_19102026.pdf",
+      "statement_page": 14,
+      "pdf_pages": 48,
+      "rows": {
+        "revenue": [
+          "total revenue from operations",
+          "24,546.37"
+        ],
+        "pat": [
+          "profit after tax",
+          "6,366.57"
+        ]
+      },
+      "known_mismatch": {
+        "pbt": {
+          "status": "definition_differs",
+          "xbrl_concept": "ProfitBeforeTax",
+          "printed_value": "8,537.20"
+        }
+      },
+      "aligned_by": "prev_q"
+    },
+    {
+      "ticker": "DIXON",
+      "taxonomy": "indas",
+      "printed_units": "crores",
+      "pdf": "https://nsearchives.nseindia.com/corporate/DIXON_30102026160547_Outcome30102026.pdf",
+      "statement_page": 11,
+      "pdf_pages": 14,
+      "rows": {
+        "revenue": [
+          "revenue from operations",
+          "21,793.64"
+        ],
+        "pbt": [
+          "profit before share of profit of joint ventures and tax",
+          "529.54"
+        ],
+        "pat": [
+          "net profit for the period/year",
+          "410.87"
+        ]
+      },
+      "notes": "OCR layer doubles every glyph; collapsed per page when >=60% of tokens are doubled. XBRL PBT is the pre-JV line.",
+      "aligned_by": "prev_q"
+    },
+    {
+      "ticker": "POLYCAB",
+      "taxonomy": "indas",
+      "printed_units": "millions",
+      "pdf": "https://nsearchives.nseindia.com/corporate/POLYCAB_15102026125737_OutcomeofBoardMeeting.pdf",
+      "statement_page": 4,
+      "pdf_pages": 14,
+      "rows": {
+        "revenue": [
+          "revenue from operations",
+          "98,989.01"
+        ],
+        "pbt": [
+          "profit before share of profit/(loss) of joint venture",
+          "13,062.20"
+        ],
+        "pat": [
+          "profit for the period",
+          "9,899.97"
+        ]
+      },
+      "notes": "Printed in millions with Indian digit grouping (1,81,086.33).",
+      "aligned_by": "prev_q"
+    },
+    {
+      "ticker": "ETERNAL",
+      "taxonomy": "indas",
+      "printed_units": "crores",
+      "pdf": "https://nsearchives.nseindia.com/corporate/ZOMATO_21102026152051_OutcomeSIGNED.pdf",
+      "statement_page": 11,
+      "pdf_pages": 21,
+      "rows": {
+        "revenue": [
+          "revenue from operations",
+          "24,138"
+        ],
+        "pbt": [
+          "profit before exceptional items and tax",
+          "323"
+        ],
+        "pat": [
+          "profit for the period / year",
+          "125"
+        ]
+      },
+      "notes": "Heavy OCR noise; 3-digit values only accepted with row-label association. Exceptional items nil, so pre-exceptional PBT equals PBT.",
+      "aligned_by": "prev_q"
+    }
+  ],
+  "rejected": [
+    {
+      "ticker": "DEEPAKNTR",
+      "pdf": "https://nsearchives.nseindia.com/corporate/DEEPAKNTR_29102026183918_NSE-29-10-2026-bm-ufr.pdf",
+      "reason": "Scanned image: 1 of 10 pages has a text layer; basis and table header could not be confirmed. Card shows XBRL values with no page corroboration."
+    }
+  ],
+  "not_yet_reported": [
+    "DIVISLAB",
+    "TITAN",
+    "IRCTC",
+    "KAYNES"
+  ],
+  "unseen_ticker_check": {
+    "ticker": "KAYNES",
+    "quarter_end": "2026-06-30",
+    "statement_page": 10,
+    "result": "card built; revenue/PBT/PAT located"
+  }
+}

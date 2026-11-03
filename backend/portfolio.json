@@ -1,0 +1,24 @@
+{
+  "portfolio": [
+    {"ticker": "HDFCBANK", "sector": "Private bank"},
+    {"ticker": "ICICIBANK", "sector": "Private bank"},
+    {"ticker": "BAJFINANCE", "sector": "NBFC"},
+    {"ticker": "INFY", "sector": "IT services"},
+    {"ticker": "PERSISTENT", "sector": "IT services"},
+    {"ticker": "KPITTECH", "sector": "Auto software"},
+    {"ticker": "RELIANCE", "sector": "Conglomerate"},
+    {"ticker": "LT", "sector": "Engineering & construction"},
+    {"ticker": "SUNPHARMA", "sector": "Pharma"},
+    {"ticker": "DIVISLAB", "sector": "Pharma (API)"},
+    {"ticker": "TITAN", "sector": "Jewellery & watches"},
+    {"ticker": "TRENT", "sector": "Retail"},
+    {"ticker": "ASIANPAINT", "sector": "Paints"},
+    {"ticker": "DIXON", "sector": "Electronics manufacturing"},
+    {"ticker": "POLYCAB", "sector": "Cables & wires"},
+    {"ticker": "ETERNAL", "sector": "Food delivery & quick commerce"},
+    {"ticker": "IRCTC", "sector": "Railways (PSU)"},
+    {"ticker": "DEEPAKNTR", "sector": "Chemicals"}
+  ],
+  "research_demo": ["HAL", "CDSL", "ASTRAL", "PIDILITIND"],
+  "unseen_check": ["KAYNES"]
+}

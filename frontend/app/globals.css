@@ -1,0 +1,68 @@
+@import "tailwindcss";
+
+:root {
+  --bg: #f6f5f1;
+  --surface: #ffffff;
+  --surface-2: #efede7;
+  --ink: #16181d;
+  --muted: #6b6f78;
+  --faint: #9a9ea6;
+  --line: #e3e0d8;
+  --up: #0f7b4b;
+  --down: #c2362b;
+  --warn: #9a5b00;
+  --warn-bg: #fdf3e1;
+  --accent: #2b4fd8;
+  --top: #16181d;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #0e0f12;
+    --surface: #17191e;
+    --surface-2: #1f2228;
+    --ink: #eceae4;
+    --muted: #9a9ea8;
+    --faint: #6c7079;
+    --line: #2a2d34;
+    --up: #3fbf7f;
+    --down: #ff6b5e;
+    --warn: #f0b45a;
+    --warn-bg: #2a2213;
+    --accent: #8ea6ff;
+    --top: #eceae4;
+  }
+}
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-ink: var(--ink);
+  --color-muted: var(--muted);
+  --color-faint: var(--faint);
+  --color-line: var(--line);
+  --color-up: var(--up);
+  --color-down: var(--down);
+  --color-warn: var(--warn);
+  --color-warn-bg: var(--warn-bg);
+  --color-accent: var(--accent);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+html,
+body {
+  background: var(--bg);
+  color: var(--ink);
+}
+
+body {
+  font-family: var(--font-geist-sans), system-ui, sans-serif;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.num {
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum";
+}

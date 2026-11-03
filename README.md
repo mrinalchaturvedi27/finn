@@ -1,0 +1,56 @@
+# FINN — Financial Investment Agent (ENAM build challenge)
+
+Mobile-first investor brief: portfolio filings ranked by what matters, with results
+numbers taken from the company's own XBRL filing and located on the printed statement page.
+
+**Status: milestone 1** — seeded historical snapshot (visibly labelled), ranked brief,
+results detail view, price/volume thresholds, freshness indicators.
+Cloud source access is **unverified** until `probe/source_probe.py` runs on the backend host.
+
+## Layout
+```
+backend/   FastAPI + SQLite. finn/models.py is the frozen evidence model.
+  finn/extract/results.py   XBRL -> validated metrics -> page-level PDF corroboration
+  finn/classify.py          category and materiality (separate)
+  finn/events.py            grouping / dedup of related filings
+  finn/prices.py            per-ticker EOD thresholds, staleness
+frontend/  Next.js (app router), mobile-first
+probe/     source-access probe, results evaluation, manually confirmed fixture
+```
+
+## Run locally
+```
+python3 -m venv .venv && .venv/bin/pip install -r backend/requirements.txt
+cd backend && ../.venv/bin/python -m finn.ingest snapshot --replay data/snapshot   # offline, reproducible
+../.venv/bin/uvicorn finn.api:app --port 8000
+cd ../frontend && npm install && NEXT_PUBLIC_API_BASE=http://localhost:8000 npm run dev
+```
+Tests: `cd backend && ../.venv/bin/python -m pytest` (add `FINN_NETWORK_TESTS=1` for the
+regression run against `probe/results_confirmed.json`).
+
+## Seeding (reproducible)
+`backend/data/snapshot/` holds everything the seeded database is built from, captured
+2026-11-03 11:24 IST: NSE API responses, results XBRL files, raw extracted PDF text (not the
+PDFs), price bars, and the capture clock. `--replay` rebuilds the identical database offline
+(asserted in `tests/test_core.py::test_snapshot_replay_is_offline_and_reproducible`).
+To capture a new snapshot: `python -m finn.ingest snapshot --days 30 --record data/snapshot-<date>`.
+
+## Deployment (milestone 1)
+- Backend on Render (Docker). The image seeds the snapshot at build; set `FINN_CORS` to the
+  Vercel origin. Free instances sleep and have ephemeral disk — fine for a labelled snapshot,
+  not for persistent settings or live ingestion (those need durable storage + scheduled jobs).
+- Frontend on Vercel with `NEXT_PUBLIC_API_BASE` set to the Render URL.
+- Cloud source probe: `python probe/source_probe.py --out -` from the Render shell/job.
+
+## Data decisions
+- **Results numbers** come from NSE Integrated Filing XBRL (one file per quarter × basis; latest
+  revision wins). Each file is checked for company, basis and a 3-month period context before use.
+- **Corroboration**: a reported value counts as located only when it sits after its row label
+  *and* the next printed column equals the comparison quarter's value from that quarter's own
+  XBRL filing (column alignment). States: aligned · column unconfirmed · definition differs ·
+  not located · no PDF. OCR repairs are applied to a copy; raw text is kept and shown.
+- **Definition differs** (e.g. HDFC Bank, Bajaj Finance PBT): the XBRL concept is kept and
+  labelled, and excluded from comparisons that need the printed figure.
+- **EBITDA** is not in the filing; shown as *Operating EBITDA (calculated)* with its formula.
+  Banks and NBFCs use their own metric sets.
+- **BSE** fallback currently returns 403 (preserved in probe reports); not pursued in milestone 1.

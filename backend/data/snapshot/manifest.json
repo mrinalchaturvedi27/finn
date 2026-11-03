@@ -1,0 +1,357 @@
+{
+ "captured_at": "2026-11-03T11:41:39",
+ "urls": {
+  "https://nsearchives.nseindia.com/corporate/ASIANPAINT_29102026140936_OutcomeofBM29102026signed.pdf": {
+   "kind": "pdf",
+   "sha256": "56846f56b0a414ee14e323bf1855a8472723e5f761b85cf79df0a08d1b9240af"
+  },
+  "https://nsearchives.nseindia.com/corporate/BAJFINANCE_19102026172017_BMOutcome_19102026.pdf": {
+   "kind": "pdf",
+   "sha256": "fdd01f6b9d2a9b6468518471df7221303a71a93544175633b9737ee2acd6ff33"
+  },
+  "https://nsearchives.nseindia.com/corporate/DEEPAKNTR_29102026183918_NSE-29-10-2026-bm-ufr.pdf": {
+   "kind": "pdf",
+   "sha256": "bfbf4d433e1cc6fa8514c5c7c1b0673565a22e2cef4b540213d135e258f87b45"
+  },
+  "https://nsearchives.nseindia.com/corporate/DIXON_30102026160547_Outcome30102026.pdf": {
+   "kind": "pdf",
+   "sha256": "7bb496c842e8c6da8a311d9d5f9510b87b6d1191667fd32d267d9168efebc4b2"
+  },
+  "https://nsearchives.nseindia.com/corporate/HDFCBANK_17102026135520_OutcomeofBMResults_17oct2026.pdf": {
+   "kind": "pdf",
+   "sha256": "1a25f460842bbd8e3632a000cdbc625d7aa1ec2934d3b0d8b60d270bb33e3bdf"
+  },
+  "https://nsearchives.nseindia.com/corporate/ICICI2022_17102026152039_NSEBSE17102026.pdf": {
+   "kind": "pdf",
+   "sha256": "b28a719174d31592413f317e9baf527e4dd127f18b2468179d9cc0bfa74fabd1"
+  },
+  "https://nsearchives.nseindia.com/corporate/Infosys_23102026160704_BM_Outcome_Oct232026_1.pdf": {
+   "kind": "pdf",
+   "sha256": "65e459d2b8bc4ed1e754d15250e209f68db29d06e0b98593c7a023d29b6ef151"
+  },
+  "https://nsearchives.nseindia.com/corporate/KPITTECH_28102026124748_Outcome_NSE.pdf": {
+   "kind": "pdf",
+   "sha256": "23a686abe60dd11e5819f7f977c5a0ffa2bb61e30af3ed58757c9848e3c32c3f"
+  },
+  "https://nsearchives.nseindia.com/corporate/PAM_27102026171156_LTSep2026.pdf": {
+   "kind": "pdf",
+   "sha256": "da335b2be356b8fb865b45c14aa8082b9f232cd218d1cbdea4954947771ebdb4"
+  },
+  "https://nsearchives.nseindia.com/corporate/PERSISTENTUSER1_15102026155331_PSLBMOutcomeOctober152026159signed.pdf": {
+   "kind": "pdf",
+   "sha256": "332b82921b260e4deb2fb3cecd88294a5c0a57e5d80705b23cf708c0b69872e2"
+  },
+  "https://nsearchives.nseindia.com/corporate/POLYCAB_15102026125737_OutcomeofBoardMeeting.pdf": {
+   "kind": "pdf",
+   "sha256": "79e9770fac27e6a469ed0d29890f42e357535595cf91b3f3423eeaa5b1411d69"
+  },
+  "https://nsearchives.nseindia.com/corporate/SUNSEC_30102026141321_BMOutcomeFinancialoct26signed.pdf": {
+   "kind": "pdf",
+   "sha256": "a61d4ac3bb8430419e443083de66f0e77bc9a714a8bfe141d067fdbbbec85c33"
+  },
+  "https://nsearchives.nseindia.com/corporate/TRENT_29102026160446_DraftOutcomeofBM.pdf": {
+   "kind": "pdf",
+   "sha256": "3d238861f122612281c0ce4ccd21b8b9cfda3f4f09b8473d7cf87d884aafa568"
+  },
+  "https://nsearchives.nseindia.com/corporate/kavinavora_30102026193935_SE_30102026_Results.pdf": {
+   "kind": "pdf",
+   "sha256": "7c1b0618fa7aeb2d2e951aa54ef31e88639aa44031ece74eced1e1fd96ee32db"
+  },
+  "https://nsearchives.nseindia.com/corporate/xbrl/INTEGRATED_FILING_BANKING_1553886_18102025082322_WEB.xml": {
+   "kind": "blob",
+   "sha256": "d7431b6f7c0c3e5386683b713a28e75485f31faf0908999f9964b5faa5d3a0de"
+  },
+  "https://nsearchives.nseindia.com/corporate/xbrl/INTEGRATED_FILING_BANKING_1553893_18102025083009_WEB.xml": {
+   "kind": "blob",
+   "sha256": "0e5199052b0a12b2595e2817f2194a3f24172332d0f2c6619c857d9f797f4611"
+  },
+  "https://nsearchives.nseindia.com/corporate/xbrl/INTEGRATED_FILING_BANKING_1696123_18072026040126_WEB.xml": {
+   "kind": "blob",
+   "sha256": "7c5f4cfae145b0ac20dcbb7081c6a76488fb1ffea1b42e49ddd4a6f46d6cf38b"
+  },
+  "https://nsearchives.nseindia.com/corporate/xbrl/INTEGRATED_FILING_BANKING_1696196_18072026050643_WEB.xml": {
+   "kind": "blob",
+   "sha256": "ded5800004dd276f7b81110c4be9ed449eb2c7281ee3bb3e67519cf6448a4cb4"
+  },
+  "https://nsearchives.nseindia.com/corporate/xbrl/INTEGRATED_FILING_BANKING_1740887_17102026052842_WEB.xml": {
+   "kind": "blob",
+   "sha256": "615348fca1872145ef64f390d725bc196359c61dec88ddf49f8ab8deb920dc5d"
+  },
+  "https://nsearchives.nseindia.com/corporate/xbrl/INTEGRATED_FILING_BANKING_1740913_17102026054812_WEB.xml": {
+   "kind": "blob",
+   "sha256": "41840bebf50eacb915fe9ddd2d7cd2bace3d6fffdaa0898a482bd56ddd94aa3b"
+  },
+  "https://nsearchives.nseindia.com/corporate/xbrl/INTEGRATED_FILING_INDAS_1548199_14102025081605_WEB.xml": {
+   "kind": "blob",
+   "sha256": "126955983b050a87896e4aa5bd222812b19d270337a8afff3056bc16bba1e66b"
+  },
+  "https://nsearchives.nseindia.com/corporate/xbrl/INTEGRATED_FILING_INDAS_1551001_16102025094433_WEB.xml": {
+   "kind": "blob",
+   "sha256": "412f184d7ef6ed8d9c24a53f784abf76038f2ba49ed5f88533bdbd6685b0256f"
+  },
+  "https://nsearchives.nseindia.com/corporate/xbrl/INTEGRATED_FILING_INDAS_1552465_17102025061553_WEB.xml": {
+   "kind": "blob",
+   "sha256": "acd6d5720ceb9f2c2e8b67c1712020e5dbd765c354d373710f5d03e0e3f853b6"
+  },
+  "https://nsearchives.nseindia.com/corporate/xbrl/INTEGRATED_FILING_INDAS_1552809_17102025073643_WEB.xml": {
+   "kind": "blob",
+   "sha256": "0c5a20faaa6718ecca3567a560c8cd0b07ba6246a336538e079b33153c6ab720"
+  },
+  "https://nsearchives.nseindia.com/corporate/xbrl/INTEGRATED_FILING_INDAS_1552946_17102025091526_WEB.xml": {
+   "kind": "blob",
+   "sha256": "2059afc0b4c9c6a8bdac43aa92c8288d03d1624bb0da957ccbdbe2a231953d7a"
+  },
+  "https://nsearchives.nseindia.com/corporate/xbrl/INTEGRATED_FILING_INDAS_1560629_29102025075509_WEB.xml": {
+   "kind": "blob",
+   "sha256": "2f6cdc1c632f33641de94ad4177fa8f86f67aa5958f65ff8e0043ea908299927"
+  },
+  "https://nsearchives.nseindia.com/corporate/xbrl/INTEGRATED_FILING_INDAS_1566095_05112025070548_WEB.xml": {
+   "kind": "blob",
+   "sha256": "c382c7668b96d1761bce363cf9130e8bd726bd6b9bd8848b41cfd64a582af3c5"
+  },
+  "https://nsearchives.nseindia.com/corporate/xbrl/INTEGRATED_FILING_INDAS_1568155_07112025053948_WEB.xml": {
+   "kind": "blob",
+   "sha256": "d9e3c0035c13979ed52aa1c3745d3b6626ebc362502ea6cffdd4990f88a0ba1b"
+  },
+  "https://nsearchives.nseindia.com/corporate/xbrl/INTEGRATED_FILING_INDAS_1570600_10112025102053_WEB.xml": {
+   "kind": "blob",
+   "sha256": "1b6b1163d7929c1b18fa6b88951ca6d91fee3b8ede76c62a9172f9418d4bd686"
+  },
+  "https://nsearchives.nseindia.com/corporate/xbrl/INTEGRATED_FILING_INDAS_1572823_12112025080351_WEB.xml": {
+   "kind": "blob",
+   "sha256": "f68c8ef602ad0a0eac31e7bc088e868355d80a09d6b6903a178f73c35dcafd22"
+  },
+  "https://nsearchives.nseindia.com/corporate/xbrl/INTEGRATED_FILING_INDAS_1572848_12112025081025_WEB.xml": {
+   "kind": "blob",
+   "sha256": "dfdcfaa528db9f78b8db8890840cc9413350ac7fa1b87ec2e524d67b829f349e"
+  },
+  "https://nsearchives.nseindia.com/corporate/xbrl/INTEGRATED_FILING_INDAS_1694176_16072026035916_WEB.xml": {
+   "kind": "blob",
+   "sha256": "32dd9af89104cc954d65d4195c4452a87b043eff465bf73ffcd3a15671c94030"
+  },
+  "https://nsearchives.nseindia.com/corporate/xbrl/INTEGRATED_FILING_INDAS_1695741_17072026075004_WEB.xml": {
+   "kind": "blob",
+   "sha256": "63050036510b68e57f6ad670879d6c15c40ea03cdb6438a71f81e0790d2c6417"
+  },
+  "https://nsearchives.nseindia.com/corporate/xbrl/INTEGRATED_FILING_INDAS_1700136_23072026054446_WEB.xml": {
+   "kind": "blob",
+   "sha256": "5928e8ca820f60f944a66367291a7dc76c8df4536dfaf5627f3d3ff077487bae"
+  },
+  "https://nsearchives.nseindia.com/corporate/xbrl/INTEGRATED_FILING_INDAS_1703294_28072026061959_WEB.xml": {
+   "kind": "blob",
+   "sha256": "50737f577af7a44d6fea51e824e497ce43867c9ccee2586ad7e779f9fab8daaf"
+  },
+  "https://nsearchives.nseindia.com/corporate/xbrl/INTEGRATED_FILING_INDAS_1704095_29072026050810_WEB.xml": {
+   "kind": "blob",
+   "sha256": "a008d35228389c36b9c4224be548deae413b78dfd09c7506adb5f26cbfeff93e"
+  },
+  "https://nsearchives.nseindia.com/corporate/xbrl/INTEGRATED_FILING_INDAS_1704404_29072026065419_WEB.xml": {
+   "kind": "blob",
+   "sha256": "7855266114cb80b59641426c7d6cac3d7a25f3d31c1f5e77658ec568a0e39551"
+  },
+  "https://nsearchives.nseindia.com/corporate/xbrl/INTEGRATED_FILING_INDAS_1706200_31072026061259_WEB.xml": {
+   "kind": "blob",
+   "sha256": "3289562eb0ac45ecd2646b29e9bf87550e5f8e16633266eaa1b06a4128c4a20d"
+  },
+  "https://nsearchives.nseindia.com/corporate/xbrl/INTEGRATED_FILING_INDAS_1706221_31072026062408_WEB.xml": {
+   "kind": "blob",
+   "sha256": "9fd3435e3a3c4e16c8eff2749425f136354dac7243722f071b055b31f06757ad"
+  },
+  "https://nsearchives.nseindia.com/corporate/xbrl/INTEGRATED_FILING_INDAS_1706739_02082026064511_WEB.xml": {
+   "kind": "blob",
+   "sha256": "948ec3436e21d80925bbda8a4b18feaaeabc91c6dfce63e495cbb7da7da148a4"
+  },
+  "https://nsearchives.nseindia.com/corporate/xbrl/INTEGRATED_FILING_INDAS_1707838_04082026063632_WEB.xml": {
+   "kind": "blob",
+   "sha256": "1070018202e876e97e7580cfd01a83676595caa4c3604d0cad7487a3ac0fcb74"
+  },
+  "https://nsearchives.nseindia.com/corporate/xbrl/INTEGRATED_FILING_INDAS_1709071_06082026050711_WEB.xml": {
+   "kind": "blob",
+   "sha256": "5c3f86f3b7fcbca90e2ce915eb1c7d71145c057f5cec61f90a7fc55168c005fc"
+  },
+  "https://nsearchives.nseindia.com/corporate/xbrl/INTEGRATED_FILING_INDAS_1738868_15102026035523_WEB.xml": {
+   "kind": "blob",
+   "sha256": "6476acf173e1896cf17159a578999aa455a3f25b9d22de9ba502097c8f3df47e"
+  },
+  "https://nsearchives.nseindia.com/corporate/xbrl/INTEGRATED_FILING_INDAS_1739401_15102026080919_WEB.xml": {
+   "kind": "blob",
+   "sha256": "775d244fa403a4bb2f4d10685655eee7a56e2bb43929364671505e8979b2ac05"
+  },
+  "https://nsearchives.nseindia.com/corporate/xbrl/INTEGRATED_FILING_INDAS_1745058_23102026082117_WEB.xml": {
+   "kind": "blob",
+   "sha256": "3ffaef97b427b567ff5905eca05e40acc88ea4290a6584dcc6a9b4403ae54d99"
+  },
+  "https://nsearchives.nseindia.com/corporate/xbrl/INTEGRATED_FILING_INDAS_1747229_27102026081332_WEB.xml": {
+   "kind": "blob",
+   "sha256": "11beb59833e7902d538d04ad3faae6441e0fbc35a583517d972ce6b53742c058"
+  },
+  "https://nsearchives.nseindia.com/corporate/xbrl/INTEGRATED_FILING_INDAS_1748348_28102026101807_WEB.xml": {
+   "kind": "blob",
+   "sha256": "312a832da39254020637de9e4528749ab2d8fd0fa1fe49dc7ad2c82581495844"
+  },
+  "https://nsearchives.nseindia.com/corporate/xbrl/INTEGRATED_FILING_INDAS_1749321_29102026074823_WEB.xml": {
+   "kind": "blob",
+   "sha256": "06dc7923232e699f656524ed8f852b29d23724f49321ff3090f5a9ea443a5857"
+  },
+  "https://nsearchives.nseindia.com/corporate/xbrl/INTEGRATED_FILING_INDAS_1749364_29102026080541_WEB.xml": {
+   "kind": "blob",
+   "sha256": "5166dd795c1c6f4c4bd2d0d682e2315e896c7569aa9849f94ca35bb03f1c3780"
+  },
+  "https://nsearchives.nseindia.com/corporate/xbrl/INTEGRATED_FILING_INDAS_1749465_29102026092521_WEB.xml": {
+   "kind": "blob",
+   "sha256": "4b2e172b90e99edfbc81a81ac0138cedf617af45e5381453b8b26bc930cf1dd0"
+  },
+  "https://nsearchives.nseindia.com/corporate/xbrl/INTEGRATED_FILING_INDAS_1750394_30102026073426_WEB.xml": {
+   "kind": "blob",
+   "sha256": "1172f1c8f3eab1bb2e82a0d15cab0970668e183766467f0ced4d446cac96e82f"
+  },
+  "https://nsearchives.nseindia.com/corporate/xbrl/INTEGRATED_FILING_INDAS_1750473_30102026082202_WEB.xml": {
+   "kind": "blob",
+   "sha256": "de56b2e3c7f7e6fcfde104ab83bd4ddf88f360f9114a66f38c13cab43afd940f"
+  },
+  "https://nsearchives.nseindia.com/corporate/xbrl/INTEGRATED_FILING_INDAS_1750537_30102026093254_WEB.xml": {
+   "kind": "blob",
+   "sha256": "5e596d6e3dc2941d060bcb95585708f9b1bc3e892db9ab27cc7c03fd9513f758"
+  },
+  "https://nsearchives.nseindia.com/corporate/xbrl/INTEGRATED_FILING_NBFC_INDAS_1570585_10112025100247_WEB.xml": {
+   "kind": "blob",
+   "sha256": "0e25d7e85fba34b2628bc6bc254c8392ab3b61e2d61fb2d8c2c3ab8b6c586193"
+  },
+  "https://nsearchives.nseindia.com/corporate/xbrl/INTEGRATED_FILING_NBFC_INDAS_1705543_30072026070233_WEB.xml": {
+   "kind": "blob",
+   "sha256": "6673a4352cbba97633148e64caa8cd803eafc2fefb118e9318ceaf02cae248ba"
+  },
+  "https://nsearchives.nseindia.com/corporate/xbrl/INTEGRATED_FILING_NBFC_INDAS_1742040_19102026075918_WEB.xml": {
+   "kind": "blob",
+   "sha256": "3de881019f229f5fde8d2aa113ea1c71304f5225ebe6a4d192b5f4a65f54ea34"
+  },
+  "https://www.nseindia.com/api/corporate-announcements?index=equities&symbol=ASIANPAINT&from_date=04-10-2026&to_date=03-11-2026": {
+   "key": "3436486d0a9d90f703987ffb",
+   "kind": "api"
+  },
+  "https://www.nseindia.com/api/corporate-announcements?index=equities&symbol=BAJFINANCE&from_date=04-10-2026&to_date=03-11-2026": {
+   "key": "1943f8cd5d12c1b5cdfbf7a2",
+   "kind": "api"
+  },
+  "https://www.nseindia.com/api/corporate-announcements?index=equities&symbol=DEEPAKNTR&from_date=04-10-2026&to_date=03-11-2026": {
+   "key": "6cfd6d7ab82c4cdfa8a1e782",
+   "kind": "api"
+  },
+  "https://www.nseindia.com/api/corporate-announcements?index=equities&symbol=DIVISLAB&from_date=04-10-2026&to_date=03-11-2026": {
+   "key": "d68e3705ae70c0f9fcc73b57",
+   "kind": "api"
+  },
+  "https://www.nseindia.com/api/corporate-announcements?index=equities&symbol=DIXON&from_date=04-10-2026&to_date=03-11-2026": {
+   "key": "d4f5266aa60a2ac18329a433",
+   "kind": "api"
+  },
+  "https://www.nseindia.com/api/corporate-announcements?index=equities&symbol=ETERNAL&from_date=04-10-2026&to_date=03-11-2026": {
+   "key": "dee5b505902b7001dbad2e21",
+   "kind": "api"
+  },
+  "https://www.nseindia.com/api/corporate-announcements?index=equities&symbol=HDFCBANK&from_date=04-10-2026&to_date=03-11-2026": {
+   "key": "73b73c25e07bd783cdae161a",
+   "kind": "api"
+  },
+  "https://www.nseindia.com/api/corporate-announcements?index=equities&symbol=ICICIBANK&from_date=04-10-2026&to_date=03-11-2026": {
+   "key": "d5b069bd5290160c186698e8",
+   "kind": "api"
+  },
+  "https://www.nseindia.com/api/corporate-announcements?index=equities&symbol=INFY&from_date=04-10-2026&to_date=03-11-2026": {
+   "key": "969b235b05ce8ad4f0fd4947",
+   "kind": "api"
+  },
+  "https://www.nseindia.com/api/corporate-announcements?index=equities&symbol=IRCTC&from_date=04-10-2026&to_date=03-11-2026": {
+   "key": "f1f91536dedaea4b732a3c10",
+   "kind": "api"
+  },
+  "https://www.nseindia.com/api/corporate-announcements?index=equities&symbol=KPITTECH&from_date=04-10-2026&to_date=03-11-2026": {
+   "key": "6726815389450e9c699ef15f",
+   "kind": "api"
+  },
+  "https://www.nseindia.com/api/corporate-announcements?index=equities&symbol=LT&from_date=04-10-2026&to_date=03-11-2026": {
+   "key": "4249829e9feb3f560d32a0cb",
+   "kind": "api"
+  },
+  "https://www.nseindia.com/api/corporate-announcements?index=equities&symbol=PERSISTENT&from_date=04-10-2026&to_date=03-11-2026": {
+   "key": "5dcc626b4a8618e2e1221686",
+   "kind": "api"
+  },
+  "https://www.nseindia.com/api/corporate-announcements?index=equities&symbol=POLYCAB&from_date=04-10-2026&to_date=03-11-2026": {
+   "key": "f309551f97cef929cbaec663",
+   "kind": "api"
+  },
+  "https://www.nseindia.com/api/corporate-announcements?index=equities&symbol=RELIANCE&from_date=04-10-2026&to_date=03-11-2026": {
+   "key": "d63ed07bd2490af2ab23c605",
+   "kind": "api"
+  },
+  "https://www.nseindia.com/api/corporate-announcements?index=equities&symbol=SUNPHARMA&from_date=04-10-2026&to_date=03-11-2026": {
+   "key": "70d2edf292b025e272a6df93",
+   "kind": "api"
+  },
+  "https://www.nseindia.com/api/corporate-announcements?index=equities&symbol=TITAN&from_date=04-10-2026&to_date=03-11-2026": {
+   "key": "ff4be3c6d3a8cf08e387e891",
+   "kind": "api"
+  },
+  "https://www.nseindia.com/api/corporate-announcements?index=equities&symbol=TRENT&from_date=04-10-2026&to_date=03-11-2026": {
+   "key": "c81c8f8eb463485cdc8e45c8",
+   "kind": "api"
+  },
+  "https://www.nseindia.com/api/integrated-filing-results?index=equities&symbol=ASIANPAINT&type=Integrated%20Filing-%20Financials": {
+   "key": "13e8ccd8a654cab1cad83399",
+   "kind": "api"
+  },
+  "https://www.nseindia.com/api/integrated-filing-results?index=equities&symbol=BAJFINANCE&type=Integrated%20Filing-%20Financials": {
+   "key": "64cde00c50de46e059b59a37",
+   "kind": "api"
+  },
+  "https://www.nseindia.com/api/integrated-filing-results?index=equities&symbol=DEEPAKNTR&type=Integrated%20Filing-%20Financials": {
+   "key": "e1803a65a016a4f86170446f",
+   "kind": "api"
+  },
+  "https://www.nseindia.com/api/integrated-filing-results?index=equities&symbol=DIXON&type=Integrated%20Filing-%20Financials": {
+   "key": "ce1f78baca8f390c654c5dee",
+   "kind": "api"
+  },
+  "https://www.nseindia.com/api/integrated-filing-results?index=equities&symbol=HDFCBANK&type=Integrated%20Filing-%20Financials": {
+   "key": "923b67b2d0f1f87435129514",
+   "kind": "api"
+  },
+  "https://www.nseindia.com/api/integrated-filing-results?index=equities&symbol=ICICIBANK&type=Integrated%20Filing-%20Financials": {
+   "key": "b3b6151cec8cb10c0ed40dbc",
+   "kind": "api"
+  },
+  "https://www.nseindia.com/api/integrated-filing-results?index=equities&symbol=INFY&type=Integrated%20Filing-%20Financials": {
+   "key": "15984cb85c91cdb2f46314d4",
+   "kind": "api"
+  },
+  "https://www.nseindia.com/api/integrated-filing-results?index=equities&symbol=KPITTECH&type=Integrated%20Filing-%20Financials": {
+   "key": "e54ceb309603321eb87bde8e",
+   "kind": "api"
+  },
+  "https://www.nseindia.com/api/integrated-filing-results?index=equities&symbol=LT&type=Integrated%20Filing-%20Financials": {
+   "key": "db4d8d43a1963ffcbcda5904",
+   "kind": "api"
+  },
+  "https://www.nseindia.com/api/integrated-filing-results?index=equities&symbol=PERSISTENT&type=Integrated%20Filing-%20Financials": {
+   "key": "7736559cbb605c2173ddcfa9",
+   "kind": "api"
+  },
+  "https://www.nseindia.com/api/integrated-filing-results?index=equities&symbol=POLYCAB&type=Integrated%20Filing-%20Financials": {
+   "key": "9f8432c6343b4570eb1d8245",
+   "kind": "api"
+  },
+  "https://www.nseindia.com/api/integrated-filing-results?index=equities&symbol=RELIANCE&type=Integrated%20Filing-%20Financials": {
+   "key": "3b74a3b98874c21454aae6bc",
+   "kind": "api"
+  },
+  "https://www.nseindia.com/api/integrated-filing-results?index=equities&symbol=SUNPHARMA&type=Integrated%20Filing-%20Financials": {
+   "key": "14aa85e8bc476f0ce3548bbe",
+   "kind": "api"
+  },
+  "https://www.nseindia.com/api/integrated-filing-results?index=equities&symbol=TRENT&type=Integrated%20Filing-%20Financials": {
+   "key": "d5e908889c1ce131cdb964cd",
+   "kind": "api"
+  }
+ }
+}

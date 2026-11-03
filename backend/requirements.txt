@@ -1,0 +1,10 @@
+fastapi
+uvicorn[standard]
+sqlalchemy>=2.0
+requests
+pdfplumber
+yfinance
+beautifulsoup4
+lxml
+pytest
+httpx
