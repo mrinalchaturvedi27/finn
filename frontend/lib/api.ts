@@ -57,6 +57,7 @@ export type Brief = {
   movers: { session: string | null; triggered: Mover[]; quiet: Mover[]; stale: Mover[] };
   settings: Settings;
   alerts?: AlertItem[];
+  data_source?: "live" | "seed" | "seed_fallback";
   alerts_since?: string | null;
   totals: { events: number; filings: number };
 };

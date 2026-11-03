@@ -15,7 +15,8 @@ from . import live
 from . import prices as px
 from . import snapshot
 from .versions import cache_key
-from .db import Session, init_db
+from . import db as dbmod
+from .db import Session
 from .events import build_events, dedup_key
 from .extract.results import build_results_card
 from .models import Company, Document, Event, Filing, IngestRun, MetricObs, PriceBar, Setting
@@ -251,6 +252,19 @@ def seed_companies(db):
     db.commit()
 
 
+def _refuse_live_target(mode: str):
+    """The historical snapshot is only ever written to local SQLite, never to the live database."""
+    if mode == "snapshot" and not dbmod.DB_URL.startswith("sqlite"):
+        raise SystemExit(f"refusing to write the historical snapshot to {dbmod.redacted_url()}: "
+                         "snapshot seeding is SQLite-only (unset FINN_DB_URL)")
+    if mode == "snapshot":
+        from sqlalchemy import inspect
+        if "ingest_run" in inspect(dbmod.engine).get_table_names():
+            with Session() as db:
+                if db.scalar(select(IngestRun.id).where(IngestRun.mode == "live").limit(1)):
+                    raise SystemExit("refusing to write the historical snapshot into a database with live runs")
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("mode", choices=["snapshot", "live"])
@@ -265,7 +279,8 @@ def main():
         snapshot.set_captured_at(px.now_ist())
     elif a.replay:
         snapshot.configure("replay", a.replay)
-    init_db()
+    _refuse_live_target(a.mode)
+    dbmod.init_db()
     with Session() as db:
         seed_companies(db)
         tickers = [p["ticker"] for p in load_portfolio()]

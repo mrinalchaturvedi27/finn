@@ -13,7 +13,8 @@ from sqlalchemy import select
 from . import prices as px
 from . import startup_probe
 from .classify import tier
-from .db import Session, init_db
+from . import db as dbmod
+from .db import Session
 from .ingest import DEFAULT_SETTINGS
 from .models import Alert, Company, Event, Filing, IngestRun, MetricObs, PriceBar, Setting
 
@@ -41,7 +42,7 @@ WINDOWS = {"24h": timedelta(hours=24), "3d": timedelta(days=3), "7d": timedelta(
 
 @app.on_event("startup")
 def _startup():
-    init_db()
+    dbmod.use_for_api()
     startup_probe.start()
 
 
@@ -137,6 +138,7 @@ def brief(window: str = Query("24h", pattern="^(24h|3d|7d|30d)$")):
         return {"as_of": as_of.isoformat(), "mode": mode, "window": window, "since": since.isoformat(),
                 "freshness": fresh, "tiers": out, "movers": movers, "settings": st,
                 "alerts": _alerts(db, 20), "alerts_since": live_since.value["at"] if live_since else None,
+                "data_source": dbmod.SOURCE,  # live | seed | seed_fallback (live database unusable)
                 "totals": {"events": len(events), "filings": sum(counts.values())}}
 
 
@@ -226,8 +228,11 @@ def health():
         obs = db.scalars(select(MetricObs.value).order_by(MetricObs.id)).all()
         n_obs = len(obs)
     digest = hashlib.sha256(json.dumps([events, obs], default=str).encode()).hexdigest()[:16]
+    from .migrate import current
     return {"ok": True, "booted_at": BOOTED_AT, "commit": os.environ.get("RENDER_GIT_COMMIT"),
             "read_only": READ_ONLY,
+            "database": {"source": dbmod.SOURCE, "fallback_reason": dbmod.FALLBACK_REASON,
+                         "schema_version": current(dbmod.engine)},
             "seed": {"captured_at": _manifest_captured_at(), "events": len(events), "metric_obs": n_obs,
                      "fingerprint": digest}}
 

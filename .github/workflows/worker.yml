@@ -31,6 +31,7 @@ jobs:
           FINN_DB_URL: ${{ secrets.FINN_DB_URL }}
         run: |
           if [ -z "$FINN_DB_URL" ]; then echo "::error::repository secret FINN_DB_URL is not set"; exit 1; fi
+          python -m finn.migrate --status  # fails if the schema is behind: run the migrate workflow
           start=$(date +%s)
           python -m finn.worker --once
           echo "tick_seconds=$(( $(date +%s) - start ))" | tee -a "$GITHUB_STEP_SUMMARY"

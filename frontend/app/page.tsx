@@ -50,6 +50,11 @@ export default function BriefPage() {
         </Link>
       </header>
 
+      {data?.data_source === "seed_fallback" && (
+        <p role="alert" className="mt-4 rounded-xl border border-warn/40 bg-warn-bg px-3 py-2 text-[12.5px] text-warn">
+          Live data is unavailable right now, so this is the historical snapshot instead.
+        </p>
+      )}
       {data?.mode === "snapshot" && <SnapshotBanner asOf={data.as_of} />}
 
       <nav className="mt-4 flex gap-1.5" aria-label="Time window">

@@ -20,7 +20,8 @@ from sqlalchemy import select, text
 
 from . import live
 from . import prices as px
-from .db import DATA_DIR, Session, engine, init_db
+from . import db as dbmod
+from .db import DATA_DIR, Session
 from .extract.results import build_results_card
 from .ingest import (_finish, _run, _settings_or_default, ingest_announcements, ingest_prices, load_portfolio,
                      persist_observations, rebuild_events, seed_companies)
@@ -37,8 +38,8 @@ ABANDONED_AFTER = timedelta(minutes=30)  # longer than the job timeout
 def single_worker():
     """Yield True if this process holds the worker lock; False if another run is in progress.
     Postgres: session advisory lock (released if the runner dies). SQLite: a lock file."""
-    if engine.dialect.name == "postgresql":
-        with engine.connect() as c:
+    if dbmod.engine.dialect.name == "postgresql":
+        with dbmod.engine.connect() as c:
             got = c.execute(text("select pg_try_advisory_lock(:k)"), {"k": LOCK_KEY}).scalar()
             try:
                 yield bool(got)
@@ -179,11 +180,39 @@ def _tick(now: datetime) -> list[str]:
     return jobs
 
 
+def report() -> str:
+    """What the database holds after a run (no credentials): used to verify a deployment."""
+    from sqlalchemy import func
+    from .migrate import current
+    from .models import Alert, Document, Filing, MetricObs, PriceBar
+    lines = [f"database {dbmod.redacted_url()} schema v{current(dbmod.engine)}"]
+    with Session() as db:
+        counts = {m.__tablename__: db.scalar(select(func.count()).select_from(m))
+                  for m in (Filing, Event, MetricObs, Document, PriceBar, Alert, IngestRun)}
+        lines.append("rows " + " ".join(f"{k}={v}" for k, v in counts.items()))
+        for src in ("nse_announcements", "results_xbrl", "prices", "results_xbrl_recheck"):
+            r = db.scalar(select(IngestRun).where(IngestRun.source == src).order_by(IngestRun.started_at.desc()).limit(1))
+            if r:
+                secs = (r.finished_at - r.started_at).total_seconds() if r.finished_at else None
+                lines.append(f"last {src}: {r.status} items={r.items} errors={len(r.errors or [])} "
+                             f"started={r.started_at:%Y-%m-%d %H:%M} took={secs and round(secs)}s "
+                             f"through={r.data_through} mode={r.mode}")
+        lines.append(f"cursors={len(live.get_cursors(db))} live_since={live.live_since(db)}")
+    return "\n".join(lines)
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--once", action="store_true")
+    ap.add_argument("--report", action="store_true", help="print what the database holds and exit")
     a = ap.parse_args()
-    init_db()
+    from .migrate import require_latest
+    dbmod.init_db()  # local SQLite only; hosted databases are migrated explicitly
+    require_latest(dbmod.engine)
+    if a.report:
+        print(report())
+        return
+    print(f"worker using {dbmod.redacted_url()}", flush=True)
     while True:
         try:
             jobs = tick()
@@ -194,6 +223,7 @@ def main():
             if a.once:
                 raise
         if a.once:
+            print(report(), flush=True)
             return
         time.sleep(60)
 

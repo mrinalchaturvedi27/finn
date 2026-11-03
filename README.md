@@ -71,6 +71,15 @@ secret; the Render API reads the same database (`FINN_DB_URL` set in the Render 
 
 Exchange holidays are not modelled; a holiday produces an empty or stale run.
 
+**Schema and rollback.** The hosted database is changed only by `python -m finn.migrate` (the
+manual `migrate` workflow); the worker and the API check the schema version and never create
+tables there. The historical snapshot is SQLite-only: `finn.ingest snapshot` refuses a hosted
+database or one with live runs, and the image builds its seed into its own SQLite file. At startup
+the API uses `FINN_DB_URL` only if it connects and is at the latest schema; otherwise it serves the
+bundled seed, shows "Live data is unavailable" above the snapshot banner, and reports
+`database.source = seed_fallback` in `/api/health` (error type only; details in the logs).
+Manual rollback: remove `FINN_DB_URL` in the Render dashboard; the restart serves the seed.
+
 **Where it can run.** NSE's APIs return 403 to Render (`probe/report-render.json`). The worker
 needs a host NSE accepts, writing to storage the Render API can read. Storage: `FINN_DB_URL` accepts
 a Postgres URL; replaying the snapshot into Postgres gives byte-identical API output to SQLite.

@@ -10,6 +10,7 @@ ENV PYTHONUNBUFFERED=1
 WORKDIR /app/backend
 # Seed the labelled historical snapshot offline from the recorded responses (no network at build).
 # Render's disk is ephemeral: every restart comes back to exactly this database; settings edits do not persist.
-RUN python -m finn.ingest snapshot --replay data/snapshot
+# Pinned to the image's SQLite file: the seed never goes to a hosted database.
+RUN FINN_DB_URL=sqlite:////app/backend/data/finn.db python -m finn.ingest snapshot --replay data/snapshot
 EXPOSE 8000
 CMD ["sh", "-c", "uvicorn finn.api:app --host 0.0.0.0 --port ${PORT:-8000}"]

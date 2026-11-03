@@ -474,3 +474,61 @@ def test_killed_run_is_marked_abandoned(tmp_path):
     db.commit()
     assert close_abandoned(db, now) == 1
     assert {r.source: r.status for r in db.query(IngestRun)} == {"nse_announcements": "abandoned", "prices": "running"}
+
+
+def test_migrations_are_explicit_and_idempotent(tmp_path):
+    from sqlalchemy import create_engine
+    from finn import migrate
+    eng = create_engine(f"sqlite:///{tmp_path / 'm.db'}")
+    assert migrate.current(eng) is None
+    with pytest.raises(RuntimeError):
+        migrate.require_latest(eng)
+    assert migrate.upgrade(eng) == [1] and migrate.upgrade(eng) == []
+    assert migrate.current(eng) == migrate.LATEST
+    migrate.require_latest(eng)
+
+
+def _api_health(env_extra):
+    import json
+    import os
+    import subprocess
+    import sys
+    from pathlib import Path
+    code = ("import json; from fastapi.testclient import TestClient; from finn.api import app\n"
+            "with TestClient(app) as c: print(json.dumps(c.get('/api/health').json()['database']))")
+    r = subprocess.run([sys.executable, "-c", code], cwd=Path(__file__).resolve().parents[1],
+                       env={**os.environ, **env_extra}, capture_output=True, text=True, timeout=60)
+    assert r.returncode == 0, r.stderr[-1500:]
+    return json.loads(r.stdout.strip().splitlines()[-1])
+
+
+def test_api_falls_back_to_seed_without_touching_an_unmigrated_db(tmp_path):
+    import sqlite3
+    target = tmp_path / "live.db"
+    sqlite3.connect(target).close()
+    d = _api_health({"FINN_DB_URL": f"sqlite:///{target}"})
+    assert d["source"] == "seed_fallback" and "schema is version None" in d["fallback_reason"]
+    assert sqlite3.connect(target).execute("select count(*) from sqlite_master").fetchone()[0] == 0
+    d = _api_health({"FINN_DB_URL": "postgresql://u:pw@127.0.0.1:1/x"})
+    assert d == {**d, "source": "seed_fallback", "fallback_reason": "OperationalError"}  # no host or message
+
+
+def test_snapshot_refuses_a_database_with_live_runs(tmp_path):
+    import os
+    import subprocess
+    import sys
+    from pathlib import Path
+    from sqlalchemy import create_engine
+    from sqlalchemy.orm import sessionmaker
+    from finn import migrate
+    from finn.models import IngestRun
+    url = f"sqlite:///{tmp_path / 'live.db'}"
+    eng = create_engine(url)
+    migrate.upgrade(eng)
+    s = sessionmaker(eng)()
+    s.add(IngestRun(source="nse_announcements", mode="live", started_at=datetime(2026, 11, 3), status="ok"))
+    s.commit()
+    r = subprocess.run([sys.executable, "-m", "finn.ingest", "snapshot", "--replay", "data/snapshot"],
+                       cwd=Path(__file__).resolve().parents[1], env={**os.environ, "FINN_DB_URL": url},
+                       capture_output=True, text=True, timeout=120)
+    assert r.returncode != 0 and "live runs" in r.stderr
