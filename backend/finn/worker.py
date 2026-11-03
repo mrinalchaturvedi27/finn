@@ -43,11 +43,14 @@ def single_worker():
             # if this runner dies (job killed), the server closes the idle session and frees the lock;
             # longer than the 15 min job timeout so a live run never loses it
             c.execute(text("set idle_session_timeout = '20min'"))
+            c.execute(text("set idle_in_transaction_session_timeout = '20min'"))
             got = c.execute(text("select pg_try_advisory_lock(:k)"), {"k": LOCK_KEY}).scalar()
+            c.commit()  # a session-level advisory lock outlives the transaction; leave the session idle
             if not got and take_over_stale_lock(c):
                 for _ in range(10):  # termination is a signal: the old session takes a moment to exit
                     time.sleep(1)
                     got = c.execute(text("select pg_try_advisory_lock(:k)"), {"k": LOCK_KEY}).scalar()
+                    c.commit()
                     if got:
                         break
             try:
@@ -81,7 +84,8 @@ def take_over_stale_lock(c, idle_minutes: int = 30) -> bool:
         "where l.locktype = 'advisory' and l.classid = 0 and l.objid = :k and l.objsubid = 1 and l.granted "
         "and l.database = (select oid from pg_database where datname = current_database()) "
         "and a.usename = current_user and a.pid <> pg_backend_pid() "
-        "and a.state = 'idle' and a.state_change < now() - make_interval(mins => :m)"),
+        "and a.state in ('idle', 'idle in transaction') "  # older runs left the lock session mid-transaction
+        "and a.state_change < now() - make_interval(mins => :m)"),
         {"k": LOCK_KEY, "m": idle_minutes}).scalars().all()
     for pid in pids:
         c.execute(text("select pg_terminate_backend(:p)"), {"p": pid})
