@@ -1,69 +1,80 @@
-# FINN — covering note (draft)
+# FINN — covering note
 
-**What it is.** A mobile-first brief for an 18-stock NSE portfolio that tells you what changed and
-what to look at first, plus an on-demand "promised vs delivered" check on any NSE company.
+Before sending: attach the AI build history and confirm the reviewers can access the private repository.
 
-**Try it on a phone:** https://finn-eta-hazel.vercel.app (the first load can take about a minute
-while the free backend wakes up).
+To: assessment@enam.com
+
+Subject: ENAM - IIT screening - 2027
+
+Hello,
+
+I built FINN, a mobile-first briefing for an 18-stock NSE portfolio, with company research focused
+on comparing management's guidance against filed results.
+
+- [Working prototype](https://finn-eta-hazel.vercel.app)
+- [Repository](https://github.com/mrinalchaturvedi27/finn)
+
+Start with **Demo briefing**. It opens a recorded results-heavy period so you can inspect a
+results story, expand its evidence, and follow the company into research. The demo is anchored
+to 30 October 2026; research reports show their own later dates. The Live view shows source
+freshness and labels any fallback to historical data. The backend can take about a minute to
+wake on the first visit.
 
 ## What I built
-- **Brief (push, digest).** Every filing in the window you pick (24h / 3d / 7d / 30d), grouped into
-  events: a results outcome, its press release, deck and newspaper notice are one item. Ranked by
-  materiality, with routine filings collapsed. Category (what kind of filing) and materiality (how
-  much to care) are separate. Filings too thin to judge are surfaced at a middle priority as
-  "unread", never buried.
-- **Results cards.** Revenue, EBITDA, PBT and PAT, QoQ and YoY, from the company's own XBRL filing.
-  Each number is also located on the printed PDF statement page and in the right column, checked
-  against the comparison quarter's XBRL. Where the company's printed PBT has a different definition,
-  the card says so rather than forcing a match.
-- **Alerts (push, triggered).** Per-stock price and volume thresholds you set, evaluated after each
-  close against a 20-session baseline that excludes the session itself. A stock missing that
-  session's bar is shown as stale, not silently skipped. Announcement alerts fire only for filings
-  that arrive after live ingestion starts.
-- **Promised vs delivered (pull).** For any NSE ticker: management's numeric guidance from its last
-  five earnings calls, checked against the results it then filed. Each verdict shows the
-  calculation, the quote and the page it came from.
 
-  **Limits, stated plainly.** Extraction is rule-based, not model-based. Across the 11 companies
-  I tested, only **three** guidance statements could be checked against company-level results:
-  - Pidilite's 20–24% EBITDA corridor: delivered.
-  - Astral's 15–16% consolidated EBITDA margin band: near miss.
-  - Kaynes's ~55% FY27 revenue growth: pending. This is a one-quarter run-rate indication, not a
-    delivered or missed annual target.
+The brief groups related filings into one event and ranks material changes above routine
+paperwork. Results pages compare revenue, calculated operating EBITDA, PBT and PAT with the
+previous quarter and year-ago quarter. Financial companies use a separate metric set.
 
-  Dixon gave two different FY26 growth targets on different calls ("50% growth this fiscal" in
-  July 2025, "double-digit" in October 2025). Neither says it replaces the other, so FINN shows both
-  and the actual (+25.8%) without a verdict. Everything else management said is listed with the
-  reason it can't be checked (mostly segment-level guidance). Wider guidance coverage is future
-  work.
+Numbers come from the company's XBRL results. A separate check tries to locate each reported
+value in the PDF statement and confirm the comparison column. The interface exposes the
+source, page and checking status, including missing matches and differences between the XBRL
+concept and the printed definition. Calculated figures show their formulas.
 
-## Key decisions and trade-offs
-- **Primary filings for every number.** XBRL is the source of truth; screener.in was only used to
-  discover links. Calculated metrics (EBITDA) are labelled as calculated, with their formula.
-- **Rules before models.** Classification, guidance extraction and verdicts are deterministic and
-  versioned. It's cheap (no model spend at all), reproducible, and every output can be traced. A model
-  pass to improve recall on transcripts is the obvious next step, behind the same verdict rules.
-- **Abstain rather than guess.** Segment-level, industry, AUM or loan-book, constant-currency or
-  "which margin?" statements are shown as not checkable, with the reason. Every claimed verdict was
-  checked by hand against its quote.
-- **Classifier measured, not assumed.** Two blind-labelled holdouts of 100 filings each from
-  earlier periods. On the one labelled after the fixes, the classifier scored 82/100 on category
-  and 77/100 on tier (`probe/labels/RESULTS.md`).
-- **Hosting from evidence.** A probe run inside each candidate host showed NSE blocks Render but
-  answers GitHub runners. So the worker runs on Actions and writes to Postgres, and the API on
-  Render reads it, with a fallback to the seeded demo if the database is unavailable.
-- **Honest freshness.** The brief shows the actual last successful check and labels historical
-  data, instead of promising "within 15 minutes".
+Price and volume flags use end-of-day data and a volume baseline of the previous 20 completed
+sessions. Missing data is shown per stock. Browser preferences change which moves and filing
+types the reader sees flagged; they do not reconfigure background monitoring. Alerts are in-app.
 
-## Deliberately left out
-- LinkedIn bios for management changes: needs an authorised data source.
-- Bull/bear, business snapshot, balance sheet and cash quality: they need annual-report parsing,
-  and I chose depth on one research view over breadth.
-- Web push notifications (alerts are in-app), an ask bar, per-stock overrides, in-app cost display.
+Research reads management's numeric guidance from earnings-call transcripts and compares it
+with company-level results for the matching period. Each comparison shows its quote, source
+page, actual and calculation. Extraction and verdicts use rules; there are no LLM calls in the
+running application.
 
-## Where I'd take it next
-- Broader guidance coverage. Today only three comparisons were checkable. The next steps are a
-  model pass over transcripts for recall (a cheap model to extract, with the same rule-based
-  verdicts) and segment-level checks against XBRL segment reporting.
-- Capex promises checked against the half-yearly cash-flow statement.
-- Web push for triggered alerts; per-stock thresholds.
+## Decisions and trade-offs
+
+I concentrated the research work on one question: did the company deliver what management said
+it would? Coverage is limited. Review across 11 companies produced two completed comparisons
+and one pending comparison: Pidilite's EBITDA margin corridor was delivered; Astral's consolidated
+margin target was a near miss; Kaynes's FY27 revenue growth remains pending. Its partial-year
+figures are labelled as a run-rate indication.
+
+Dixon illustrates a case where FINN withholds a verdict. Management gave different FY26 growth
+targets on two calls without explicitly replacing the earlier target. FINN shows both statements
+and the actual result. Segment-level targets and statements with uncertain definitions are also
+shown with an explanation when they cannot be compared.
+
+The classifier was evaluated on two sets of 100 filings from earlier periods. A separate model
+labelled each set without seeing classifier output. Version 2 agreed with the second set on
+82 categories and 77 priority tiers out of 100. These are agreement scores against model labels,
+not human-validated accuracy. The current rules include fixes from that set and need a new
+holdout for an independent estimate.
+
+Hosting was chosen after testing source access. NSE requests returned 403 from Render Singapore
+but worked from GitHub-hosted runners, so the worker runs on Actions and writes to Postgres.
+The Render API reads that database and can serve a labelled snapshot if it is unavailable.
+Scheduled updates are best effort; the app reports actual check times.
+
+## Scope and next steps
+
+I left out annual-report analysis, business snapshots, balance-sheet and cash-quality views,
+bull/bear cases, external executive profiles, chat and browser push notifications. The interface
+uses a compact terminal layout, with source evidence available on demand.
+
+The next research work would be broader transcript extraction and segment-level comparisons.
+A model could help extract more guidance while leaving comparability checks and verdicts in
+code. I would also validate the classifier against human-labelled filings and verify scheduled
+ingestion over a longer period.
+
+Regards,
+
+Mrinal Chaturvedi
